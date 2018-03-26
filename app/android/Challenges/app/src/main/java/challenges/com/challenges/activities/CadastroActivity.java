@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +20,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 import challenges.com.challenges.R;
 import challenges.com.challenges.config.ConfiguracaoFirebase;
@@ -33,7 +40,7 @@ public class CadastroActivity extends AppCompatActivity {
     private EditText senha;
     private EditText confirmarSenha;
     private Button continuar;
-    private Usuario usuario;
+    private Usuario usuario = new Usuario();
     private FirebaseAuth autenticacao;
 
     @Override
@@ -58,10 +65,11 @@ public class CadastroActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (validarCampos()){
-                    usuario = new Usuario();
                     usuario.setNome(nome.getText().toString());
                     usuario.setSenha(senha.getText().toString());
                     usuario.setEmail(email.getText().toString());
+                    //tipo responsavel
+                    usuario.setTipo(0);
                     cadastrarUsuario();
                 }
             }
@@ -76,11 +84,23 @@ public class CadastroActivity extends AppCompatActivity {
                 if (task.isSuccessful()){
                     //insere no banco o usuario agora
                     Toast.makeText(CadastroActivity.this, "Usuário cadastrado com sucesso!", Toast.LENGTH_LONG ).show();
+                    String idUsuario = autenticacao.getCurrentUser().getUid();
 
-                    autenticacao.signOut();
+                    CollectionReference referencia = ConfiguracaoFirebase.getFirestore().collection("Usuarios");
+                    Map<String, Object> salvar = new HashMap<String, Object>();
+                    salvar.put("nome", usuario.getNome());
+                    salvar.put("email", usuario.getEmail());
+                    salvar.put("tipo", usuario.getTipo());
+                    referencia.document(idUsuario).set(salvar).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Log.i("DEBUG", "SALVO COM SUCESSO");
+                            autenticacao.signOut();
+                        }
+                    });
 
-                    //cadastra a crianca agora
-                    abrirCadastroCrianca();
+                    //cadastra a crianca agora - passa o id do usuario para pegar a referencia dele depois
+                    abrirCadastroCrianca(idUsuario);
 
                 }else{
                     String erroExcecao = "";
@@ -106,8 +126,9 @@ public class CadastroActivity extends AppCompatActivity {
         });
     }
 
-    private void abrirCadastroCrianca() {
+    private void abrirCadastroCrianca(String responsavel) {
         Intent intent = new Intent(CadastroActivity.this, CadastroCriancaActivity.class);
+        intent.putExtra("responsavel", responsavel);
         startActivity(intent);
         finish();
     }

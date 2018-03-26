@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -21,6 +22,7 @@ import java.util.Map;
 
 import challenges.com.challenges.R;
 import challenges.com.challenges.config.ConfiguracaoFirebase;
+import challenges.com.challenges.model.Usuario;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,11 +46,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+       /* Usuario usuario = new Usuario();
+
+        usuario.setNome("Wender");
+        usuario.setSenha("a5t7l4h6");
+        usuario.setEmail("wendergalan2014@hotmail.com");
+        usuario.setTipo(0);
+        usuario.setId("fsdfsdfsdfsdfsdf3123s32fd312123231");
+        usuario.salvar();*/
+
+
             /*CollectionReference db = FirebaseFirestore.getInstance().collection("usuarios");
-            Log.i("DEBUG", "Instancia: " + db);
-            Map<String, Object> data = new HashMap<>();
-            data.put("email", email.getText().toString());
-            db.document("" + id).set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
+            Usuario usuario = new Usuario();
+            usuario.setEmail("wendergalan@2014.com");
+            DocumentReference responsavel = FirebaseFirestore.getInstance().collection("usuarios").document("wender");
+            usuario.setResponsavel(responsavel);
+            db.document("wender").set(usuario).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
                     Log.i("DEBUG", "Deu certo!");
@@ -65,16 +79,5 @@ public class MainActivity extends AppCompatActivity {
                 }
             });*/
 
-
-                   /* DocumentReference mDocRef = FirebaseFirestore.getInstance().document(id);
-
-                    Map<String, Object> data = new HashMap<>();
-                    data.put("email", email.getText().toString());
-                    mDocRef.set(data).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            Log.i("DEBUG", "Deu certo!");
-                        }
-                    });*/
     }
 }

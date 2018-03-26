@@ -3,6 +3,7 @@ package challenges.com.challenges.config;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -16,6 +17,7 @@ public final class ConfiguracaoFirebase {
     private static FirebaseAuth autenticacao;
     private static StorageReference referenciaStorage;
     private static StorageReference referenciaStorageFromUrl;
+    private static FirebaseFirestore referenciaFirestore;
 
 
     public static DatabaseReference getFirebase(){
@@ -50,6 +52,13 @@ public final class ConfiguracaoFirebase {
             referenciaStorageFromUrl = FirebaseStorage.getInstance().getReferenceFromUrl(url);
         }
         return referenciaStorageFromUrl;
+    }
+
+    public static FirebaseFirestore getFirestore(){
+        if (referenciaFirestore == null){
+            referenciaFirestore = FirebaseFirestore.getInstance();
+        }
+        return referenciaFirestore;
     }
 
 }
