@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>158526899286-o0g6r5ck3g45hkid1ne2bbd7nmfdbk1i.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.158526899286-o0g6r5ck3g45hkid1ne2bbd7nmfdbk1i</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBBRXsTkYcbMvgKqBJ6UsJ5sQdZ73TVuRM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>158526899286</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>br.com.RocaCorp.Challenges</string>
+	<key>PROJECT_ID</key>
+	<string>project-challenges-2018</string>
+	<key>STORAGE_BUCKET</key>
+	<string>project-challenges-2018.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false></false>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:158526899286:ios:dc8d8d81f3e02794</string>
+	<key>DATABASE_URL</key>
+	<string>https://project-challenges-2018.firebaseio.com</string>
+</dict>
+</plist>
