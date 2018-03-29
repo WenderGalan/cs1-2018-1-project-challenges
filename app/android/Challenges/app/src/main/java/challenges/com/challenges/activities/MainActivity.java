@@ -15,13 +15,19 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import challenges.com.challenges.R;
 import challenges.com.challenges.config.ConfiguracaoFirebase;
+import challenges.com.challenges.model.Crianca;
+import challenges.com.challenges.model.Responsavel;
 import challenges.com.challenges.model.Usuario;
 
 public class MainActivity extends AppCompatActivity {
@@ -47,37 +53,36 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-       /* Usuario usuario = new Usuario();
+        /*//busca pelo ID e coloca um listener nesse nó, tudo que mudar ele avisa aqui
+        ConfiguracaoFirebase.getFirestore().collection("usuarios").document("AvIdYPSvPJalkM4RUrRiXIwzfqR2").addSnapshotListener(MainActivity.this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
+                Responsavel responsavel = documentSnapshot.toObject(Responsavel.class);
+                Log.i("DEBUG", "Nome: " + responsavel.getNome());
+                Log.i("DEBUG", "Email: " + responsavel.getEmail());
+                Log.i("DEBUG", "Foto: " + responsavel.getFoto());
+                Log.i("DEBUG", "Tipo: " + responsavel.getTipo());
+                Log.i("DEBUG", "Criança: " + responsavel.getCriancas().get(0));
+            }
+        });
 
-        usuario.setNome("Wender");
-        usuario.setSenha("a5t7l4h6");
-        usuario.setEmail("wendergalan2014@hotmail.com");
-        usuario.setTipo(0);
-        usuario.setId("fsdfsdfsdfsdfsdf3123s32fd312123231");
-        usuario.salvar();*/
+        //busca pelo ID e apenas recebe um objeto, aqui nao existe listener
+        ConfiguracaoFirebase.getFirestore().collection("usuarios").document("7dZjCJPgnTPUo0cuQ7odSN0ElME2").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Crianca crianca = documentSnapshot.toObject(Crianca.class);
+                Log.i("DEBUG", "Nome: " + crianca.getNome());
+                Log.i("DEBUG", "Email: " + crianca.getEmail());
+                Log.i("DEBUG", "Foto: " + crianca.getFoto());
+                Log.i("DEBUG", "Tipo: " + crianca.getTipo());
+                Log.i("DEBUG", "Responsável: " + crianca.getResponsavel());
+                Log.i("DEBUG", "Pontos: " + crianca.getPontos());
+                Log.i("DEBUG", "Habilidade: " + crianca.getHabilidade());
+
+            }
+        });*/
 
 
-            /*CollectionReference db = FirebaseFirestore.getInstance().collection("usuarios");
-            Usuario usuario = new Usuario();
-            usuario.setEmail("wendergalan@2014.com");
-            DocumentReference responsavel = FirebaseFirestore.getInstance().collection("usuarios").document("wender");
-            usuario.setResponsavel(responsavel);
-            db.document("wender").set(usuario).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    Log.i("DEBUG", "Deu certo!");
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.i("DEBUG", "Erro: " + e.getMessage());
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    Log.i("DEBUG", "Erro: " + task.getException());
-                }
-            });*/
 
     }
 }

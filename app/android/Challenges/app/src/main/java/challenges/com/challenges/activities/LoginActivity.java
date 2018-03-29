@@ -2,10 +2,10 @@ package challenges.com.challenges.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,7 +23,6 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 
 import challenges.com.challenges.R;
 import challenges.com.challenges.config.ConfiguracaoFirebase;
-import challenges.com.challenges.model.Usuario;
 import challenges.com.challenges.util.Validator;
 
 public class LoginActivity extends AppCompatActivity {
@@ -31,7 +30,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText email;
     private EditText senha;
     private Button entrar;
-    private Usuario usuario;
     private FirebaseAuth autenticacao;
 
     @Override
@@ -49,11 +47,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (validarCampos()){
-                    //campso validados sem estarem nulos
-                    usuario = new Usuario();
-                    usuario.setEmail(email.getText().toString());
-                    usuario.setSenha(senha.getText().toString());
-                    validarLogin();
+                    validarLogin(email.getText().toString(), senha.getText().toString());
                 }
             }
         });
@@ -66,9 +60,9 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void validarLogin() {
+    private void validarLogin(String email, String senha) {
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-        autenticacao.signInWithEmailAndPassword(usuario.getEmail(), usuario.getSenha()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        autenticacao.signInWithEmailAndPassword(email, senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){

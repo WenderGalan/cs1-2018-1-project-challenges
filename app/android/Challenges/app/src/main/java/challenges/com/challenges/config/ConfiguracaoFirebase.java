@@ -8,7 +8,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 /**
- * Created by Wender Galan Gamer on 28/12/2017.
+ * Created by Wender Galan on 28/03/2018.
  */
 
 public final class ConfiguracaoFirebase {

@@ -1,6 +1,8 @@
 package challenges.com.challenges.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -10,9 +12,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,14 +24,21 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import challenges.com.challenges.R;
 import challenges.com.challenges.config.ConfiguracaoFirebase;
+import challenges.com.challenges.model.Responsavel;
 import challenges.com.challenges.model.Usuario;
 import challenges.com.challenges.util.Validator;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CadastroActivity extends AppCompatActivity {
 
@@ -37,8 +48,13 @@ public class CadastroActivity extends AppCompatActivity {
     private EditText senha;
     private EditText confirmarSenha;
     private Button continuar;
-    private Usuario usuario = new Usuario();
+    private Responsavel responsavel;
     private FirebaseAuth autenticacao;
+    private static final int GALLERY_INTENT = 2;
+    private Uri imagemCarregada = null;
+    private CircleImageView imagem;
+    private ProgressDialog progressDialog;
+    private String imagemPerfilResponsavel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +66,8 @@ public class CadastroActivity extends AppCompatActivity {
         senha = findViewById(R.id.editTextSenha);
         confirmarSenha = findViewById(R.id.editTextConfirmarSenha);
         continuar = findViewById(R.id.buttonContinuar);
+        imagem = findViewById(R.id.imagemPerfilResponsavel);
+        responsavel = new Responsavel();
 
         toolbar = findViewById(R.id.toolbarCadastro);
         setSupportActionBar(toolbar);
@@ -57,16 +75,24 @@ public class CadastroActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
         getSupportActionBar().setTitle("Crie sua conta");
 
+        imagem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //abrir o selecionador de imagem
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, GALLERY_INTENT);
+            }
+        });
+
         //botao cadastrar
         continuar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (validarCampos()){
-                    usuario.setNome(nome.getText().toString());
-                    usuario.setSenha(senha.getText().toString());
-                    usuario.setEmail(email.getText().toString());
-                    //tipo responsavel
-                    usuario.setTipo(0);
+                    responsavel.setNome(nome.getText().toString());
+                    responsavel.setSenha(senha.getText().toString());
+                    responsavel.setEmail(email.getText().toString());
                     cadastrarUsuario();
                 }
             }
@@ -74,32 +100,51 @@ public class CadastroActivity extends AppCompatActivity {
     }
 
     private void cadastrarUsuario() {
+        progressDialog = new ProgressDialog(CadastroActivity.this);
+        progressDialog.setMessage("Inserindo o usuário...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.show();
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         autenticacao.createUserWithEmailAndPassword(email.getText().toString(), senha.getText().toString()).addOnCompleteListener(CadastroActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
+
                     //insere no banco o usuario agora
                     Toast.makeText(CadastroActivity.this, "Usuário cadastrado com sucesso!", Toast.LENGTH_LONG ).show();
                     String idUsuario = autenticacao.getCurrentUser().getUid();
+                    //seta o ID do usuario
+                    responsavel.setId(idUsuario);
 
-                    CollectionReference referencia = ConfiguracaoFirebase.getFirestore().collection("Usuarios");
-                    Map<String, Object> salvar = new HashMap<String, Object>();
-                    salvar.put("nome", usuario.getNome());
-                    salvar.put("email", usuario.getEmail());
-                    salvar.put("tipo", usuario.getTipo());
-                    referencia.document(idUsuario).set(salvar).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            Log.i("DEBUG", "SALVO COM SUCESSO");
-                            autenticacao.signOut();
-                        }
-                    });
+                    if (imagemCarregada != null){
+                        //inserir no Storage e salva no banco
+                        StorageReference storageRef = ConfiguracaoFirebase.getStorage();
+                        //Cada usuario tem uma pasta com seu UID e dentro tem duas pastas com sua foto de perfil e a foto de seus anuncios
+                        final StorageReference imagemPerfil = storageRef.child(idUsuario + "/" + "perfil/" + imagemCarregada.getLastPathSegment());
+                        //upa a imagem ao storage
+                        UploadTask uploadTask = imagemPerfil.putFile(imagemCarregada);
+                        //Listener para verificar o estado da task de upload
+                        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                //pega o link da foto
+                                final Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                                //seta a foto no usuario
+                                responsavel.setFoto(downloadUrl.toString());
+                                imagemPerfilResponsavel = downloadUrl.toString();
+                                responsavel.salvar();
+                            }
+                        });
+                    }
+
+                    responsavel.salvar();
+                    progressDialog.dismiss();
 
                     //cadastra a crianca agora - passa o id do usuario para pegar a referencia dele depois
-                    abrirCadastroCrianca(idUsuario);
+                    abrirCadastroCrianca();
 
                 }else{
+                    progressDialog.dismiss();
                     String erroExcecao = "";
                     try {
                         throw task.getException();
@@ -121,10 +166,13 @@ public class CadastroActivity extends AppCompatActivity {
                 }
             }
         });
+
+        autenticacao.signOut();
     }
 
-    private void abrirCadastroCrianca(String responsavel) {
+    private void abrirCadastroCrianca() {
         Intent intent = new Intent(CadastroActivity.this, CadastroCriancaActivity.class);
+        responsavel.setFoto(imagemPerfilResponsavel);
         intent.putExtra("responsavel", responsavel);
         startActivity(intent);
         finish();
@@ -177,6 +225,17 @@ public class CadastroActivity extends AppCompatActivity {
         startActivity(new Intent(this, LoginActivity.class)); //O efeito ao ser pressionado do botão (no caso abre a activity)
         finishAffinity(); //Método para matar a activity e não deixa-lá indexada na pilhagem
         return;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK){
+            imagemCarregada = data.getData();
+            imagem.setImageURI(imagemCarregada);
+        }
+
     }
 
 }
