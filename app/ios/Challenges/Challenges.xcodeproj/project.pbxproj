@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0A0697482068335200FA11EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0697472068335200FA11EB /* AppDelegate.swift */; };
-		0A06974A2068335200FA11EB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0697492068335200FA11EB /* ViewController.swift */; };
 		0A06974D2068335200FA11EB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A06974B2068335200FA11EB /* Main.storyboard */; };
 		0A06974F2068335200FA11EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A06974E2068335200FA11EB /* Assets.xcassets */; };
 		0A0697522068335200FA11EB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A0697502068335200FA11EB /* LaunchScreen.storyboard */; };
@@ -19,6 +18,15 @@
 		0A06977A20683C1300FA11EB /* FirestoreObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A06977920683C1300FA11EB /* FirestoreObject.swift */; };
 		0A06977C2068593C00FA11EB /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A06977B2068593C00FA11EB /* FirestoreService.swift */; };
 		0A06977E2068974100FA11EB /* UsuarioDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A06977D2068974100FA11EB /* UsuarioDAO.swift */; };
+		0A161FE9206EE25000A397E0 /* Responsavel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A161FE8206EE25000A397E0 /* Responsavel.swift */; };
+		0A161FEB206EE37400A397E0 /* Crianca.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A161FEA206EE37400A397E0 /* Crianca.swift */; };
+		0A161FED206EE4E000A397E0 /* Habilidade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A161FEC206EE4E000A397E0 /* Habilidade.swift */; };
+		0A855B37206C46AE001138DC /* BasicTextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A855B36206C46AE001138DC /* BasicTextFieldCell.xib */; };
+		0A855B39206C4842001138DC /* BasicTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A855B38206C4842001138DC /* BasicTextFieldCell.swift */; };
+		0A855B3B206C48BD001138DC /* FotoPerfilCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A855B3A206C48BD001138DC /* FotoPerfilCell.swift */; };
+		0A855B3D206C4919001138DC /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A855B3C206C4919001138DC /* LoginController.swift */; };
+		0A855B3F206C492A001138DC /* CadastroResponsavelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A855B3E206C492A001138DC /* CadastroResponsavelController.swift */; };
+		0A855B41206C497D001138DC /* CadastroCriancaController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A855B40206C497D001138DC /* CadastroCriancaController.swift */; };
 		1B3E1E6AEA17E454C510F0F4 /* Pods_Challenges.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DEFFBA0C8FD8175AAE1AFB3 /* Pods_Challenges.framework */; };
 		28D87721B82DA581E6AB8190 /* Pods_ChallengesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 903E5C5493AF3B1C3A5B8538 /* Pods_ChallengesTests.framework */; };
 		57E6F180C710C702700F7247 /* Pods_ChallengesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8933191861CBCED9EC5E17E0 /* Pods_ChallengesUITests.framework */; };
@@ -44,7 +52,6 @@
 /* Begin PBXFileReference section */
 		0A0697442068335100FA11EB /* Challenges.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Challenges.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A0697472068335200FA11EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0A0697492068335200FA11EB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		0A06974C2068335200FA11EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0A06974E2068335200FA11EB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0A0697512068335200FA11EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -60,6 +67,15 @@
 		0A06977920683C1300FA11EB /* FirestoreObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreObject.swift; sourceTree = "<group>"; };
 		0A06977B2068593C00FA11EB /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
 		0A06977D2068974100FA11EB /* UsuarioDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsuarioDAO.swift; sourceTree = "<group>"; };
+		0A161FE8206EE25000A397E0 /* Responsavel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Responsavel.swift; sourceTree = "<group>"; };
+		0A161FEA206EE37400A397E0 /* Crianca.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crianca.swift; sourceTree = "<group>"; };
+		0A161FEC206EE4E000A397E0 /* Habilidade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habilidade.swift; sourceTree = "<group>"; };
+		0A855B36206C46AE001138DC /* BasicTextFieldCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BasicTextFieldCell.xib; sourceTree = "<group>"; };
+		0A855B38206C4842001138DC /* BasicTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTextFieldCell.swift; sourceTree = "<group>"; };
+		0A855B3A206C48BD001138DC /* FotoPerfilCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FotoPerfilCell.swift; sourceTree = "<group>"; };
+		0A855B3C206C4919001138DC /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		0A855B3E206C492A001138DC /* CadastroResponsavelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CadastroResponsavelController.swift; sourceTree = "<group>"; };
+		0A855B40206C497D001138DC /* CadastroCriancaController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CadastroCriancaController.swift; sourceTree = "<group>"; };
 		1B3A1525BF220B55AF99B895 /* Pods-ChallengesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChallengesUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ChallengesUITests/Pods-ChallengesUITests.release.xcconfig"; sourceTree = "<group>"; };
 		27BC87AE5A8C3692A1A72D64 /* Pods-Challenges.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Challenges.release.xcconfig"; path = "Pods/Target Support Files/Pods-Challenges/Pods-Challenges.release.xcconfig"; sourceTree = "<group>"; };
 		4DEFFBA0C8FD8175AAE1AFB3 /* Pods_Challenges.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Challenges.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -125,13 +141,13 @@
 			isa = PBXGroup;
 			children = (
 				0A06977B2068593C00FA11EB /* FirestoreService.swift */,
-				0A06977D2068974100FA11EB /* UsuarioDAO.swift */,
-				0A0697752068336D00FA11EB /* Usuario.swift */,
-				0A06977920683C1300FA11EB /* FirestoreObject.swift */,
+				0A855B45206C49CD001138DC /* Custom Views */,
+				0A855B44206C49BD001138DC /* Login e cadastro */,
+				0A855B43206C499F001138DC /* DAO */,
+				0A855B42206C4990001138DC /* Model */,
 				0A0697472068335200FA11EB /* AppDelegate.swift */,
-				0A0697492068335200FA11EB /* ViewController.swift */,
-				0A06974B2068335200FA11EB /* Main.storyboard */,
 				0A06974E2068335200FA11EB /* Assets.xcassets */,
+				0A06974B2068335200FA11EB /* Main.storyboard */,
 				0A0697502068335200FA11EB /* LaunchScreen.storyboard */,
 				0A0697532068335200FA11EB /* Info.plist */,
 				0A069777206833DA00FA11EB /* GoogleService-Info.plist */,
@@ -155,6 +171,46 @@
 				0A0697692068335200FA11EB /* Info.plist */,
 			);
 			path = ChallengesUITests;
+			sourceTree = "<group>";
+		};
+		0A855B42206C4990001138DC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0A161FE8206EE25000A397E0 /* Responsavel.swift */,
+				0A0697752068336D00FA11EB /* Usuario.swift */,
+				0A161FEA206EE37400A397E0 /* Crianca.swift */,
+				0A161FEC206EE4E000A397E0 /* Habilidade.swift */,
+				0A06977920683C1300FA11EB /* FirestoreObject.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0A855B43206C499F001138DC /* DAO */ = {
+			isa = PBXGroup;
+			children = (
+				0A06977D2068974100FA11EB /* UsuarioDAO.swift */,
+			);
+			path = DAO;
+			sourceTree = "<group>";
+		};
+		0A855B44206C49BD001138DC /* Login e cadastro */ = {
+			isa = PBXGroup;
+			children = (
+				0A855B3C206C4919001138DC /* LoginController.swift */,
+				0A855B3E206C492A001138DC /* CadastroResponsavelController.swift */,
+				0A855B40206C497D001138DC /* CadastroCriancaController.swift */,
+			);
+			path = "Login e cadastro";
+			sourceTree = "<group>";
+		};
+		0A855B45206C49CD001138DC /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				0A855B36206C46AE001138DC /* BasicTextFieldCell.xib */,
+				0A855B3A206C48BD001138DC /* FotoPerfilCell.swift */,
+				0A855B38206C4842001138DC /* BasicTextFieldCell.swift */,
+			);
+			path = "Custom Views";
 			sourceTree = "<group>";
 		};
 		7B0A12BE0EB5F142296BDC01 /* Frameworks */ = {
@@ -299,6 +355,7 @@
 				0A0697522068335200FA11EB /* LaunchScreen.storyboard in Resources */,
 				0A069778206833DA00FA11EB /* GoogleService-Info.plist in Resources */,
 				0A06974F2068335200FA11EB /* Assets.xcassets in Resources */,
+				0A855B37206C46AE001138DC /* BasicTextFieldCell.xib in Resources */,
 				0A06974D2068335200FA11EB /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -492,8 +549,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A06974A2068335200FA11EB /* ViewController.swift in Sources */,
+				0A855B3F206C492A001138DC /* CadastroResponsavelController.swift in Sources */,
+				0A161FEB206EE37400A397E0 /* Crianca.swift in Sources */,
+				0A855B3B206C48BD001138DC /* FotoPerfilCell.swift in Sources */,
+				0A855B41206C497D001138DC /* CadastroCriancaController.swift in Sources */,
 				0A06977C2068593C00FA11EB /* FirestoreService.swift in Sources */,
+				0A161FED206EE4E000A397E0 /* Habilidade.swift in Sources */,
+				0A161FE9206EE25000A397E0 /* Responsavel.swift in Sources */,
+				0A855B39206C4842001138DC /* BasicTextFieldCell.swift in Sources */,
+				0A855B3D206C4919001138DC /* LoginController.swift in Sources */,
 				0A0697482068335200FA11EB /* AppDelegate.swift in Sources */,
 				0A06977A20683C1300FA11EB /* FirestoreObject.swift in Sources */,
 				0A0697762068336D00FA11EB /* Usuario.swift in Sources */,

@@ -10,8 +10,8 @@ import Foundation
 import FirebaseFirestore
 
 protocol FirestoreService {
-    func save()
-    func delete()
-    func toDictionary() -> Dictionary<String, Any>
-    func from(document: DocumentSnapshot)
+//    func save()
+//    func delete()
+//    func toDictionary() -> Dictionary<String, Any>
+//    func from(document: DocumentSnapshot)
 }

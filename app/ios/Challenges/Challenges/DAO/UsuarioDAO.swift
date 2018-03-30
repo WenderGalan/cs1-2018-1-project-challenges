@@ -24,17 +24,21 @@ class UsuarioDAO: NSObject {
             if let authUser = firUser {
                 let childRef = self.ref.document(authUser.uid)
                 childRef.getDocument(completion: { (snapshot, error) in
-                    let user = Usuario.sharedUser()
-                    if let usuario = user {
-                        if let snapshot = snapshot {
-                            usuario.from(document: snapshot)
-                            success(usuario)
+                    
+                    if let snapshot = snapshot {
+                        if (snapshot.data()!["tipo"] as! Int) == 0 {
+                            let user = Responsavel.sharedUser()
+                            if let usuario = user {
+                                usuario.from(document: snapshot)
+                                success(usuario)
+                            }
                         } else {
-                            failed(nil)
+                            
                         }
                     } else {
                         failed(nil)
                     }
+                    
                 })
             } else {
                 failed(errorLogin)
@@ -47,16 +51,19 @@ class UsuarioDAO: NSObject {
         Auth.auth().createUser(withEmail: usuario.email!, password: senha) { (firUser, errorCadastro) in
             
             if let authUser = firUser {
-                let dictionary = usuario.toDictionary()
+                usuario.objectId = authUser.uid
+                usuario.createUser()
+                success(true)
                 
-                self.ref.document(authUser.uid).setData(dictionary, completion: { (error) in
-                    if let error = error {
-                        failed(error)
-                    } else {
-                        success(true)
-                    }
-                })
-                
+//                let dictionary = usuario.toDictionary()
+//
+//                self.ref.document(authUser.uid).setData(dictionary, completion: { (error) in
+//                    if let error = error {
+//                        failed(error)
+//                    } else {
+//                        success(true)
+//                    }
+//                })
             } else {
                 failed(errorCadastro)
             }

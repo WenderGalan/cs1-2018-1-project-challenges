@@ -1,8 +1,8 @@
 //
-//  Usuario.swift
+//  Crianca.swift
 //  Challenges
 //
-//  Created by Rodolfo Roca on 3/25/18.
+//  Created by Rodolfo Roca on 3/30/18.
 //  Copyright © 2018 RocaCorp. All rights reserved.
 //
 
@@ -10,26 +10,22 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
-class Usuario: FirestoreObject, FirestoreService {
+class Crianca: Usuario {
 
-    var nome: String?
-    var email: String?
-    var tipo: NSNumber?
     var fotoURL: String?
-    var responsavel: DocumentReference?
-    var habilidade: DocumentReference?
-    var amigos: [DocumentReference]?
-    var criancas: [DocumentReference]?
+    var responsavel: Responsavel?
+    var habilidade: Habilidade?
+    var amigos: [Crianca]?
     var pontos: NSNumber?
     
-    private static var sharedInstance: Usuario? = {
+    private static var sharedInstance: Crianca? = {
         
         if let currentUser = Auth.auth().currentUser {
-            let sharedInstance = Usuario.init(objectId: currentUser.uid)
+            let sharedInstance = Crianca.init(objectId: currentUser.uid)
             return sharedInstance
         }
         
-        return Usuario.init()
+        return Crianca.init()
     }()
     
     private override init() {
@@ -41,7 +37,7 @@ class Usuario: FirestoreObject, FirestoreService {
         setReference()
     }
     
-    class func sharedUser() -> Usuario? {
+    class func sharedUser() -> Crianca? {
         return sharedInstance
     }
     
@@ -49,29 +45,7 @@ class Usuario: FirestoreObject, FirestoreService {
         ref = db.collection("Usuarios")
     }
     
-    func save() {
-        if ref == nil {
-            setReference()
-        }
-        
-        if objectId != nil {
-            ref!.document(objectId!).updateData(toDictionary())
-        } else {
-            ref!.addDocument(data: toDictionary())
-        }
-    }
-    
-    func delete() {
-        if ref == nil {
-            setReference()
-        }
-        
-        if let uid = objectId {
-            ref!.document(uid).delete()
-        }
-    }
-    
-    func toDictionary() -> Dictionary<String, Any> {
+    override func toDictionary() -> Dictionary<String, Any> {
         var data = [String : Any]()
         
         if let nome = nome {
@@ -80,10 +54,6 @@ class Usuario: FirestoreObject, FirestoreService {
         
         if let email = email {
             data["email"] = email
-        }
-        
-        if let tipo = tipo {
-            data["tipo"] = tipo
         }
         
         if let fotoURL = fotoURL {
@@ -102,18 +72,14 @@ class Usuario: FirestoreObject, FirestoreService {
             data["amigos"] = amigos
         }
         
-        if let criancas = criancas {
-            data["criancas"] = criancas
-        }
-        
         if let pontos = pontos {
             data["pontos"] = pontos
         }
-
+        
         return data
     }
     
-    func from(document: DocumentSnapshot) {
+    override func from(document: DocumentSnapshot) {
         guard let data = document.data() else {
             return
         }
@@ -126,33 +92,24 @@ class Usuario: FirestoreObject, FirestoreService {
             self.email = email
         }
         
-        if let tipo = data["tipo"] as? NSNumber {
-            self.tipo = tipo
-        }
-        
         if let fotoURL = data["fotoURL"] as? String {
             self.fotoURL = fotoURL
         }
         
-        if let responsavel = data["responsavel"] as? DocumentReference {
+        if let responsavel = data["responsavel"] as? Responsavel {
             self.responsavel = responsavel
         }
         
-        if let habilidade = data["habilidade"] as? DocumentReference {
+        if let habilidade = data["habilidade"] as? Habilidade {
             self.habilidade = habilidade
         }
         
-        if let amigos = data["amigos"] as? [DocumentReference] {
+        if let amigos = data["amigos"] as? [Crianca] {
             self.amigos = amigos
-        }
-        
-        if let criancas = data["criancas"] as? [DocumentReference] {
-            self.criancas = criancas
         }
         
         if let pontos = data["pontos"] as? NSNumber {
             self.pontos = pontos
         }
     }
-
 }
