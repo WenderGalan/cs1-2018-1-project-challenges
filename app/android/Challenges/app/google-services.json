@@ -40,6 +40,13 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
+              "client_id": "158526899286-o0g6r5ck3g45hkid1ne2bbd7nmfdbk1i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "br.com.RocaCorp.Challenges"
+              }
+            },
+            {
               "client_id": "158526899286-0mbplsvrgtfe9qo80jd276m3h4i3nkg3.apps.googleusercontent.com",
               "client_type": 3
             }

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="challenges.com.challenges.activities.CadastroCriancaActivity">
+
+    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbarCadastroCrianca"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center|center_horizontal|center_vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imagemPerfil"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="59dp"
+            android:background="@drawable/ic_camera" />
+
+        <EditText
+            android:id="@+id/editTextEmail"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/imagemPerfil"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
+            android:ems="10"
+            android:hint="Email ID"
+            android:inputType="textPersonName"
+            android:paddingLeft="15dp"
+            android:textColorHint="@android:color/darker_gray" />
+
+        <EditText
+            android:id="@+id/editTextNome"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/editTextEmail"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
+            android:ems="10"
+            android:hint="Nome"
+            android:inputType="textPersonName"
+            android:paddingLeft="15dp"
+            android:textColorHint="@android:color/darker_gray" />
+
+        <EditText
+            android:id="@+id/editTextSenha"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_alignStart="@+id/editTextNome"
+            android:layout_below="@+id/editTextNome"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
+            android:ems="10"
+            android:hint="Senha"
+            android:inputType="textPassword"
+            android:paddingLeft="15dp"
+            android:textColorHint="@android:color/darker_gray" />
+
+        <EditText
+            android:id="@+id/editTextConfirmarSenha"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_alignStart="@+id/editTextSenha"
+            android:layout_below="@+id/editTextSenha"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
+            android:ems="10"
+            android:hint="Confirmar Senha"
+            android:inputType="textPassword"
+            android:paddingLeft="15dp"
+            android:textColorHint="@android:color/darker_gray" />
+
+        <Button
+            android:id="@+id/buttonConcluir"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_alignStart="@+id/editTextConfirmarSenha"
+            android:layout_below="@+id/editTextConfirmarSenha"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/fundo_botao_branco"
+            android:text="Concluir"
+            android:textAllCaps="false"
+            android:textColor="@color/branco"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/buttonConcluir"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:onClick="cadastrarDepois"
+            android:text="Vou cadastrar depois"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
