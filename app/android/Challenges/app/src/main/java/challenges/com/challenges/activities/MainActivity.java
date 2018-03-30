@@ -19,9 +19,12 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import challenges.com.challenges.R;
@@ -60,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
                 Responsavel responsavel = documentSnapshot.toObject(Responsavel.class);
                 Log.i("DEBUG", "Nome: " + responsavel.getNome());
                 Log.i("DEBUG", "Email: " + responsavel.getEmail());
-                Log.i("DEBUG", "Foto: " + responsavel.getFoto());
                 Log.i("DEBUG", "Tipo: " + responsavel.getTipo());
                 Log.i("DEBUG", "Criança: " + responsavel.getCriancas().get(0));
             }
@@ -79,6 +81,20 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("DEBUG", "Pontos: " + crianca.getPontos());
                 Log.i("DEBUG", "Habilidade: " + crianca.getHabilidade());
 
+            }
+        });*/
+
+        /*CollectionReference ref = ConfiguracaoFirebase.getFirestore().collection("usuarios");
+        Query query = ref.whereEqualTo("tipo", 0);
+        query.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                List<Responsavel> responsavel = documentSnapshots.toObjects(Responsavel.class);
+                Log.i("DEBUG", "Nome: " + responsavel.get(0).getNome());
+                Log.i("DEBUG", "Email: " + responsavel.get(0).getEmail());
+
+                Log.i("DEBUG", "Nome: " + responsavel.get(1).getNome());
+                Log.i("DEBUG", "Email: " + responsavel.get(1).getEmail());
             }
         });*/
 

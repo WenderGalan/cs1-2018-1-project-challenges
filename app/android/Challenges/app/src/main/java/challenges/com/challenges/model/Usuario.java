@@ -23,7 +23,6 @@ public class Usuario implements Serializable{
     private String nome;
     private String email;
     private String senha;
-    private String foto;
 
     public Usuario() {
     }
@@ -60,24 +59,6 @@ public class Usuario implements Serializable{
 
     public void setSenha(String senha) {
         this.senha = senha;
-    }
-
-    public String getFoto() {
-        return foto;
-    }
-
-    public void setFoto(String foto) {
-        this.foto = foto;
-    }
-
-    public void salvar(){
-        /*CollectionReference referencia = ConfiguracaoFirebase.getFirestore().collection("Usuarios");
-        referencia.document(getId()).set(this).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                Log.i("DEBUG", "SALVO COM SUCESSO");
-            }
-        });*/
     }
 
 }

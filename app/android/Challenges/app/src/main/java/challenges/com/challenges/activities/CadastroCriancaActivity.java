@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -32,7 +32,6 @@ import java.util.Map;
 import challenges.com.challenges.R;
 import challenges.com.challenges.config.ConfiguracaoFirebase;
 import challenges.com.challenges.model.Crianca;
-import challenges.com.challenges.model.Responsavel;
 import challenges.com.challenges.util.Validator;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -49,7 +48,7 @@ public class CadastroCriancaActivity extends AppCompatActivity {
     private static final int GALLERY_INTENT = 2;
     private Uri imagemCarregada = null;
     private Crianca crianca;
-    private Responsavel responsavel;
+    private String responsavel;
     private String idUsuario;
     private ProgressDialog progressDialog;
 
@@ -58,8 +57,7 @@ public class CadastroCriancaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_crianca);
 
-        responsavel = (Responsavel) getIntent().getSerializableExtra("responsavel");
-
+        responsavel = getIntent().getStringExtra("responsavel");
 
         imagem = findViewById(R.id.imagemPerfil);
         email = findViewById(R.id.editTextEmail);
@@ -84,21 +82,20 @@ public class CadastroCriancaActivity extends AppCompatActivity {
         concluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (validarCampos()){
+                if (validarCampos()) {
                     crianca = new Crianca();
                     crianca.setNome(nome.getText().toString());
                     crianca.setSenha(senha.getText().toString());
                     crianca.setEmail(email.getText().toString());
                     crianca.setPontos(0);
                     //pega a referencia do pai
-                    DocumentReference responsavelReferencia = ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(responsavel.getId());
+                    DocumentReference responsavelReferencia = ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(responsavel);
                     crianca.setResponsavel(responsavelReferencia);
                     cadastrarCrianca();
                 }
             }
         });
     }
-
 
     private void cadastrarCrianca() {
         progressDialog = new ProgressDialog(CadastroCriancaActivity.this);
@@ -110,12 +107,12 @@ public class CadastroCriancaActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 //deu certo
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     Toast.makeText(CadastroCriancaActivity.this, "Criança inserida com sucesso", Toast.LENGTH_LONG).show();
                     //salvar no banco de dados
                     idUsuario = autenticacao.getCurrentUser().getUid();
                     crianca.setId(idUsuario);
-                    if (imagemCarregada != null){
+                    if (imagemCarregada != null) {
                         //inserir no Storage e salva no banco
                         StorageReference storageRef = ConfiguracaoFirebase.getStorage();
                         //Cada usuario tem uma pasta com seu UID e dentro tem duas pastas com sua foto de perfil e a foto de seus anuncios
@@ -131,54 +128,87 @@ public class CadastroCriancaActivity extends AppCompatActivity {
                                 //seta a foto no usuario
                                 crianca.setFoto(downloadUrl.toString());
                                 //insere no banco a crianca
-                                crianca.salvar();
+                                CollectionReference referencia = ConfiguracaoFirebase.getFirestore().collection("Usuarios");
+                                Map<String, Object> salvar = new HashMap<String, Object>();
+                                salvar.put("nome", crianca.getNome());
+                                salvar.put("email", crianca.getEmail());
+                                salvar.put("tipo", crianca.getTipo());
+                                salvar.put("foto", crianca.getFoto());
+                                salvar.put("pontos", crianca.getPontos());
+                                salvar.put("responsavel", crianca.getResponsavel());
+                                referencia.document(idUsuario).set(salvar).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        autenticacao.signOut();
+                                        //recupera a referencia da crianca inserida
+                                        DocumentReference referencia = ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(idUsuario);
+                                        //cria um vetor de criancas
+                                        ArrayList<DocumentReference> criancas = new ArrayList<>();
+                                        criancas.add(referencia);
+                                        //insere no responsavel as criancas
+                                        DocumentReference responsavelRef = ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(responsavel);
+                                        Map<String, Object> update = new HashMap<String, Object>();
+                                        update.put("criancas", criancas);
+                                        responsavelRef.update(update);
+                                    }
+                                });
                             }
                         });
 
                         autenticacao.signOut();
 
-                    }else{
-                        crianca.salvar();
+                    } else {
+                        //insere no banco a crianca
+                        CollectionReference referencia = ConfiguracaoFirebase.getFirestore().collection("Usuarios");
+                        Map<String, Object> salvar = new HashMap<String, Object>();
+                        salvar.put("nome", crianca.getNome());
+                        salvar.put("email", crianca.getEmail());
+                        salvar.put("tipo", crianca.getTipo());
+                        salvar.put("pontos", crianca.getPontos());
+                        salvar.put("responsavel", crianca.getResponsavel());
+                        referencia.document(idUsuario).set(salvar).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                autenticacao.signOut();
+                                //recupera a referencia da crianca inserida
+                                DocumentReference referencia = ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(idUsuario);
+                                //cria um vetor de criancas
+                                ArrayList<DocumentReference> criancas = new ArrayList<>();
+                                criancas.add(referencia);
+                                //insere no responsavel as criancas
+                                DocumentReference responsavelRef = ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(responsavel);
+                                Map<String, Object> update = new HashMap<String, Object>();
+                                update.put("criancas", criancas);
+                                responsavelRef.update(update);
+                            }
+                        });
+
                     }
-
-
-                    //recupera a referencia da crianca inserida
-                    DocumentReference referencia = ConfiguracaoFirebase.getFirestore().collection("usuarios").document(idUsuario);
-                    //cria um vetor de criancas
-                    ArrayList<DocumentReference> criancas = new ArrayList<>();
-                    criancas.add(referencia);
-                    //insere no responsavel as criancas
-                    DocumentReference responsavelRef = ConfiguracaoFirebase.getFirestore().collection("usuarios").document(responsavel.getId());
-                    Map<String, Object> update = new HashMap<String, Object>();
-                    update.put("criancas", criancas);
-                    responsavelRef.update(update);
 
                     progressDialog.dismiss();
                     abrirTelaPrincipal();
-                }else{//nao cadastrou
+                } else {//nao cadastrou
                     progressDialog.dismiss();
                     String erroExcecao = "";
                     try {
                         throw task.getException();
 
-                    }catch (FirebaseAuthWeakPasswordException e){
+                    } catch (FirebaseAuthWeakPasswordException e) {
                         erroExcecao = "Digite uma senha mais forte, contendo mais caracteres e com letras e números";
-                    }catch (FirebaseAuthInvalidCredentialsException e){
+                    } catch (FirebaseAuthInvalidCredentialsException e) {
                         erroExcecao = "O e-mail digitado é inválido, digite um novo e-mail";
                         email.setFocusable(true);
-                    }catch (FirebaseAuthUserCollisionException e){
+                    } catch (FirebaseAuthUserCollisionException e) {
                         erroExcecao = "Esse e-mail já esá em uso no APP!";
                         email.setFocusable(true);
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         erroExcecao = "Erro ao efetuar o cadastro!";
                         e.printStackTrace();
                     }
-                    Toast.makeText(CadastroCriancaActivity.this, "" + erroExcecao, Toast.LENGTH_LONG ).show();
+                    Toast.makeText(CadastroCriancaActivity.this, "" + erroExcecao, Toast.LENGTH_LONG).show();
                 }
             }
         });
-
-        autenticacao.signOut();
     }
 
     private void abrirTelaPrincipal() {
@@ -190,25 +220,25 @@ public class CadastroCriancaActivity extends AppCompatActivity {
     private boolean validarCampos() {
         Validator validator = new Validator();
         boolean retorno = true;
-        if (!validator.validateNotNull(email)){
+        if (!validator.validateNotNull(email)) {
             email.setError("Email vazio");
             email.setFocusable(true);
             email.requestFocus();
             retorno = false;
         }
-        if (!validator.validateNotNull(nome)){
+        if (!validator.validateNotNull(nome)) {
             nome.setError("Nome vazio");
             nome.setFocusable(true);
             nome.requestFocus();
             retorno = false;
         }
-        if (!validator.validateNotNull(senha)){
+        if (!validator.validateNotNull(senha)) {
             senha.setError("Senha vazia");
             senha.setFocusable(true);
             senha.requestFocus();
             retorno = false;
         }
-        if (!senha.getText().toString().equals(confirmarSenha.getText().toString())){
+        if (!senha.getText().toString().equals(confirmarSenha.getText().toString())) {
             confirmarSenha.setError("Senhas diferentes");
             confirmarSenha.setFocusable(true);
             confirmarSenha.requestFocus();
@@ -228,7 +258,7 @@ public class CadastroCriancaActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK){
+        if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK) {
             imagemCarregada = data.getData();
             imagem.setImageURI(imagemCarregada);
         }

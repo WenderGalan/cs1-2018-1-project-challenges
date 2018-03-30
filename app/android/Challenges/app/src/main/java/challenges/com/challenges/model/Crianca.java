@@ -18,6 +18,7 @@ public class Crianca extends Usuario implements Serializable{
     private DocumentReference responsavel;
     private int tipo = 1;
     private int pontos;
+    private String foto;
 
     public Crianca() {
     }
@@ -56,6 +57,14 @@ public class Crianca extends Usuario implements Serializable{
 
     public void setResponsavel(DocumentReference responsavel) {
         this.responsavel = responsavel;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 
     public void salvar(){

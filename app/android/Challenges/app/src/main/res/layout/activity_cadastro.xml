@@ -16,23 +16,13 @@
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imagemPerfilResponsavel"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="67dp"
-        android:background="@drawable/ic_camera"/>
-
-
     <EditText
         android:id="@+id/editTextEmail"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_alignStart="@+id/editTextNome"
-        android:layout_below="@+id/imagemPerfilResponsavel"
-        android:layout_marginTop="10dp"
+        android:layout_below="@+id/toolbarCadastro"
+        android:layout_marginTop="44dp"
         android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
         android:ems="10"
         android:hint="Email ID"
