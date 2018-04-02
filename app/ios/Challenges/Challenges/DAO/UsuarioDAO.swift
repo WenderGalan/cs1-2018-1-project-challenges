@@ -19,6 +19,11 @@ class UsuarioDAO: NSObject {
     
     
     func login(email: String, senha: String, success: @escaping (Usuario) -> (), failed:  @escaping (Error?) -> ()) {
+        do {
+            try Auth.auth().signOut()
+        } catch {
+            print("erro logout")
+        }
         
         Auth.auth().signIn(withEmail: email, password: senha) { (firUser, errorLogin) in
             if let authUser = firUser {
@@ -46,57 +51,76 @@ class UsuarioDAO: NSObject {
         }
     }
     
-    func cadastrarUsuario(usuario: Usuario, senha: String, success: @escaping (Bool) -> (), failed: @escaping (Error?) -> ()) {
+    func cadastrarResponsavel(responsavel: Responsavel, senha: String, success: @escaping (Bool) -> (), failed: @escaping (Error?) -> ()) {
         
-        Auth.auth().createUser(withEmail: usuario.email!, password: senha) { (firUser, errorCadastro) in
+        Auth.auth().createUser(withEmail: responsavel.email!, password: senha) { (firUser, errorCadastro) in
             
             if let authUser = firUser {
-                usuario.objectId = authUser.uid
-                usuario.createUser()
+                responsavel.objectId = authUser.uid
+                responsavel.createUser()
                 success(true)
-                
-//                let dictionary = usuario.toDictionary()
-//
-//                self.ref.document(authUser.uid).setData(dictionary, completion: { (error) in
-//                    if let error = error {
-//                        failed(error)
-//                    } else {
-//                        success(true)
-//                    }
-//                })
             } else {
                 failed(errorCadastro)
             }
         }
     }
     
-//    func salvarFotoPerfilUsuario(usuario: Usuario, image: UIImage, success: @escaping (Usuario) -> (), failed: @escaping (Error?) -> ()) {
-//        
-//        let storageRef = Storage.storage().reference(withPath: "imagens").child(String.init(format: "/%@/perfil.jpg", usuario.uid!))
-//        
-//        let imgData = UIImageJPEGRepresentation(image, 0.75)
-//        
-//        storageRef.putData(imgData!, metadata: nil) { (metadata, error) in
-//            if let e = error {
-//                failed(e)
-//            } else {
-//                if let data = metadata {
-//                    if let url = data.downloadURL() {
-//                        usuario.fotoURL = url.absoluteString
-//                        self.atualizarUsuario(usuario: usuario, success: { (_) in
-//                            success(usuario)
-//                        }, failed: { (errorUpdate) in
-//                            failed(errorUpdate)
-//                        })
-//                    } else {
-//                        failed(error)
-//                    }
-//                } else {
-//                    failed(error)
-//                }
-//            }
-//        }
-//    }
+    func cadastrarCrianca(crianca: Crianca, senha: String, foto: UIImage?, success: @escaping (Bool) -> (), failed: @escaping (Error?) -> ()) {
+        
+        do {
+            try Auth.auth().signOut()
+        } catch {
+            print("erro logout")
+        }
+        
+        Auth.auth().createUser(withEmail: crianca.email!, password: senha) { [unowned self] (firUser, errorCadastro) in
+            
+            if let authUser = firUser {
+                crianca.objectId = authUser.uid
+                crianca.createUser()
+                crianca.responsavel!.ref!.document(crianca.responsavel!.objectId!).collection("criancas").addDocument(data: ["0" : crianca.objectId])
+                if let foto = foto {
+                    self.salvarFotoPerfil(crianca: crianca, image: foto, success: { (criancaFoto) in
+                        crianca.fotoURL = criancaFoto.fotoURL
+                        success(true)
+                    }, failed: { (_) in
+                        success(true)
+                    })
+                }
+            } else {
+                print(errorCadastro?.localizedDescription)
+                failed(errorCadastro)
+            }
+        }
+    }
+    
+    private func salvarFotoPerfil(crianca: Crianca, image: UIImage, success: @escaping (Crianca) -> (), failed: @escaping (Error?) -> ()) {
+        
+        let storageRef = Storage.storage().reference(withPath: String.init(format: "/%@/perfil/fotoPerfil.jpg", crianca.objectId!))
+        
+        let imgData = UIImageJPEGRepresentation(image, 0.75)
+        
+        storageRef.putData(imgData!, metadata: nil) { (metadata, error) in
+            if let e = error {
+                failed(e)
+            } else {
+                if let data = metadata {
+                    if let url = data.downloadURL() {
+                        crianca.fotoURL = url.absoluteString
+                        crianca.saveInBackground(success: { (_) in
+                            success(crianca)
+                        }, failed: { (_) in
+                            success(crianca)
+                        })
+                    } else {
+                        failed(error)
+                    }
+                } else {
+                    failed(error)
+                }
+            }
+        }
+    }
     
 //    func checkEmailAlreadyExist(email: String, success: @escaping (Bool) -> (), failed: @escaping (Error?) -> ()) {
 //        let q = refUserUsernames.queryOrdered(byChild: "email").queryEqual(toValue: email.lowercased())

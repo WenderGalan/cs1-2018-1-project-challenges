@@ -21,6 +21,7 @@
 		0A161FE9206EE25000A397E0 /* Responsavel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A161FE8206EE25000A397E0 /* Responsavel.swift */; };
 		0A161FEB206EE37400A397E0 /* Crianca.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A161FEA206EE37400A397E0 /* Crianca.swift */; };
 		0A161FED206EE4E000A397E0 /* Habilidade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A161FEC206EE4E000A397E0 /* Habilidade.swift */; };
+		0A695A6A206FDF5100DED428 /* FotoPerfilCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A695A69206FDF5100DED428 /* FotoPerfilCell.xib */; };
 		0A855B37206C46AE001138DC /* BasicTextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A855B36206C46AE001138DC /* BasicTextFieldCell.xib */; };
 		0A855B39206C4842001138DC /* BasicTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A855B38206C4842001138DC /* BasicTextFieldCell.swift */; };
 		0A855B3B206C48BD001138DC /* FotoPerfilCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A855B3A206C48BD001138DC /* FotoPerfilCell.swift */; };
@@ -70,6 +71,7 @@
 		0A161FE8206EE25000A397E0 /* Responsavel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Responsavel.swift; sourceTree = "<group>"; };
 		0A161FEA206EE37400A397E0 /* Crianca.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crianca.swift; sourceTree = "<group>"; };
 		0A161FEC206EE4E000A397E0 /* Habilidade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habilidade.swift; sourceTree = "<group>"; };
+		0A695A69206FDF5100DED428 /* FotoPerfilCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FotoPerfilCell.xib; sourceTree = "<group>"; };
 		0A855B36206C46AE001138DC /* BasicTextFieldCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BasicTextFieldCell.xib; sourceTree = "<group>"; };
 		0A855B38206C4842001138DC /* BasicTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTextFieldCell.swift; sourceTree = "<group>"; };
 		0A855B3A206C48BD001138DC /* FotoPerfilCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FotoPerfilCell.swift; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 		0A855B45206C49CD001138DC /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
+				0A695A69206FDF5100DED428 /* FotoPerfilCell.xib */,
 				0A855B36206C46AE001138DC /* BasicTextFieldCell.xib */,
 				0A855B3A206C48BD001138DC /* FotoPerfilCell.swift */,
 				0A855B38206C4842001138DC /* BasicTextFieldCell.swift */,
@@ -353,6 +356,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A0697522068335200FA11EB /* LaunchScreen.storyboard in Resources */,
+				0A695A6A206FDF5100DED428 /* FotoPerfilCell.xib in Resources */,
 				0A069778206833DA00FA11EB /* GoogleService-Info.plist in Resources */,
 				0A06974F2068335200FA11EB /* Assets.xcassets in Resources */,
 				0A855B37206C46AE001138DC /* BasicTextFieldCell.xib in Resources */,

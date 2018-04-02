@@ -23,4 +23,8 @@ class Usuario: FirestoreObject {
             ref.document(uid).setData(toDictionary())
         }
     }
+    
+    func logOut() {
+        
+    }
 }

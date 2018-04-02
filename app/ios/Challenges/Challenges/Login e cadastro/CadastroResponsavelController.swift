@@ -115,7 +115,7 @@ class CadastroResponsavelController: UIViewController, UITableViewDelegate, UITa
             if editandoCadastro {
                 
             } else {                
-                UsuarioDAO.sharedInstance.cadastrarUsuario(usuario: user!, senha: senha!, success: { [unowned self] (_)  in
+                UsuarioDAO.sharedInstance.cadastrarResponsavel(responsavel: user!, senha: senha!, success: { [unowned self] (_)  in
                     self.performSegue(withIdentifier: "SegueCadastroCrianca", sender: self)
                 }) { (_) in
                     print("deu erro")
@@ -138,7 +138,8 @@ class CadastroResponsavelController: UIViewController, UITableViewDelegate, UITa
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == "SegueCadastroCrianca" {
-            
+            let cc = segue.destination as! CadastroCriancaController
+            cc.user = user
         }
     }
     

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hSA-HV-sbj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hSA-HV-sbj">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -123,6 +123,7 @@
                         <outlet property="emailField" destination="7C7-as-tA7" id="QFM-K1-05l"/>
                         <outlet property="senhaField" destination="qQT-Pf-D6k" id="EtP-Fb-7EE"/>
                         <segue destination="f0D-Y9-a6U" kind="show" identifier="SegueCadastroResponsavel" id="JPN-rs-5e7"/>
+                        <segue destination="5oK-pr-xNX" kind="show" identifier="SegueCadastroCrianca" id="4K9-Dk-bd2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -260,4 +261,7 @@
     <resources>
         <image name="challengesLogo" width="270" height="55"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="4K9-Dk-bd2"/>
+    </inferredMetricsTieBreakers>
 </document>

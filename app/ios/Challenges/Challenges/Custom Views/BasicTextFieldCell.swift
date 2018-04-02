@@ -12,10 +12,8 @@ class BasicTextFieldCell: UITableViewCell {
 
     static let kCellBasicTextFieldID = "CellTextfield"
 
-    
     @IBOutlet weak var textField: UITextField!
-    
-    
+        
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
