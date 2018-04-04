@@ -19,7 +19,8 @@
         <activity android:name=".activities.CadastroActivity" />
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.CadastroCriancaActivity" />
-        <activity android:name=".activities.MainActivity"></activity>
+        <activity android:name=".activities.HomeCriancaActivity" />
+        <activity android:name=".activities.HomeResponsavelActivity"></activity>
     </application>
 
 </manifest>
