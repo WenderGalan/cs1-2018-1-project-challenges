@@ -129,14 +129,7 @@ public class CadastroCriancaActivity extends AppCompatActivity {
                                 crianca.setFoto(downloadUrl.toString());
                                 //insere no banco a crianca
                                 CollectionReference referencia = ConfiguracaoFirebase.getFirestore().collection("Usuarios");
-                                Map<String, Object> salvar = new HashMap<String, Object>();
-                                salvar.put("nome", crianca.getNome());
-                                salvar.put("email", crianca.getEmail());
-                                salvar.put("tipo", crianca.getTipo());
-                                salvar.put("foto", crianca.getFoto());
-                                salvar.put("pontos", crianca.getPontos());
-                                salvar.put("responsavel", crianca.getResponsavel());
-                                referencia.document(idUsuario).set(salvar).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                referencia.document(idUsuario).set(crianca.construirHash()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         autenticacao.signOut();
@@ -160,13 +153,7 @@ public class CadastroCriancaActivity extends AppCompatActivity {
                     } else {
                         //insere no banco a crianca
                         CollectionReference referencia = ConfiguracaoFirebase.getFirestore().collection("Usuarios");
-                        Map<String, Object> salvar = new HashMap<String, Object>();
-                        salvar.put("nome", crianca.getNome());
-                        salvar.put("email", crianca.getEmail());
-                        salvar.put("tipo", crianca.getTipo());
-                        salvar.put("pontos", crianca.getPontos());
-                        salvar.put("responsavel", crianca.getResponsavel());
-                        referencia.document(idUsuario).set(salvar).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        referencia.document(idUsuario).set(crianca.construirHash()).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 autenticacao.signOut();

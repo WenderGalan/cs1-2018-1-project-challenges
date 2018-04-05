@@ -102,11 +102,7 @@ public class CadastroActivity extends AppCompatActivity {
                     responsavel.setId(idUsuario);
 
                     CollectionReference referencia = ConfiguracaoFirebase.getFirestore().collection("Usuarios");
-                    Map<String, Object> salvar = new HashMap<String, Object>();
-                    salvar.put("nome", responsavel.getNome());
-                    salvar.put("email", responsavel.getEmail());
-                    salvar.put("tipo", responsavel.getTipo());
-                    referencia.document(idUsuario).set(salvar).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    referencia.document(idUsuario).set(responsavel.construirHash()).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             Log.i("DEBUG", "SALVO COM SUCESSO");
