@@ -44,6 +44,30 @@ class FirestoreObject: NSObject {
         }
     }
     
+    func saveInBackground(success: @escaping (Bool) -> (), failed: @escaping (Error?) -> ())  {
+        guard let ref = ref else {
+            return
+        }
+        
+        if objectId != nil {
+            ref.document(objectId!).setData(toDictionary()) { (error) in
+                if let erro = error {
+                    failed(erro)
+                } else {
+                    success(true)
+                }
+            }
+        } else {
+            ref.addDocument(data: toDictionary()) { (error) in
+                if let erro = error {
+                    failed(erro)
+                } else {
+                    success(true)
+                }
+            }
+        }
+    }
+    
     func delete() {
         guard let ref = ref else {
             return

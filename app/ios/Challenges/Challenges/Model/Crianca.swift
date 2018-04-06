@@ -18,14 +18,15 @@ class Crianca: Usuario {
     var amigos: [Crianca]?
     var pontos: NSNumber?
     
-    private static var sharedInstance: Crianca? = {
+    static var sharedInstance: Crianca? = {
         
         if let currentUser = Auth.auth().currentUser {
             let sharedInstance = Crianca.init(objectId: currentUser.uid)
             return sharedInstance
         }
         
-        return Crianca.init()
+        let sharedInstance = Crianca.init()
+        return sharedInstance
     }()
     
     private override init() {
@@ -37,9 +38,9 @@ class Crianca: Usuario {
         setReference()
     }
     
-    class func sharedUser() -> Crianca? {
-        return sharedInstance
-    }
+//    class func sharedInstance() -> Crianca? {
+//        return sharedInstance
+//    }
     
     func setReference() {
         ref = db.collection("Usuarios")
@@ -61,20 +62,19 @@ class Crianca: Usuario {
         }
         
         if let responsavel = responsavel {
-            data["responsavel"] = responsavel
+            data["responsavel"] = ref!.document(responsavel.objectId!)
         }
         
         if let habilidade = habilidade {
             data["habilidade"] = habilidade
         }
         
-        if let amigos = amigos {
-            data["amigos"] = amigos
-        }
-        
         if let pontos = pontos {
             data["pontos"] = pontos
         }
+        
+        data["tipo"] = NSNumber(integerLiteral: 1)
+
         
         return data
     }
@@ -104,12 +104,12 @@ class Crianca: Usuario {
             self.habilidade = habilidade
         }
         
-        if let amigos = data["amigos"] as? [Crianca] {
-            self.amigos = amigos
-        }
-        
         if let pontos = data["pontos"] as? NSNumber {
             self.pontos = pontos
+        }
+        
+        if let tipo = data["tipo"] as? NSNumber {
+            self.tipo = tipo
         }
     }
 }

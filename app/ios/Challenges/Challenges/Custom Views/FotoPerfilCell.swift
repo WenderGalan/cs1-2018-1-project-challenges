@@ -9,7 +9,10 @@
 import UIKit
 
 class FotoPerfilCell: UITableViewCell {
+    static let kCellBasicTextFieldID = "CellAddFoto"
 
+    @IBOutlet weak var fotoPerfilImageView: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -21,4 +24,7 @@ class FotoPerfilCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+    class func defaultIdentifier() -> String {
+        return kCellBasicTextFieldID
+    }
 }

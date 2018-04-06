@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import MobileCoreServices
 
-class CadastroCriancaController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+
+class CadastroCriancaController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -16,6 +18,7 @@ class CadastroCriancaController: UIViewController, UITableViewDelegate, UITableV
     var senhaResponsavel: String!
     
     var crianca: Crianca?
+    var foto: UIImage?
     var senha: String?
     var confirmaSenha: String?
     
@@ -42,6 +45,7 @@ class CadastroCriancaController: UIViewController, UITableViewDelegate, UITableV
         tableView.estimatedRowHeight = 44
         tableView.tableFooterView = UIView.init(frame: .zero)
         
+        tableView.register(UINib.init(nibName: "FotoPerfilCell", bundle: nil), forCellReuseIdentifier: FotoPerfilCell.defaultIdentifier())
         tableView.register(UINib.init(nibName: "BasicTextFieldCell", bundle: nil), forCellReuseIdentifier: BasicTextFieldCell.defaultIdentifier())
     }
     
@@ -55,56 +59,77 @@ class CadastroCriancaController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: BasicTextFieldCell.defaultIdentifier(), for: indexPath) as! BasicTextFieldCell
-        cell.textField.delegate = self
-        
-        
-        switch indexPath.row {
-        case 0:
-            break
-        case 1:
-            cell.textField.placeholder = "Nome completo"
-            break
-        case 2:
-            cell.textField.placeholder = "E-mail"
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: FotoPerfilCell.defaultIdentifier(), for: indexPath) as! FotoPerfilCell
             
-            break
-        case 3:
-            cell.textField.placeholder = "Senha"
+            if let foto = foto {
+                cell.fotoPerfilImageView.image = foto
+            } else {
+                cell.fotoPerfilImageView.image = #imageLiteral(resourceName: "addPhoto")
+            }
             
-            break
-        case 4:
-            cell.textField.placeholder = "Confirme a senha"
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: BasicTextFieldCell.defaultIdentifier(), for: indexPath) as! BasicTextFieldCell
+            cell.textField.delegate = self
             
-            break
-        default:
-            break
+            switch indexPath.row {
+            
+            case 1:
+                cell.textField.placeholder = "Nome completo"
+                break
+            case 2:
+                cell.textField.placeholder = "E-mail"
+                
+                break
+            case 3:
+                cell.textField.placeholder = "Senha"
+                
+                break
+            case 4:
+                cell.textField.placeholder = "Confirme a senha"
+                
+                break
+            default:
+                break
+            }
+            
+            return cell
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         
-        return cell
+        if indexPath.row == 0 {
+            adicionarFotoTapped()
+        } else {
+            let cell = tableView.cellForRow(at: indexPath) as! BasicTextFieldCell
+            cell.textField.becomeFirstResponder()
+        }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if user == nil {
-            user = Responsavel.sharedUser()
+        if crianca == nil {
+            crianca = Crianca.sharedInstance
         }
         
         let cell = textField.superview?.superview as! UITableViewCell
         let indexPath = tableView.indexPath(for: cell)
         
         switch indexPath!.row {
-        case 0:
-            user?.nome = textField.text
-            break
         case 1:
-            user?.email = textField.text
-            
+            crianca?.nome = textField.text
             break
         case 2:
-            senha = textField.text
+            crianca?.email = textField.text
             
             break
         case 3:
+            senha = textField.text
+            
+            break
+        case 4:
             confirmaSenha = textField.text
             
             break
@@ -113,17 +138,73 @@ class CadastroCriancaController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
+    // MARK: - Camera Action
+    func adicionarFotoTapped() {
+        
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.allowsEditing = true
+        imagePickerController.mediaTypes = [kUTTypeImage as String]
+        
+        let alert = UIAlertController.init(title: "Selecione uma opção", message: "", preferredStyle: .actionSheet)
+        let cameraAction = UIAlertAction.init(title: "Câmera", style: .default) { (_) in
+            imagePickerController.sourceType = .camera
+            self.present(imagePickerController, animated: true, completion: nil)
+        }
+        
+        let photoLibraryAction = UIAlertAction.init(title: "Biblioteca de fotos", style: .default) { (_) in
+            imagePickerController.sourceType = .photoLibrary
+            self.present(imagePickerController, animated: true, completion: nil)
+        }
+        
+        let cancelAction = UIAlertAction.init(title: "Cancelar", style: .cancel, handler: nil)
+        
+        alert.addAction(cameraAction)
+        alert.addAction(photoLibraryAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    // MARK: - ImagePicker Delegates
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        let image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        dismiss(animated:true, completion: nil)
+        if let img = image {
+            foto = img
+            tableView.reloadData()
+        }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     @IBAction func concluirButtonTapped(_ sender: UIButton) {
         view.endEditing(true)
         
         if validarDados() {
+            guard let crianca = crianca else {
+                return
+            }
+            
             if editandoCadastro {
                 
             } else {
-                UsuarioDAO.sharedInstance.cadastrarUsuario(usuario: user!, senha: senha!, success: { [unowned self] (_)  in
-                    self.performSegue(withIdentifier: "SegueCadastroCrianca", sender: self)
+                crianca.responsavel = user
+                UsuarioDAO.sharedInstance.cadastrarCrianca(crianca: crianca, senha: senha!, foto: foto, success: { [unowned self] (_) in
+                    if let c = self.crianca {
+                        self.user.criancas?.append(c)
+                        self.user.save()
+                    }
+                    UsuarioDAO.sharedInstance.login(email: self.user.email!, senha: self.senhaResponsavel, success: { (_) in
+                        print("deu certo")
+                    }, failed: { (error) in
+                        print("deu errado")
+                    })
                 }) { (_) in
-                    print("deu erro")
+                    
                 }
             }
             

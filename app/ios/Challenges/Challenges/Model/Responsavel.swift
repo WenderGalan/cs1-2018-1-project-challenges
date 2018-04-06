@@ -12,7 +12,7 @@ import FirebaseFirestore
 import FirebaseAuth
 
 class Responsavel: Usuario {
-    var criancas: [DocumentReference]?
+    var criancas: [Crianca]?
     
     private static var sharedInstance: Responsavel? = {
         
@@ -75,10 +75,6 @@ class Responsavel: Usuario {
             data["email"] = email
         }
         
-        if let criancas = criancas {
-            data["criancas"] = criancas
-        }
-        
         data["tipo"] = NSNumber(integerLiteral: 0)
         
         return data
@@ -95,10 +91,6 @@ class Responsavel: Usuario {
         
         if let email = data["email"] as? String {
             self.email = email
-        }
-        
-        if let criancas = data["criancas"] as? [DocumentReference] {
-            self.criancas = criancas
         }
         
         if let tipo = data["tipo"] as? NSNumber {
