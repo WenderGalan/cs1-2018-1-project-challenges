@@ -22,8 +22,7 @@
         <activity android:name=".activities.HomeCriancaActivity" />
         <activity android:name=".activities.HomeResponsavelActivity" />
         <activity android:name=".activities.ConfiguracoesResponsavelActivity" />
-        <activity android:name=".activities.AdicionarDesafioActivity" />
-        <activity android:name=".activities.AdicionarCriancaActivity"></activity>
+        <activity android:name=".activities.CadastrarDesafioActivity" />
     </application>
 
 </manifest>

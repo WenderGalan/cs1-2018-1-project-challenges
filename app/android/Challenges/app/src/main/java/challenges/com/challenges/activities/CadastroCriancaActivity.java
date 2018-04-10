@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -42,6 +43,7 @@ public class CadastroCriancaActivity extends AppCompatActivity {
     private EditText nome;
     private EditText senha;
     private EditText confirmarSenha;
+    private TextView cadastrarDepois;
     private Button concluir;
     private FirebaseAuth autenticacao;
     private CircleImageView imagem;
@@ -49,8 +51,10 @@ public class CadastroCriancaActivity extends AppCompatActivity {
     private Uri imagemCarregada = null;
     private Crianca crianca;
     private String responsavel;
+    private String segundoCadastro;
     private String idUsuario;
     private ProgressDialog progressDialog;
+    private boolean tipoDeConclusao = true; //true significa o fluxo normal, false é o fluxo de dentro do app
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +62,10 @@ public class CadastroCriancaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro_crianca);
 
         responsavel = getIntent().getStringExtra("responsavel");
+        segundoCadastro = getIntent().getStringExtra("segundoCadastro");
 
+
+        cadastrarDepois = findViewById(R.id.textViewCadastrarDepois);
         imagem = findViewById(R.id.imagemPerfil);
         email = findViewById(R.id.editTextEmail);
         nome = findViewById(R.id.editTextNome);
@@ -68,6 +75,20 @@ public class CadastroCriancaActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbarCadastroCrianca);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Cadastre uma criança");
+
+        if(segundoCadastro.equals("verdade")){
+            cadastrarDepois.setVisibility(View.INVISIBLE);
+            tipoDeConclusao = false;
+        }
+
+        cadastrarDepois.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CadastroCriancaActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         imagem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,6 +154,13 @@ public class CadastroCriancaActivity extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         autenticacao.signOut();
+                                        /**
+                                         *
+                                         * TEM QUE RECUPERAR AQUI O RESPONSAVEL
+                                         * INTEITO E ATUALIZAR APENAS AS CRIANCAS DELE
+                                         *
+                                         *
+                                         * **/
                                         //recupera a referencia da crianca inserida
                                         DocumentReference referencia = ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(idUsuario);
                                         //cria um vetor de criancas
@@ -173,7 +201,13 @@ public class CadastroCriancaActivity extends AppCompatActivity {
                     }
 
                     progressDialog.dismiss();
-                    abrirTelaPrincipal();
+                    if (tipoDeConclusao == true){
+                        abrirTelaPrincipal();
+                    }else{
+                        finish();
+                    }
+
+
                 } else {//nao cadastrou
                     progressDialog.dismiss();
                     String erroExcecao = "";
@@ -232,13 +266,6 @@ public class CadastroCriancaActivity extends AppCompatActivity {
             retorno = false;
         }
         return retorno;
-    }
-
-
-    public void cadastrarDepois(View view) {
-        Intent intent = new Intent(CadastroCriancaActivity.this, LoginActivity.class);
-        startActivity(intent);
-        finish();
     }
 
     @Override

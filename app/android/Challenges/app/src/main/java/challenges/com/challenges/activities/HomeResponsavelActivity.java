@@ -37,6 +37,7 @@ public class HomeResponsavelActivity extends AppCompatActivity {
     private Responsavel responsavel;
     private ArrayList<DocumentReference> criancas;
     private ArrayList<Crianca> criancasObject;
+    private CriancaAdapter adapter;
 
 
     private FirebaseAuth autenticacao;
@@ -56,6 +57,14 @@ public class HomeResponsavelActivity extends AppCompatActivity {
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         usuarioUID = autenticacao.getCurrentUser().getUid();
         usuario = ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(usuarioUID);
+        criancasObject = new ArrayList<>();
+
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(HomeResponsavelActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new CriancaAdapter(criancasObject);
+
+        recyclerView.setAdapter(adapter);
 
         //recupera o usuario
         ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(usuarioUID).get().addOnSuccessListener(HomeResponsavelActivity.this, new OnSuccessListener<DocumentSnapshot>() {
@@ -73,22 +82,12 @@ public class HomeResponsavelActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                 Crianca crianca = documentSnapshot.toObject(Crianca.class);
-                                criancasObject = new ArrayList<>();
                                 criancasObject.add(crianca);
+                                adapter.notifyDataSetChanged();
                             }
                         });
                     }
-
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(HomeResponsavelActivity.this);
-                    layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-                    recyclerView.setLayoutManager(layoutManager);
-
-
-                    //recyclerView.setAdapter(new CriancaAdapter(getApplicationContext(), 0, criancasObject));
-
-
                 }
-
             }
         });
 
@@ -116,15 +115,19 @@ public class HomeResponsavelActivity extends AppCompatActivity {
 
 
 
+
+
     }
 
     private void abrirAdicionarDesafio() {
-        Intent intent = new Intent(HomeResponsavelActivity.this, AdicionarDesafioActivity.class);
+        Intent intent = new Intent(HomeResponsavelActivity.this, CadastrarDesafioActivity.class);
         startActivity(intent);
     }
 
     private void abrirAdicionarCrianca() {
-        Intent intent = new Intent(HomeResponsavelActivity.this, AdicionarCriancaActivity.class);
+        Intent intent = new Intent(HomeResponsavelActivity.this, CadastroCriancaActivity.class);
+        intent.putExtra("responsavel", usuarioUID);
+        intent.putExtra("segundoCadastro", "verdade");
         startActivity(intent);
     }
 
