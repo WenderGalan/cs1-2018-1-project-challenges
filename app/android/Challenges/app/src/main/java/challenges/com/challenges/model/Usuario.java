@@ -23,6 +23,7 @@ public class Usuario implements Serializable{
     private String nome;
     private String email;
     private String senha;
+    private int tipo;
 
     public Usuario() {
     }
@@ -61,4 +62,7 @@ public class Usuario implements Serializable{
         this.senha = senha;
     }
 
+    public int getTipo() {
+        return tipo;
+    }
 }

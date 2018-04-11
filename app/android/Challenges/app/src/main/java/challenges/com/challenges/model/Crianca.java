@@ -5,16 +5,19 @@ import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Crianca extends Usuario implements Serializable{
 
     private DocumentReference habilidade;
-    private ArrayList<DocumentReference> amigos;
+    private CollectionReference amigos;
     private DocumentReference responsavel;
     private int tipo = 1;
     private int pontos;
@@ -35,11 +38,11 @@ public class Crianca extends Usuario implements Serializable{
         this.habilidade = habilidade;
     }
 
-    public ArrayList<DocumentReference> getAmigos() {
+    public CollectionReference getAmigos() {
         return amigos;
     }
 
-    public void setAmigos(ArrayList<DocumentReference> amigos) {
+    public void setAmigos(CollectionReference amigos) {
         this.amigos = amigos;
     }
 
@@ -67,17 +70,22 @@ public class Crianca extends Usuario implements Serializable{
         this.foto = foto;
     }
 
-    public void salvar(){
-        DocumentReference responsavel = FirebaseFirestore.getInstance().collection("usuarios").document(getId());
-        responsavel.set(this).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
-                    Log.i("DEBUG", "Criança salva com sucesso!");
-                }
-            }
-        });
+    public Map construirHash(){
+        Map<String, Object> hashMap = new HashMap<String, Object>();
+
+        //seta o tipo do usuario
+        hashMap.put("tipo", getTipo());
+        if (getNome() != null) hashMap.put("nome", getNome());
+        if (getEmail() != null) hashMap.put("email", getEmail());
+        if (getFoto() != null) hashMap.put("foto", getFoto());
+        if (getPontos() != 0) hashMap.put("pontos", getPontos());
+        if (getResponsavel() != null) hashMap.put("responsavel", getResponsavel());
+        if (getHabilidade() != null) hashMap.put("habilidade", getHabilidade());
+        if (getAmigos() != null) hashMap.put("amigos", getAmigos());
+
+        return hashMap;
     }
+
 
 
 }
