@@ -1,53 +1,69 @@
 package challenges.com.challenges.activities;
 
-import android.content.Intent;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import android.app.FragmentManager;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-
-import com.google.firebase.auth.FirebaseAuth;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import challenges.com.challenges.R;
-import challenges.com.challenges.adapter.TabsAdapter;
-import challenges.com.challenges.config.ConfiguracaoFirebase;
-import challenges.com.challenges.helper.SlidingTabLayout;
+import challenges.com.challenges.fragments.HomeFragment;
+import challenges.com.challenges.fragments.PerfilCriancaFragment;
 
 public class HomeCriancaActivity extends AppCompatActivity {
 
-    private Button sair;
+    private boolean fragmentHome = true;
+    private boolean fragmentPerfil = false;
 
-    private SlidingTabLayout slidingTabLayout;
-    private ViewPager viewPager;
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    if (!fragmentHome) {
+                        HomeFragment homeFragment = new HomeFragment();
+                        fragmentTransaction.replace(R.id.rl_id_container_fragment, homeFragment);
+                        fragmentTransaction.commit();
+                        fragmentHome = true;
+                        fragmentPerfil = false;
+                    }
+                    return true;
+
+                case R.id.navigation_notifications:
+                    if (!fragmentPerfil) {
+                        PerfilCriancaFragment perfilCriancaFragment = new PerfilCriancaFragment();
+                        fragmentTransaction.replace(R.id.rl_id_container_fragment, perfilCriancaFragment);
+                        fragmentTransaction.commit();
+                        fragmentHome = false;
+                        fragmentPerfil = true;
+                    }
+                    return true;
+            }
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_crianca);
+        setContentView(R.layout.activity_crianca);
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        slidingTabLayout = findViewById(R.id.sliding_tab_crianca);
-        viewPager = findViewById(R.id.view_pager_crianca);
+        HomeFragment homeFragment = new HomeFragment();
+        fragmentTransaction.replace(R.id.rl_id_container_fragment, homeFragment);
+        fragmentTransaction.commit();
 
-
-        sair = findViewById(R.id.button2);
-        sair.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //desloga o usuario e volta para a tela incial de Login
-                FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-                autenticacao.signOut();
-                Intent intent = new Intent(HomeCriancaActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        //configurar o adapter da navegacao
-        TabsAdapter tabsAdapter = new TabsAdapter(getSupportFragmentManager(), this);
-
-
-
-
+        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
+
 }

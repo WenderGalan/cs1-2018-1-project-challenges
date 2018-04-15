@@ -19,11 +19,15 @@
         <activity android:name=".activities.CadastroActivity" />
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.CadastroCriancaActivity" />
-        <activity android:name=".activities.HomeCriancaActivity" />
+        <activity android:name=".activities.AntigaHome" />
         <activity android:name=".activities.HomeResponsavelActivity" />
         <activity android:name=".activities.ConfiguracoesResponsavelActivity" />
         <activity android:name=".activities.AdicionarDesafioActivity" />
-        <activity android:name=".activities.AdicionarCriancaActivity"></activity>
+        <activity android:name=".activities.AdicionarCriancaActivity" />
+        <activity
+            android:name=".activities.HomeCriancaActivity"
+            android:label="@string/title_activity_main2" />
+        <activity android:name=".activities.AdicionarAmigoActivity"></activity>
     </application>
 
 </manifest>

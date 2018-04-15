@@ -45,7 +45,7 @@ public class CriancaAdapter extends ArrayAdapter<Crianca> {
             Crianca crianca = criancas.get(position);
             if (crianca != null){
                 if (crianca.getFoto() != null){
-                    Picasso.with(getContext()).load(crianca.getFoto()).into(imagem);
+                    Picasso.get().load(crianca.getFoto()).into(imagem);
                 }
                 nome.setText(crianca.getNome());
             }
