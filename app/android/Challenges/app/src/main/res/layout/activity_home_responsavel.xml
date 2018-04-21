@@ -9,33 +9,47 @@
 
     <TextView
         android:id="@+id/textViewNomeResponsavel"
-        android:layout_width="315dp"
-        android:layout_height="wrap_content"
+        android:layout_width="115dp"
+        android:layout_height="80dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
+        android:autoText="false"
         android:text="RESPONSÁVEL"
         android:textColor="@color/fonte"
-        android:textSize="29sp" />
+        android:textSize="29sp"
+        app:autoSizeTextType="uniform" />
 
     <ImageView
         android:id="@+id/imageViewConfiguracoes"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
         android:layout_alignEnd="@+id/divider"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="50dp"
         app:srcCompat="@drawable/settings_ic" />
 
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/textViewNomeResponsavel"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="93dp"
+        android:background="@android:color/darker_gray" />
+
+    <View
+        android:id="@+id/divider6"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="215dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:background="@android:color/darker_gray" />
 
     <TextView
@@ -44,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/textViewNomeResponsavel"
-        android:layout_marginTop="65dp"
+        android:layout_marginTop="121dp"
         android:text="CRIANÇAS"
         android:textColor="@color/fonte"
         android:textSize="29dp" />
@@ -57,15 +71,15 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="120dp" />
+        android:layout_marginTop="180dp" />
 
     <TextView
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/textViewNomeResponsavel"
-        android:layout_marginTop="225dp"
+        android:layout_marginBottom="229dp"
         android:text="DESAFIOS"
         android:textColor="@color/fonte"
         android:textSize="29dp" />
@@ -75,18 +89,15 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignBottom="@+id/textView5"
-        android:layout_marginRight="20dp"
-        android:layout_toEndOf="@+id/textViewNomeResponsavel"
+        android:layout_alignStart="@+id/imageViewConfiguracoes"
         app:srcCompat="@drawable/ic_plus" />
 
     <ImageView
         android:id="@+id/imageViewAddDesafio"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_alignBottom="@id/textView7"
-        android:layout_marginBottom="5dp"
-        android:layout_marginRight="20dp"
-        android:layout_toEndOf="@+id/textViewNomeResponsavel"
+        android:layout_alignBottom="@+id/textView7"
+        android:layout_alignEnd="@+id/imageViewConfiguracoes"
         app:srcCompat="@drawable/ic_plus" />
 
     <GridView
@@ -98,7 +109,16 @@
         android:layout_below="@id/imageViewAddDesafio"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="30dp" />
+
+    <ImageView
+        android:id="@+id/imageViewNotificacoes"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignEnd="@+id/imageViewConfiguracoes"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="13dp"
+        app:srcCompat="@drawable/ic_notifications_active" />
 
 
 </RelativeLayout>

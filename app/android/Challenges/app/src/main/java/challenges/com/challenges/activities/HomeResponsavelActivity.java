@@ -29,6 +29,7 @@ public class HomeResponsavelActivity extends AppCompatActivity {
     private TextView nome;
     private ImageView adicionarCrianca;
     private ImageView adicionarDesafio;
+    private ImageView verNotificacoes;
     private RecyclerView recyclerView;
     private GridView gridView;
 
@@ -53,6 +54,7 @@ public class HomeResponsavelActivity extends AppCompatActivity {
         adicionarDesafio = findViewById(R.id.imageViewAddDesafio);
         recyclerView = findViewById(R.id.recyclerViewCriancas);
         gridView = findViewById(R.id.gridViewDesafios);
+        verNotificacoes = findViewById(R.id.imageViewNotificacoes);
 
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         usuarioUID = autenticacao.getCurrentUser().getUid();
@@ -112,11 +114,23 @@ public class HomeResponsavelActivity extends AppCompatActivity {
             }
         });
 
+        verNotificacoes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                abrirNotificacoes();
+            }
+        });
 
 
 
 
 
+
+    }
+
+    private void abrirNotificacoes() {
+        Intent intent = new Intent(HomeResponsavelActivity.this, NotificacoesActivity.class);
+        startActivity(intent);
     }
 
     private void abrirAdicionarDesafio() {
@@ -134,5 +148,12 @@ public class HomeResponsavelActivity extends AppCompatActivity {
     private void abrirConfiguracoes() {
         Intent intent = new Intent(HomeResponsavelActivity.this, ConfiguracoesResponsavelActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        adapter.notifyDataSetChanged();
+        adapter.notify();
     }
 }

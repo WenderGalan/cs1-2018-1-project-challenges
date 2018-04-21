@@ -1,12 +1,15 @@
 package challenges.com.challenges.activities;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,11 +21,14 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthEmailException;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -33,6 +39,7 @@ import java.util.Map;
 import challenges.com.challenges.R;
 import challenges.com.challenges.config.ConfiguracaoFirebase;
 import challenges.com.challenges.model.Crianca;
+import challenges.com.challenges.model.Responsavel;
 import challenges.com.challenges.util.Validator;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -50,11 +57,13 @@ public class CadastroCriancaActivity extends AppCompatActivity {
     private static final int GALLERY_INTENT = 2;
     private Uri imagemCarregada = null;
     private Crianca crianca;
+    private Responsavel responsavelRecuperado;
     private String responsavel;
     private String segundoCadastro;
     private String idUsuario;
     private ProgressDialog progressDialog;
     private boolean tipoDeConclusao = true; //true significa o fluxo normal, false é o fluxo de dentro do app
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +138,6 @@ public class CadastroCriancaActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 //deu certo
                 if (task.isSuccessful()) {
-                    Toast.makeText(CadastroCriancaActivity.this, "Criança inserida com sucesso", Toast.LENGTH_LONG).show();
                     //salvar no banco de dados
                     idUsuario = autenticacao.getCurrentUser().getUid();
                     crianca.setId(idUsuario);
@@ -154,23 +162,26 @@ public class CadastroCriancaActivity extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         autenticacao.signOut();
-                                        /**
-                                         *
-                                         * TEM QUE RECUPERAR AQUI O RESPONSAVEL
-                                         * INTEITO E ATUALIZAR APENAS AS CRIANCAS DELE
-                                         *
-                                         *
-                                         * **/
-                                        //recupera a referencia da crianca inserida
-                                        DocumentReference referencia = ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(idUsuario);
-                                        //cria um vetor de criancas
-                                        ArrayList<DocumentReference> criancas = new ArrayList<>();
-                                        criancas.add(referencia);
-                                        //insere no responsavel as criancas
-                                        DocumentReference responsavelRef = ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(responsavel);
-                                        Map<String, Object> update = new HashMap<String, Object>();
-                                        update.put("criancas", criancas);
-                                        responsavelRef.update(update);
+
+                                        CollectionReference reference = ConfiguracaoFirebase.getFirestore().collection("Usuarios");
+                                        reference.document(responsavel).get().addOnSuccessListener(CadastroCriancaActivity.this, new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                responsavelRecuperado = documentSnapshot.toObject(Responsavel.class);
+                                                //recupera a referencia da crianca inserida
+                                                DocumentReference referencia = ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(idUsuario);
+                                                //cria um vetor de criancas
+                                                ArrayList<DocumentReference> criancas = responsavelRecuperado.getCriancas();
+                                                criancas.add(referencia);
+                                                //insere no responsavel as criancas
+                                                DocumentReference responsavelRef = ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(responsavel);
+                                                Map<String, Object> update = new HashMap<String, Object>();
+                                                update.put("criancas", criancas);
+                                                responsavelRef.update(update);
+                                                Toast.makeText(CadastroCriancaActivity.this, "Criança inserida com sucesso", Toast.LENGTH_LONG).show();
+                                            }
+                                        });
+
                                     }
                                 });
                             }
@@ -185,16 +196,24 @@ public class CadastroCriancaActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 autenticacao.signOut();
-                                //recupera a referencia da crianca inserida
-                                DocumentReference referencia = ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(idUsuario);
-                                //cria um vetor de criancas
-                                ArrayList<DocumentReference> criancas = new ArrayList<>();
-                                criancas.add(referencia);
-                                //insere no responsavel as criancas
-                                DocumentReference responsavelRef = ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(responsavel);
-                                Map<String, Object> update = new HashMap<String, Object>();
-                                update.put("criancas", criancas);
-                                responsavelRef.update(update);
+                                CollectionReference reference = ConfiguracaoFirebase.getFirestore().collection("Usuarios");
+                                reference.document(responsavel).get().addOnSuccessListener(CadastroCriancaActivity.this, new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                        responsavelRecuperado = documentSnapshot.toObject(Responsavel.class);
+                                        //recupera a referencia da crianca inserida
+                                        DocumentReference referencia = ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(idUsuario);
+                                        //cria um vetor de criancas
+                                        ArrayList<DocumentReference> criancas = responsavelRecuperado.getCriancas();
+                                        criancas.add(referencia);
+                                        //insere no responsavel as criancas
+                                        DocumentReference responsavelRef = ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(responsavel);
+                                        Map<String, Object> update = new HashMap<String, Object>();
+                                        update.put("criancas", criancas);
+                                        responsavelRef.update(update);
+                                        Toast.makeText(CadastroCriancaActivity.this, "Criança inserida com sucesso", Toast.LENGTH_LONG).show();
+                                    }
+                                });
                             }
                         });
 
@@ -205,6 +224,7 @@ public class CadastroCriancaActivity extends AppCompatActivity {
                         abrirTelaPrincipal();
                     }else{
                         finish();
+                        autenticarNovamente();
                     }
 
 
@@ -276,6 +296,23 @@ public class CadastroCriancaActivity extends AppCompatActivity {
             imagemCarregada = data.getData();
             imagem.setImageURI(imagemCarregada);
         }
+
+    }
+
+    private void autenticarNovamente() {
+
+        sharedPreferences = getSharedPreferences("CHALLENGES", Context.MODE_PRIVATE);
+
+        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        String email = sharedPreferences.getString("email", "email");
+        String senha = sharedPreferences.getString("senha", "senha");
+
+        autenticacao.signInWithEmailAndPassword(email, senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                Log.i("DEBUG", "Autenticou de novo o usuário");
+            }
+        });
 
     }
 

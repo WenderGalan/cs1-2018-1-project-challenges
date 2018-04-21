@@ -23,6 +23,8 @@
         <activity android:name=".activities.HomeResponsavelActivity" />
         <activity android:name=".activities.ConfiguracoesResponsavelActivity" />
         <activity android:name=".activities.CadastrarDesafioActivity" />
+        <activity android:name=".activities.NotificacoesActivity" />
+        <activity android:name=".activities.DesafioDetalhesActivity"></activity>
     </application>
 
 </manifest>
