@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import com.google.firebase.auth.FirebaseAuth;
 
-import challenges.com.challenges.activities.HomeCriancaActivity;
 import challenges.com.challenges.activities.LoginActivity;
 import challenges.com.challenges.config.ConfiguracaoFirebase;
 
@@ -21,6 +20,7 @@ import challenges.com.challenges.R;
  */
 public class HomeFragment extends Fragment {
     private Button sair;
+    private Button detalheDesafio;
 
 
     public HomeFragment() {
@@ -34,6 +34,7 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home2, container, false);
         sair = view.findViewById(R.id.button2);
+        detalheDesafio = view.findViewById(R.id.button5);
 
         sair.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +47,14 @@ public class HomeFragment extends Fragment {
                 getActivity().finish();
             }
         });
+
+//        detalheDesafio.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getActivity(), DetalheDesafioActivity.class);
+//                startActivity(intent);
+//            }
+//        });
         return view;
     }
 

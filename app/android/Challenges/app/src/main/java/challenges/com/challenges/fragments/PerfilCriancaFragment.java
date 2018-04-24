@@ -1,6 +1,7 @@
 package challenges.com.challenges.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.squareup.picasso.Picasso;
 
 import challenges.com.challenges.R;
+import challenges.com.challenges.activities.AdicionarAmigoActivity;
 import challenges.com.challenges.config.ConfiguracaoFirebase;
 import challenges.com.challenges.model.Crianca;
 import challenges.com.challenges.model.Usuario;
@@ -30,6 +32,7 @@ public class PerfilCriancaFragment extends Fragment {
     private CircleImageView fotoCrianca;
     private FirebaseAuth autenticacao;
     private Crianca crianca;
+    private ImageView adicionarAmigo;
 
     private TextView nomeCrianca;
     private TextView inteligenciaPrincipalCrianca;
@@ -55,6 +58,7 @@ public class PerfilCriancaFragment extends Fragment {
         qntPontos = view.findViewById(R.id.qnt_pontos);
         qntAmigos = view.findViewById(R.id.qnt_amigos);
         qntRecompensas = view.findViewById(R.id.qnt_recompensas);
+        adicionarAmigo = view.findViewById(R.id.adc_amigo);
 
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         String idUsuarioAtual = autenticacao.getCurrentUser().getUid();
@@ -77,6 +81,13 @@ public class PerfilCriancaFragment extends Fragment {
             System.out.println("caiu excecao");
         }
 
+        adicionarAmigo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View vie) {
+                Intent intent = new Intent(getActivity(), AdicionarAmigoActivity.class);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 }
