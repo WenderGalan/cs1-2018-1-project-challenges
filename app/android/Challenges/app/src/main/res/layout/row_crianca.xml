@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/circleImageViewCrianca"
         android:layout_width="60dp"
-        android:layout_height="60dp" />
+        android:layout_height="60dp"
+        android:layout_marginRight="31dp"
+        android:background="@drawable/ic_camera"
+        app:civ_border_color="@android:color/darker_gray"
+        app:civ_border_width="1dp" />
 
     <TextView
         android:id="@+id/textViewNomeCrianca"
         android:layout_width="60dp"
-        android:layout_height="wrap_contnt"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/circleImageViewCrianca" />
+        android:layout_below="@+id/circleImageViewCrianca"
+        android:layout_marginRight="31dp"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="13dp" />
 
 </RelativeLayout>
