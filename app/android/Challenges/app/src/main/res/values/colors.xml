@@ -7,5 +7,8 @@
     <color name="vermelho">#FF0000</color>
     <color name="fonte">#4cc6f5</color>
     <color name="rosa">#da2449</color>
-    <color name="verde">#8edf40</color>
+    <color name="laranja">#FA9917</color>
+    <color name="roxo">#7B67FF</color>
+    <color name="verde">#8EDF40</color>
+    <color name="fonte_normal">#4f4f4f</color>
 </resources>

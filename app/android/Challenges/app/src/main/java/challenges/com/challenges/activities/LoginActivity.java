@@ -1,7 +1,9 @@
 package challenges.com.challenges.activities;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -34,6 +36,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText senha;
     private Button entrar;
     private FirebaseAuth autenticacao;
+    private SharedPreferences sharedPreferences;
+    private final String CHALLENGES = "CHALLENGES";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,13 +80,17 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void validarLogin(String email, String senha) {
+    private void validarLogin(final String email, final String senha) {
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         autenticacao.signInWithEmailAndPassword(email, senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     destinarUsuario();
+
+                    //salvar email e senha do usuario nas preferencias
+                    gravarPreferencias(email, senha);
+
                 }else{
                     String erroExcecao = "";
                     try {
@@ -102,6 +110,19 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void gravarPreferencias(String email, String senha) {
+
+            sharedPreferences = getSharedPreferences(CHALLENGES, Context.MODE_PRIVATE);
+
+            SharedPreferences.Editor prefsPrivateEditor = sharedPreferences.edit();
+
+            prefsPrivateEditor.putString("email", email);
+            prefsPrivateEditor.putString("senha", senha);
+
+            prefsPrivateEditor.commit();
+
     }
 
     private void abrirHomeResponsavel() {

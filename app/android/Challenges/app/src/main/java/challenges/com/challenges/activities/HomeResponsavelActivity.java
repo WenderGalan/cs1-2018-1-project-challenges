@@ -29,6 +29,7 @@ public class HomeResponsavelActivity extends AppCompatActivity {
     private TextView nome;
     private ImageView adicionarCrianca;
     private ImageView adicionarDesafio;
+    private ImageView verNotificacoes;
     private RecyclerView recyclerView;
     private GridView gridView;
 
@@ -37,6 +38,7 @@ public class HomeResponsavelActivity extends AppCompatActivity {
     private Responsavel responsavel;
     private ArrayList<DocumentReference> criancas;
     private ArrayList<Crianca> criancasObject;
+    private CriancaAdapter adapter;
 
 
     private FirebaseAuth autenticacao;
@@ -52,10 +54,19 @@ public class HomeResponsavelActivity extends AppCompatActivity {
         adicionarDesafio = findViewById(R.id.imageViewAddDesafio);
         recyclerView = findViewById(R.id.recyclerViewCriancas);
         gridView = findViewById(R.id.gridViewDesafios);
+        verNotificacoes = findViewById(R.id.imageViewNotificacoes);
 
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         usuarioUID = autenticacao.getCurrentUser().getUid();
         usuario = ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(usuarioUID);
+        criancasObject = new ArrayList<>();
+
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(HomeResponsavelActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new CriancaAdapter(criancasObject);
+
+        recyclerView.setAdapter(adapter);
 
         //recupera o usuario
         ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(usuarioUID).get().addOnSuccessListener(HomeResponsavelActivity.this, new OnSuccessListener<DocumentSnapshot>() {
@@ -73,22 +84,12 @@ public class HomeResponsavelActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                 Crianca crianca = documentSnapshot.toObject(Crianca.class);
-                                criancasObject = new ArrayList<>();
                                 criancasObject.add(crianca);
+                                adapter.notifyDataSetChanged();
                             }
                         });
                     }
-
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(HomeResponsavelActivity.this);
-                    layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-                    recyclerView.setLayoutManager(layoutManager);
-
-
-                    //recyclerView.setAdapter(new CriancaAdapter(getApplicationContext(), 0, criancasObject));
-
-
                 }
-
             }
         });
 
@@ -113,23 +114,46 @@ public class HomeResponsavelActivity extends AppCompatActivity {
             }
         });
 
+        verNotificacoes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                abrirNotificacoes();
+            }
+        });
+
+
+
 
 
 
     }
 
+    private void abrirNotificacoes() {
+        Intent intent = new Intent(HomeResponsavelActivity.this, NotificacoesActivity.class);
+        startActivity(intent);
+    }
+
     private void abrirAdicionarDesafio() {
-        Intent intent = new Intent(HomeResponsavelActivity.this, AdicionarDesafioActivity.class);
+        Intent intent = new Intent(HomeResponsavelActivity.this, CadastrarDesafioActivity.class);
         startActivity(intent);
     }
 
     private void abrirAdicionarCrianca() {
-        Intent intent = new Intent(HomeResponsavelActivity.this, AdicionarCriancaActivity.class);
+        Intent intent = new Intent(HomeResponsavelActivity.this, CadastroCriancaActivity.class);
+        intent.putExtra("responsavel", usuarioUID);
+        intent.putExtra("segundoCadastro", "verdade");
         startActivity(intent);
     }
 
     private void abrirConfiguracoes() {
         Intent intent = new Intent(HomeResponsavelActivity.this, ConfiguracoesResponsavelActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        adapter.notifyDataSetChanged();
+        adapter.notify();
     }
 }
