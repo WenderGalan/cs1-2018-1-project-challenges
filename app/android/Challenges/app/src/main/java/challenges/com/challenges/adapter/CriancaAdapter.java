@@ -44,6 +44,10 @@ public class CriancaAdapter extends RecyclerView.Adapter<ViewHolderCrianca> {
                 Picasso.get().load(crianca.getFoto()).into(holder.imagem);
             }
 
+            Crianca crianca = criancas.get(position);
+            if (crianca != null){
+                if (crianca.getFoto() != null){
+                    Picasso.get().load(crianca.getFoto()).into(imagem);
             //listeners dos botoes
             holder.nome.setOnClickListener(new View.OnClickListener() {
                 @Override
