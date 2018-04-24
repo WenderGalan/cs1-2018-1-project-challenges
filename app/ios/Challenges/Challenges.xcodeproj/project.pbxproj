@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		050B58D7208E7D85002FDA31 /* NotificacoesResponsavelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050B58D6208E7D85002FDA31 /* NotificacoesResponsavelViewController.swift */; };
+		050B58D9208E87C7002FDA31 /* NotificacaoResponsavelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050B58D8208E87C7002FDA31 /* NotificacaoResponsavelTableViewCell.swift */; };
 		0A0697482068335200FA11EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0697472068335200FA11EB /* AppDelegate.swift */; };
 		0A06974D2068335200FA11EB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A06974B2068335200FA11EB /* Main.storyboard */; };
 		0A06974F2068335200FA11EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A06974E2068335200FA11EB /* Assets.xcassets */; };
@@ -51,6 +53,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		050B58D6208E7D85002FDA31 /* NotificacoesResponsavelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificacoesResponsavelViewController.swift; sourceTree = "<group>"; };
+		050B58D8208E87C7002FDA31 /* NotificacaoResponsavelTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificacaoResponsavelTableViewCell.swift; sourceTree = "<group>"; };
 		0A0697442068335100FA11EB /* Challenges.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Challenges.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A0697472068335200FA11EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0A06974C2068335200FA11EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -153,6 +157,8 @@
 				0A0697502068335200FA11EB /* LaunchScreen.storyboard */,
 				0A0697532068335200FA11EB /* Info.plist */,
 				0A069777206833DA00FA11EB /* GoogleService-Info.plist */,
+				050B58D6208E7D85002FDA31 /* NotificacoesResponsavelViewController.swift */,
+				050B58D8208E87C7002FDA31 /* NotificacaoResponsavelTableViewCell.swift */,
 			);
 			path = Challenges;
 			sourceTree = "<group>";
@@ -557,6 +563,7 @@
 				0A161FEB206EE37400A397E0 /* Crianca.swift in Sources */,
 				0A855B3B206C48BD001138DC /* FotoPerfilCell.swift in Sources */,
 				0A855B41206C497D001138DC /* CadastroCriancaController.swift in Sources */,
+				050B58D7208E7D85002FDA31 /* NotificacoesResponsavelViewController.swift in Sources */,
 				0A06977C2068593C00FA11EB /* FirestoreService.swift in Sources */,
 				0A161FED206EE4E000A397E0 /* Habilidade.swift in Sources */,
 				0A161FE9206EE25000A397E0 /* Responsavel.swift in Sources */,
@@ -564,6 +571,7 @@
 				0A855B3D206C4919001138DC /* LoginController.swift in Sources */,
 				0A0697482068335200FA11EB /* AppDelegate.swift in Sources */,
 				0A06977A20683C1300FA11EB /* FirestoreObject.swift in Sources */,
+				050B58D9208E87C7002FDA31 /* NotificacaoResponsavelTableViewCell.swift in Sources */,
 				0A0697762068336D00FA11EB /* Usuario.swift in Sources */,
 				0A06977E2068974100FA11EB /* UsuarioDAO.swift in Sources */,
 			);
