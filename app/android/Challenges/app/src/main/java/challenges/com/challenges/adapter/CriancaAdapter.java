@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -34,49 +35,45 @@ public class CriancaAdapter extends RecyclerView.Adapter<ViewHolderCrianca> {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolderCrianca holder, final int position) {
+    public void onBindViewHolder(final ViewHolderCrianca holder, final int position) {
 
-        if (criancas != null && criancas.size() > 0){
+        if (criancas != null && criancas.size() > 0) {
             final Crianca crianca = criancas.get(position);
 
             holder.nome.setText(crianca.getNome());
-            if (crianca.getFoto() != null){
+            if (crianca.getFoto() != null) {
                 Picasso.get().load(crianca.getFoto()).into(holder.imagem);
-            }
+                //listeners dos botoes
+                holder.nome.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //chamar o metodo
+                        abrirDetalhesDaCriança(criancas.get(position));
+                        Toast.makeText(holder.imagem.getContext(), "Clicou no " + crianca.getNome(), Toast.LENGTH_LONG).show();
+                    }
+                });
+                holder.imagem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //chamar o metodo
+                        abrirDetalhesDaCriança(criancas.get(position));
+                        Toast.makeText(holder.imagem.getContext(), "Clicou no " + crianca.getNome(), Toast.LENGTH_LONG).show();
+                    }
+                });
 
-            Crianca crianca = criancas.get(position);
-            if (crianca != null){
-                if (crianca.getFoto() != null){
-                    Picasso.get().load(crianca.getFoto()).into(imagem);
-            //listeners dos botoes
-            holder.nome.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //chamar o metodo
-                    abrirDetalhesDaCriança(criancas.get(position));
-                }
-            });
-            holder.imagem.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //chamar o metodo
-                    abrirDetalhesDaCriança(criancas.get(position));
-                }
-            });
+            }
+        }
+    }
+
+        private void abrirDetalhesDaCriança (Crianca crianca){
+            //chamar a activity de detalhes da criança
 
         }
 
-    }
-
-    private void abrirDetalhesDaCriança(Crianca crianca) {
-        //chamar a activity de detalhes da criança
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return criancas.size();
-    }
+        @Override
+        public int getItemCount () {
+            return criancas.size();
+        }
 
 
 }

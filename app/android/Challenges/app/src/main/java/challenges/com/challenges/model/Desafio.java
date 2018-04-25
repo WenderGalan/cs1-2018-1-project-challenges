@@ -6,11 +6,15 @@ import java.util.Map;
 
 public class Desafio implements Serializable {
 
+
     private String titulo;
     private String recompensa;
     private String habilidade;
     private int pontos = 0;
     private String observacoes;
+    private String idResponsavel;
+    private String idCrianca;
+
 
     public Desafio() {
     }
@@ -44,6 +48,18 @@ public class Desafio implements Serializable {
     public void setObservacoes(String observacoes) {
         this.observacoes = observacoes;
     }
+    public String getIdResponsavel() {
+        return idResponsavel;
+    }
+    public void setIdResponsavel(String idResponsavel) {
+        this.idResponsavel = idResponsavel;
+    }
+    public String getIdCrianca() {
+        return idCrianca;
+    }
+    public void setIdCrianca(String idCrianca) {
+        this.idCrianca = idCrianca;
+    }
 
     public Map construirHash(){
         Map<String, Object> hashMap = new HashMap<String, Object>();
@@ -52,6 +68,8 @@ public class Desafio implements Serializable {
         if (getHabilidade() != null) hashMap.put("habilidade", getHabilidade());
         if (getPontos() != 0) hashMap.put("pontos", getPontos());
         if (getObservacoes() != null) hashMap.put("observacoes", getObservacoes());
+        if (getIdCrianca() != null) hashMap.put("idCrianca", getIdCrianca());
+        if (getIdResponsavel() != null) hashMap.put("idResponsavel", getIdResponsavel());
         return hashMap;
     }
 

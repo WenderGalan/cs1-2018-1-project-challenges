@@ -71,6 +71,14 @@ public class DesafioDetalhesActivity extends AppCompatActivity {
         desafio = (Desafio) getIntent().getSerializableExtra("desafio");
         tipo = getIntent().getStringExtra("tipo");
 
+        /**
+         * Intent intent = new Intent(getActivity(), DesafioDetalhesActivity.class);
+         * intent.putExtra("desafio", desafio);
+         * intent.putExtra("tipo", "aceitar");
+         * startActivity(intent);
+         * **/
+
+
         //seta os textview na acitivity
         if (desafio != null){
             if (desafio.getTitulo() != null){
@@ -92,7 +100,7 @@ public class DesafioDetalhesActivity extends AppCompatActivity {
 
         if (tipo.equals("responsavel")){
             primeiroBotao.setText("Editar");
-            primeiroBotao.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.fundo_botao_laranja_grande));
+            primeiroBotao.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.fundo_botao_azul_grande));
             primeiroBotao.setVisibility(View.VISIBLE);
             segundoBotao.setText("Excluir");
             segundoBotao.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.fundo_botao_vermelho_grande));
@@ -164,14 +172,6 @@ public class DesafioDetalhesActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-        /**
-         * PRIMEIRO VEM POR INTENT O OBJETO DESAFIO PARA PREENCHER OS CAMPOS
-         *
-         * DEPOIS PEGA O INTENT TIPO E CHAMA OS BOTOES CERTOS
-         *
-         * **/
 
 
 

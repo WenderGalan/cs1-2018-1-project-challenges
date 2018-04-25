@@ -393,7 +393,7 @@
                 android:layout_marginEnd="32dp"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/fundo_botao_laranja_grande"
+                android:background="@drawable/fundo_botao_azul_grande"
                 android:text="Editar"
                 android:textAllCaps="false"
                 android:textColor="@color/branco"
