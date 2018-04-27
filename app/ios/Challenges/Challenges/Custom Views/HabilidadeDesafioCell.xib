@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="7Ek-6z-xD8" customClass="HabilidadeDesafioCell" customModule="Challenges" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7Ek-6z-xD8" id="WnR-c1-YGy">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZIE-oG-RsB">
+                        <rect key="frame" x="16" y="12" width="295" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="ErC-F6-oFT"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lSS-Bb-uad">
+                        <rect key="frame" x="319" y="1" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="AiL-5I-xIp"/>
+                            <constraint firstAttribute="width" constant="40" id="Tj8-gl-dhl"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="lSS-Bb-uad" firstAttribute="centerY" secondItem="WnR-c1-YGy" secondAttribute="centerY" id="1kV-3J-lE9"/>
+                    <constraint firstItem="lSS-Bb-uad" firstAttribute="leading" secondItem="ZIE-oG-RsB" secondAttribute="trailing" constant="8" id="fVa-d0-dYp"/>
+                    <constraint firstItem="ZIE-oG-RsB" firstAttribute="centerY" secondItem="WnR-c1-YGy" secondAttribute="centerY" id="goh-zE-H9U"/>
+                    <constraint firstItem="ZIE-oG-RsB" firstAttribute="leading" secondItem="WnR-c1-YGy" secondAttribute="leadingMargin" id="hEn-3w-H2w"/>
+                    <constraint firstAttribute="trailing" secondItem="lSS-Bb-uad" secondAttribute="trailing" constant="16" id="iDk-Py-ltl"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="LabelHabilidade" destination="ZIE-oG-RsB" id="TYb-bT-jcp"/>
+                <outlet property="imagemHabilidade" destination="lSS-Bb-uad" id="VBX-MV-q1q"/>
+            </connections>
+            <point key="canvasLocation" x="-161.5" y="-87"/>
+        </tableViewCell>
+    </objects>
+</document>

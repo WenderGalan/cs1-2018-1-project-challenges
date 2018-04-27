@@ -1,17 +1,19 @@
 //
-//  FotoPerfilCell.swift
+//  HabilidadeDesafioCell.swift
 //  Challenges
 //
-//  Created by Rodolfo Roca on 3/28/18.
+//  Created by Paulo Renan on 27/04/18.
 //  Copyright © 2018 RocaCorp. All rights reserved.
 //
 
 import UIKit
 
-class FotoPerfilCell: UITableViewCell {
-    static let kCellBasicTextFieldID = "CellAddFoto"
+class HabilidadeDesafioCell: UITableViewCell {
 
-    @IBOutlet weak var fotoPerfilImageView: UIImageView!
+    static let HabilidadeDesafioCellID = "HabilidadeDesafioCell"
+    
+    @IBOutlet weak var LabelHabilidade: UILabel!
+    @IBOutlet weak var imagemHabilidade: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -19,10 +21,10 @@ class FotoPerfilCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
+    }
+    
+    class func defaultIdentifier() -> String {
+        return HabilidadeDesafioCellID
     }
 
-    class func defaultIdentifier() -> String {
-        return kCellBasicTextFieldID
-    }
 }

@@ -130,6 +130,34 @@
             </objects>
             <point key="canvasLocation" x="505" y="117"/>
         </scene>
+        <!--Desafio View Controller-->
+        <scene sceneID="cVE-Fj-HXJ">
+            <objects>
+                <viewController id="XdI-sz-gpa" customClass="DesafioViewController" customModule="Challenges" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fIO-2a-LFx">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fSC-Da-fW7">
+                                <rect key="frame" x="0.0" y="64" width="375" height="529"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RXy-C4-pFM">
+                                <rect key="frame" x="0.0" y="601" width="375" height="66"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="Ukk-Uj-41t"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="N6E-Z7-aQi"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1v0-QQ-YqA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1380" y="117"/>
+        </scene>
         <!--Notificacoes Responsavel View Controller-->
         <scene sceneID="IEJ-Ck-IfB">
             <objects>
@@ -247,7 +275,34 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wLj-fe-wjZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="505" y="920"/>
+            <point key="canvasLocation" x="2244" y="-611"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="PHr-wC-h0y">
+            <objects>
+                <viewController id="wVw-kg-ByI" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="SE6-uJ-tEq">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="y49-qu-Ly9">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="y49-qu-Ly9" firstAttribute="bottom" secondItem="N5l-v0-aff" secondAttribute="bottom" id="E6c-vR-fIT"/>
+                            <constraint firstItem="y49-qu-Ly9" firstAttribute="leading" secondItem="N5l-v0-aff" secondAttribute="leading" id="KOo-0m-SZs"/>
+                            <constraint firstItem="y49-qu-Ly9" firstAttribute="trailing" secondItem="N5l-v0-aff" secondAttribute="trailing" id="Rhl-0I-zJ3"/>
+                            <constraint firstItem="y49-qu-Ly9" firstAttribute="top" secondItem="N5l-v0-aff" secondAttribute="top" id="skV-3l-ihk"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="N5l-v0-aff"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CIo-Sj-7Op" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1380" y="-611.24437781109452"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="YY7-u5-aLd">
@@ -313,7 +368,71 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YJ6-pF-CPu" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1380" y="116.49175412293854"/>
+            <point key="canvasLocation" x="505" y="-611"/>
+        </scene>
+        <!--Item 2-->
+        <scene sceneID="JsK-AN-6wo">
+            <objects>
+                <viewController id="CQG-Z1-gDc" customClass="PerfilCriancaViewController" customModule="Challenges" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1Lg-hA-5e4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5Px-iK-1mB">
+                                <rect key="frame" x="0.0" y="20" width="375" height="598"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="ZzK-QG-kDq"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item 2" id="bbc-ew-bbM"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rTD-Z8-Jb9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3103" y="933"/>
+        </scene>
+        <!--Item 1-->
+        <scene sceneID="6U1-YS-NyL">
+            <objects>
+                <viewController id="MFl-f8-hDL" customClass="HomeCriancaViewController" customModule="Challenges" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="aKK-ek-aC6">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="aqq-yY-Puf">
+                                <rect key="frame" x="0.0" y="20" width="375" height="598"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="i3E-nh-TiQ"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item 1" id="KfG-WX-kft"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="C5q-YI-MDh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2244" y="933"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="ynS-Xb-0GY">
+            <objects>
+                <tabBarController id="h1h-jC-PJJ" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="klQ-kW-NeT">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="MFl-f8-hDL" kind="relationship" relationship="viewControllers" id="OnT-nJ-y1H"/>
+                        <segue destination="CQG-Z1-gDc" kind="relationship" relationship="viewControllers" id="L5D-A9-oHy"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="I39-Gt-zKw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1380" y="934"/>
         </scene>
         <!--Cadastro Crianca Controller-->
         <scene sceneID="TW5-zn-kPG">
@@ -374,13 +493,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZMa-C7-vrL" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2304.8000000000002" y="116.49175412293854"/>
+            <point key="canvasLocation" x="505" y="933"/>
         </scene>
     </scenes>
     <resources>
         <image name="challengesLogo" width="270" height="55"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="4K9-Dk-bd2"/>
+        <segue reference="LIp-Qv-8SR"/>
     </inferredMetricsTieBreakers>
 </document>

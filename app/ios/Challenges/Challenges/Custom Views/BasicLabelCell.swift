@@ -1,17 +1,18 @@
 //
-//  FotoPerfilCell.swift
+//  BasicLabelCell.swift
 //  Challenges
 //
-//  Created by Rodolfo Roca on 3/28/18.
+//  Created by Paulo Renan on 27/04/18.
 //  Copyright © 2018 RocaCorp. All rights reserved.
 //
 
 import UIKit
 
-class FotoPerfilCell: UITableViewCell {
-    static let kCellBasicTextFieldID = "CellAddFoto"
+class BasicLabelCell: UITableViewCell {
 
-    @IBOutlet weak var fotoPerfilImageView: UIImageView!
+    static let BasicLabelCellID = "BasicLabelCell"
+    
+    @IBOutlet weak var TextoLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -19,10 +20,10 @@ class FotoPerfilCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
     }
 
     class func defaultIdentifier() -> String {
-        return kCellBasicTextFieldID
+        return BasicLabelCellID
     }
+    
 }

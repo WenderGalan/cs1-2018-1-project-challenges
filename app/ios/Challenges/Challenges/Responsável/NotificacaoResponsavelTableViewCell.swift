@@ -2,7 +2,7 @@
 //  NotificacaoResponsavelTableViewCell.swift
 //  Challenges
 //
-//  Created by Catwork on 23/04/18.
+//  Created by Paulo Renan on 23/04/18.
 //  Copyright © 2018 RocaCorp. All rights reserved.
 //
 
@@ -23,8 +23,8 @@ class NotificacaoResponsavelTableViewCell: UITableViewCell {
     }
     
     override func layoutSubviews() {
-        botaoAceitar.layer.cornerRadius = 2
-        botaoRecusar.layer.cornerRadius = 2
+        botaoAceitar.layer.cornerRadius = 5
+        botaoRecusar.layer.cornerRadius = 5
     }
     
     override func awakeFromNib() {

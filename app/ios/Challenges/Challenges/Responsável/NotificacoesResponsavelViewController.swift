@@ -2,7 +2,7 @@
 //  NotificacoesResponsavelViewController.swift
 //  Challenges
 //
-//  Created by Catwork on 23/04/18.
+//  Created by Paulo Renan on 23/04/18.
 //  Copyright © 2018 RocaCorp. All rights reserved.
 //
 
@@ -33,7 +33,6 @@ class NotificacoesResponsavelViewController: UIViewController, UITableViewDelega
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     
