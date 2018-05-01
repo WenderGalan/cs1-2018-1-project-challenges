@@ -198,7 +198,7 @@ class CadastroCriancaController: UIViewController, UITableViewDelegate, UITableV
                         self.user.criancas?.append(c)
                         self.user.save()
                     }
-                    UsuarioDAO.sharedInstance.login(email: self.user.email!, senha: self.senhaResponsavel, success: { (_) in
+                    UsuarioDAO.sharedInstance.login(email: self.user.email!, senha: self.se nhaResponsavel, success: { (_) in
                         print("deu certo")
                     }, failed: { (error) in
                         print("deu errado")

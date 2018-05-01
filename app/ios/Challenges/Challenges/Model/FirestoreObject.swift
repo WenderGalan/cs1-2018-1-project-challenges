@@ -38,7 +38,7 @@ class FirestoreObject: NSObject {
         }
         
         if objectId != nil {
-            ref.document(objectId!).setData(toDictionary())
+            ref.document(objectId!).updateData(toDictionary())
         } else {
             ref.addDocument(data: toDictionary())
         }
@@ -50,7 +50,7 @@ class FirestoreObject: NSObject {
         }
         
         if objectId != nil {
-            ref.document(objectId!).setData(toDictionary()) { (error) in
+            ref.document(objectId!).updateData(toDictionary()) { (error) in
                 if let erro = error {
                     failed(erro)
                 } else {
