@@ -1,5 +1,6 @@
 package challenges.com.challenges.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +17,11 @@ import challenges.com.challenges.model.Crianca;
 public class CriancaAdapter extends RecyclerView.Adapter<ViewHolderCrianca> {
 
     private ArrayList<Crianca> criancas;
+    private String tipo;
 
-    public CriancaAdapter(ArrayList<Crianca> criancas){
+    public CriancaAdapter(ArrayList<Crianca> criancas, String tipo){
         this.criancas = criancas;
+        this.tipo = tipo;
     }
 
 
@@ -43,30 +46,28 @@ public class CriancaAdapter extends RecyclerView.Adapter<ViewHolderCrianca> {
             holder.nome.setText(crianca.getNome());
             if (crianca.getFoto() != null) {
                 Picasso.get().load(crianca.getFoto()).into(holder.imagem);
-                //listeners dos botoes
-                holder.nome.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //chamar o metodo
-                        abrirDetalhesDaCriança(criancas.get(position));
-                        Toast.makeText(holder.imagem.getContext(), "Clicou no " + crianca.getNome(), Toast.LENGTH_LONG).show();
-                    }
-                });
-                holder.imagem.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //chamar o metodo
-                        abrirDetalhesDaCriança(criancas.get(position));
-                        Toast.makeText(holder.imagem.getContext(), "Clicou no " + crianca.getNome(), Toast.LENGTH_LONG).show();
-                    }
-                });
-
             }
+            //listeners dos botoes
+            holder.nome.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //chamar o metodo
+                    abrirDetalhesCriança(criancas.get(position), holder.imagem.getContext());
+                }
+            });
+            holder.imagem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //chamar o metodo
+                    abrirDetalhesCriança(criancas.get(position), holder.imagem.getContext());
+                }
+            });
         }
     }
 
-        private void abrirDetalhesDaCriança (Crianca crianca){
-            //chamar a activity de detalhes da criança
+        private void abrirDetalhesCriança (Crianca crianca, Context context){
+
+            Toast.makeText(context, "Clicou no " + crianca.getNome(), Toast.LENGTH_LONG).show();
 
         }
 

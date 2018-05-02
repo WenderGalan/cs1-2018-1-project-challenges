@@ -1,6 +1,5 @@
 package challenges.com.challenges.activities;
 
-import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -12,14 +11,14 @@ import challenges.com.challenges.R;
 import challenges.com.challenges.fragments.HomeFragment;
 import challenges.com.challenges.fragments.PerfilCriancaFragment;
 
-public class HomeCriancaActivity extends AppCompatActivity {
+public class HomeCriancaActivity extends AppCompatActivity{
 
     private boolean fragmentHome = true;
     private boolean fragmentPerfil = false;
 
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {

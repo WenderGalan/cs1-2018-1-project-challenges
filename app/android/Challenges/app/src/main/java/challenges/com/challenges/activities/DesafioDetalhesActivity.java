@@ -9,8 +9,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import challenges.com.challenges.R;
 import challenges.com.challenges.model.Desafio;
 
@@ -88,14 +86,49 @@ public class DesafioDetalhesActivity extends AppCompatActivity {
                 recompensa.setText("Recompensa: " + desafio.getRecompensa());
             }
             if (desafio.getHabilidade() != null){
-                habilidade.setText(desafio.getHabilidade());
+                switch (desafio.getHabilidade()){
+                    case "fisica":
+                        imagemHabilidade.setImageResource(R.drawable.habilidade_fisica);
+                        habilidade.setText("Física");
+                        break;
+                    case "intelectual":
+                        imagemHabilidade.setImageResource(R.drawable.habilidade_inteligencia);
+                        habilidade.setText("Intelectual");
+                        break;
+                    case "criatividade":
+                        imagemHabilidade.setImageResource(R.drawable.habilidade_criatividade);
+                        habilidade.setText("Criatividade");
+                        break;
+                    case "social":
+                        imagemHabilidade.setImageResource(R.drawable.habilidade_social);
+                        habilidade.setText("Social");
+                        break;
+                }
             }
             if (desafio.getPontos() != 0){
                 pontos.setText("Pontos: " + desafio.getPontos());
             }
-            /**TEM QUE SETAR A IMAGEM TAMBEM**/
-            /**SETAR A FREQUENCIA e BUSCAR O PROGRESSO E SETAR AQUI**/
-
+            if (desafio.getFrequencia() != null){
+                switch (desafio.getFrequencia()){
+                    case "unica vez":
+                        frequencia.setText("Única vez");
+                        break;
+                    case "diario":
+                        frequencia.setText("Diário");
+                        break;
+                    case "semanal":
+                        frequencia.setText("Semanal");
+                        break;
+                    case "mensal":
+                        frequencia.setText("Mensal");
+                        break;
+                }
+            }
+            /**
+             *
+             * AINDA TEM QUE SETAR O PROGRESSO DO USUÁRIO PORQUE NAO TEM INFORMAÇÃO AINDA
+             *
+             * */
         }
 
         if (tipo.equals("responsavel")){

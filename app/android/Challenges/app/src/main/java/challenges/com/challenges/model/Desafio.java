@@ -12,12 +12,17 @@ public class Desafio implements Serializable {
     private String habilidade;
     private int pontos = 0;
     private String observacoes;
-    private String idResponsavel;
-    private String idCrianca;
+    private String responsavel;
+    private String crianca;
+    private String frequencia;
+    private int repeticoes = 1;
+    private String hora;
+    private String data;
 
 
-    public Desafio() {
-    }
+
+
+    public Desafio() { }
     public String getTitulo() {
         return titulo;
     }
@@ -48,17 +53,41 @@ public class Desafio implements Serializable {
     public void setObservacoes(String observacoes) {
         this.observacoes = observacoes;
     }
-    public String getIdResponsavel() {
-        return idResponsavel;
+    public String getResponsavel() {
+        return responsavel;
     }
-    public void setIdResponsavel(String idResponsavel) {
-        this.idResponsavel = idResponsavel;
+    public void setResponsavel(String responsavel) {
+        this.responsavel = responsavel;
     }
-    public String getIdCrianca() {
-        return idCrianca;
+    public String getCrianca() {
+        return crianca;
     }
-    public void setIdCrianca(String idCrianca) {
-        this.idCrianca = idCrianca;
+    public void setCrianca(String crianca) {
+        this.crianca = crianca;
+    }
+    public String getFrequencia() {
+        return frequencia;
+    }
+    public void setFrequencia(String frequencia) {
+        this.frequencia = frequencia;
+    }
+    public int getRepeticoes() {
+        return repeticoes;
+    }
+    public void setRepeticoes(int repeticoes) {
+        this.repeticoes = repeticoes;
+    }
+    public String getHora() {
+        return hora;
+    }
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
+    public String getData() {
+        return data;
+    }
+    public void setData(String data) {
+        this.data = data;
     }
 
     public Map construirHash(){
@@ -68,8 +97,12 @@ public class Desafio implements Serializable {
         if (getHabilidade() != null) hashMap.put("habilidade", getHabilidade());
         if (getPontos() != 0) hashMap.put("pontos", getPontos());
         if (getObservacoes() != null) hashMap.put("observacoes", getObservacoes());
-        if (getIdCrianca() != null) hashMap.put("idCrianca", getIdCrianca());
-        if (getIdResponsavel() != null) hashMap.put("idResponsavel", getIdResponsavel());
+        if (getCrianca() != null) hashMap.put("crianca", getCrianca());
+        if (getResponsavel() != null) hashMap.put("responsavel", getResponsavel());
+        if (getFrequencia() != null) hashMap.put("frequencia", getFrequencia());
+        if (getRepeticoes() >= 1) hashMap.put("repeticoes", getRepeticoes());
+        if (getHora() != null) hashMap.put("hora", getHora());
+        if (getData() != null) hashMap.put("data", getData());
         return hashMap;
     }
 

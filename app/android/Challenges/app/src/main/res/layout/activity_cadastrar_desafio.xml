@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayoutCadastrarDesafio"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
@@ -49,9 +50,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginEnd="32dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
                 android:ems="10"
                 android:hint="Título"
@@ -62,7 +63,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/divider11" />
 
             <EditText
                 android:id="@+id/editTextPontosDesafio"
@@ -70,8 +71,8 @@
                 android:layout_height="50dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignStart="@+id/editTextTituloDesafio"
-                android:layout_marginEnd="32dp"
-                android:layout_marginStart="32dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
                 android:ems="10"
@@ -86,13 +87,34 @@
                 app:layout_constraintTop_toBottomOf="@+id/editTextRecompensaDesafio" />
 
             <EditText
+                android:id="@+id/editTextRepeticoesDesafio"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignStart="@+id/editTextTituloDesafio"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
+                android:ems="10"
+                android:hint="Quantas Repetições?"
+                android:inputType="number"
+                android:paddingLeft="16dp"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider2" />
+
+            <EditText
                 android:id="@+id/editTextRecompensaDesafio"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignStart="@+id/editTextTituloDesafio"
-                android:layout_marginEnd="32dp"
-                android:layout_marginStart="32dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
                 android:ems="10"
@@ -113,29 +135,12 @@
                 android:layout_below="@id/editTextRecompensaDesafio"
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:background="@android:color/darker_gray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textView3" />
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignStart="@+id/editTextTituloDesafio"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="36dp"
-                android:text="Frequência"
-                android:textColor="@color/laranja"
-                android:textSize="17sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/divider3" />
+                app:layout_constraintTop_toBottomOf="@+id/spinnerFrequencia" />
 
             <View
                 android:id="@+id/divider3"
@@ -152,23 +157,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/editTextPontosDesafio" />
 
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignStart="@+id/editTextTituloDesafio"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="68dp"
-                android:text="Habilidade"
-                android:textColor="@color/laranja"
-                android:textSize="17sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.041"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
             <View
                 android:id="@+id/divider4"
                 android:layout_width="match_parent"
@@ -177,19 +165,35 @@
                 android:layout_below="@+id/textView3"
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
                 android:background="@android:color/darker_gray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView8" />
+                app:layout_constraintTop_toBottomOf="@+id/spinnerHabilidades" />
+
+            <View
+                android:id="@+id/divider11"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView3"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerCriancas" />
 
             <EditText
                 android:id="@+id/editTextObservacoesDesafio"
                 android:layout_width="0dp"
                 android:layout_height="150dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="92dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
                 android:ems="10"
                 android:hint="Observações"
@@ -198,8 +202,9 @@
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/divider4" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextRepeticoesDesafio" />
 
             <Button
                 android:id="@+id/buttonSalvarDesafio"
@@ -208,7 +213,7 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/fundo_botao_laranja_grande"
                 android:text="Salvar"
                 android:textAllCaps="false"
@@ -223,14 +228,46 @@
                 android:id="@+id/spinnerHabilidades"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
                 android:paddingLeft="16dp"
+                android:popupBackground="@drawable/common_google_signin_btn_icon_dark_normal_background"
+                android:spinnerMode="dialog"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView8" />
+                app:layout_constraintTop_toBottomOf="@+id/divider3" />
+
+            <Spinner
+                android:id="@+id/spinnerFrequencia"
+                android:layout_width="0dp"
+                android:layout_height="46dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="16dp"
+                android:popupBackground="@drawable/common_google_signin_btn_icon_dark_normal_background"
+                android:spinnerMode="dialog"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider4" />
+
+            <Spinner
+                android:id="@+id/spinnerCriancas"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="16dp"
+                android:popupBackground="@drawable/common_google_signin_btn_icon_dark_normal_background"
+                android:spinnerMode="dialog"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </android.support.constraint.ConstraintLayout>
