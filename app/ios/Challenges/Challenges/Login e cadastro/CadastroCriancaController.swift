@@ -198,21 +198,22 @@ class CadastroCriancaController: UIViewController, UITableViewDelegate, UITableV
                         self.user.criancas?.append(c)
                         self.user.save()
                     }
-                    UsuarioDAO.sharedInstance.login(email: self.user.email!, senha: self.se nhaResponsavel, success: { (_) in
-                        print("deu certo")
+                    UsuarioDAO.sharedInstance.login(email: self.user.email!, senha: self.senhaResponsavel, success: { (_) in
+                        self.performSegue(withIdentifier: "SeguePerfilResponsavel", sender: self)
                     }, failed: { (error) in
-                        print("deu errado")
+                        // TODO: Alert error login
                     })
-                }) { (_) in
-                    
+                }) { (error) in
+                    // TODO: Alert error cadastro
                 }
             }
-            
+        } else {
+            // TODO: Alert error validacao
         }
     }
     
     @IBAction func cadastrarDepoisButtonTapped(_ sender: UIButton) {
-        
+        self.performSegue(withIdentifier: "SeguePerfilResponsavel", sender: self)
     }
     
     func validarDados() -> Bool {
@@ -226,7 +227,7 @@ class CadastroCriancaController: UIViewController, UITableViewDelegate, UITableV
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if segue.identifier == "SegueCadastroCrianca" {
+        if segue.identifier == "SeguePerfilResponsavel" {
             
         }
     }

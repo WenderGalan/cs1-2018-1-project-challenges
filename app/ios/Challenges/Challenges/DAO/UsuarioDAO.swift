@@ -51,6 +51,18 @@ class UsuarioDAO: NSObject {
         }
     }
     
+    func requisitarNovaSenha(email: String, success: @escaping (Bool) -> (), failed: @escaping (Error?) -> ()) {
+    
+        Auth.auth().sendPasswordReset(withEmail: email) { (error) in
+            if let e = error {
+                failed(e)
+            } else {
+                success(true)
+            }
+        }
+    }
+    
+    
     func cadastrarResponsavel(responsavel: Responsavel, senha: String, success: @escaping (Bool) -> (), failed: @escaping (Error?) -> ()) {
         
         Auth.auth().createUser(withEmail: responsavel.email!, password: senha) { (firUser, errorCadastro) in
@@ -88,7 +100,6 @@ class UsuarioDAO: NSObject {
                     })
                 }
             } else {
-                print(errorCadastro?.localizedDescription)
                 failed(errorCadastro)
             }
         }

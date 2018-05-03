@@ -24,7 +24,7 @@ class DesafioViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
+        return UITableViewCell.init()
     }
 
 }

@@ -22,6 +22,7 @@ class CadastroResponsavelController: UIViewController, UITableViewDelegate, UITa
         super.viewDidLoad()
         
         navigationController?.isNavigationBarHidden = false
+        title = "Crie sua conta"
         
         setupTableView()
     }
@@ -118,16 +119,19 @@ class CadastroResponsavelController: UIViewController, UITableViewDelegate, UITa
                 UsuarioDAO.sharedInstance.cadastrarResponsavel(responsavel: user!, senha: senha!, success: { [unowned self] (_)  in
                     self.performSegue(withIdentifier: "SegueCadastroCrianca", sender: self)
                 }) { (_) in
-                    print("deu erro")
+                    // TODO: Alert error cadastro
                 }
             }
-            
+        } else {
+            // TODO: Alert error validacao
         }
         
     }
     
     func validarDados() -> Bool {
         return true
+        
+        
     }
     
     

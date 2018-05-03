@@ -41,6 +41,7 @@
 		0A855B3D206C4919001138DC /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A855B3C206C4919001138DC /* LoginController.swift */; };
 		0A855B3F206C492A001138DC /* CadastroResponsavelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A855B3E206C492A001138DC /* CadastroResponsavelController.swift */; };
 		0A855B41206C497D001138DC /* CadastroCriancaController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A855B40206C497D001138DC /* CadastroCriancaController.swift */; };
+		0AEEC7B52098B2F100F4C90C /* DK Cool Crayon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0AEEC7B22098B29C00F4C90C /* DK Cool Crayon.ttf */; };
 		1B3E1E6AEA17E454C510F0F4 /* Pods_Challenges.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DEFFBA0C8FD8175AAE1AFB3 /* Pods_Challenges.framework */; };
 		28D87721B82DA581E6AB8190 /* Pods_ChallengesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 903E5C5493AF3B1C3A5B8538 /* Pods_ChallengesTests.framework */; };
 		57E6F180C710C702700F7247 /* Pods_ChallengesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8933191861CBCED9EC5E17E0 /* Pods_ChallengesUITests.framework */; };
@@ -104,6 +105,7 @@
 		0A855B3C206C4919001138DC /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		0A855B3E206C492A001138DC /* CadastroResponsavelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CadastroResponsavelController.swift; sourceTree = "<group>"; };
 		0A855B40206C497D001138DC /* CadastroCriancaController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CadastroCriancaController.swift; sourceTree = "<group>"; };
+		0AEEC7B22098B29C00F4C90C /* DK Cool Crayon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DK Cool Crayon.ttf"; sourceTree = "<group>"; };
 		1B3A1525BF220B55AF99B895 /* Pods-ChallengesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChallengesUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ChallengesUITests/Pods-ChallengesUITests.release.xcconfig"; sourceTree = "<group>"; };
 		27BC87AE5A8C3692A1A72D64 /* Pods-Challenges.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Challenges.release.xcconfig"; path = "Pods/Target Support Files/Pods-Challenges/Pods-Challenges.release.xcconfig"; sourceTree = "<group>"; };
 		4DEFFBA0C8FD8175AAE1AFB3 /* Pods_Challenges.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Challenges.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -211,6 +213,7 @@
 				0A0697472068335200FA11EB /* AppDelegate.swift */,
 				0A06974E2068335200FA11EB /* Assets.xcassets */,
 				0A06974B2068335200FA11EB /* Main.storyboard */,
+				0AEEC7B42098B2A600F4C90C /* Fonts */,
 				0A0697502068335200FA11EB /* LaunchScreen.storyboard */,
 				0A0697532068335200FA11EB /* Info.plist */,
 				0A069777206833DA00FA11EB /* GoogleService-Info.plist */,
@@ -279,6 +282,14 @@
 				052F4BC92093CF95000A308E /* HabilidadeDesafioCell.swift */,
 			);
 			path = "Custom Views";
+			sourceTree = "<group>";
+		};
+		0AEEC7B42098B2A600F4C90C /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				0AEEC7B22098B29C00F4C90C /* DK Cool Crayon.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		7B0A12BE0EB5F142296BDC01 /* Frameworks */ = {
@@ -425,6 +436,7 @@
 				0A695A6A206FDF5100DED428 /* FotoPerfilCell.xib in Resources */,
 				0A069778206833DA00FA11EB /* GoogleService-Info.plist in Resources */,
 				052F4BC82093CC58000A308E /* HabilidadeDesafioCell.xib in Resources */,
+				0AEEC7B52098B2F100F4C90C /* DK Cool Crayon.ttf in Resources */,
 				0A06974F2068335200FA11EB /* Assets.xcassets in Resources */,
 				0A855B37206C46AE001138DC /* BasicTextFieldCell.xib in Resources */,
 				0A06974D2068335200FA11EB /* Main.storyboard in Resources */,

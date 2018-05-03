@@ -13,7 +13,8 @@ class LoginController: UIViewController {
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var senhaField: UITextField!
     
-    var user: Responsavel?
+    var userResponsavel: Responsavel?
+    var userCrianca: Crianca?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,8 +30,13 @@ class LoginController: UIViewController {
     @IBAction func entrarButtonTapped(_ sender: UIButton) {
         view.endEditing(true)
         UsuarioDAO.sharedInstance.login(email: emailField.text!, senha: senhaField.text!, success: { [unowned self] (usuario) in
-            self.user = usuario as? Responsavel
-            self.performSegue(withIdentifier: "SegueCadastroCrianca", sender: self)
+            if usuario.tipo == 0 {
+                self.userResponsavel = usuario as? Responsavel
+                self.performSegue(withIdentifier: "SegueLoginResponsavel", sender: self)
+            } else {
+                self.userCrianca = usuario as? Crianca
+                self.performSegue(withIdentifier: "SegueLoginCrianca", sender: self)
+            }
 
         }) { (error) in
             print("erro de login")
@@ -38,7 +44,26 @@ class LoginController: UIViewController {
     }
     
     @IBAction func esqueciSenhaButtonTapped(_ sender: UIButton) {
+        let alertController = UIAlertController(title: "Insira seu e-mail", message: "", preferredStyle: .alert)
+        alertController.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = "E-mail"
+        }
+        let saveAction = UIAlertAction(title: "Enviar", style: .default, handler: { alert -> Void in
+            let firstTextField = alertController.textFields![0] as UITextField
+            if let email = firstTextField.text {
+                UsuarioDAO.sharedInstance.requisitarNovaSenha(email: email, success: { (_) in
+                    //TODO: success message
+                }, failed: { (error) in
+                    //TODO: error message
+                })
+            }
+        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
         
+        alertController.addAction(saveAction)
+        alertController.addAction(cancelAction)
+        
+        self.present(alertController, animated: true, completion: nil)
     }
     
     @IBAction func criarContaButtonTapped(_ sender: UIButton) {
@@ -52,9 +77,9 @@ class LoginController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if segue.identifier == "SegueCadastroCrianca" {
-            let cc = segue.destination as! CadastroCriancaController
-            cc.user = user
+        if segue.identifier == "SegueCadastroResponsavel" {
+            let cc = segue.destination as! CadastroResponsavelController
+            cc.user = userResponsavel
         }
     }
     
