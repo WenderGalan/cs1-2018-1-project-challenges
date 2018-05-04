@@ -16,10 +16,10 @@
 		052F4BC62093C75B000A308E /* BasicLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 052F4BC52093C75B000A308E /* BasicLabelCell.swift */; };
 		052F4BC82093CC58000A308E /* HabilidadeDesafioCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 052F4BC72093CC58000A308E /* HabilidadeDesafioCell.xib */; };
 		052F4BCA2093CF95000A308E /* HabilidadeDesafioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 052F4BC92093CF95000A308E /* HabilidadeDesafioCell.swift */; };
-		056906D12092823F006716CB /* DesafioCell1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056906D02092823F006716CB /* DesafioCell1.swift */; };
-		056906D320928253006716CB /* DesafioCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056906D220928253006716CB /* DesafioCell2.swift */; };
-		056906D520928273006716CB /* DesafioCell3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056906D420928273006716CB /* DesafioCell3.swift */; };
+		05352297209BC8370064ED35 /* CadastrarDesafioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05352296209BC8370064ED35 /* CadastrarDesafioViewController.swift */; };
 		056A938F209251D1005BAA72 /* DesafioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056A938E209251D1005BAA72 /* DesafioViewController.swift */; };
+		05853D1A209D0D0B008530C3 /* BasicLabelHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05853D19209D0D0B008530C3 /* BasicLabelHeaderView.xib */; };
+		05853D1C209D0E01008530C3 /* BasicLabelHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05853D1B209D0E01008530C3 /* BasicLabelHeaderView.swift */; };
 		0A0697482068335200FA11EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0697472068335200FA11EB /* AppDelegate.swift */; };
 		0A06974D2068335200FA11EB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A06974B2068335200FA11EB /* Main.storyboard */; };
 		0A06974F2068335200FA11EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A06974E2068335200FA11EB /* Assets.xcassets */; };
@@ -74,10 +74,10 @@
 		052F4BC52093C75B000A308E /* BasicLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicLabelCell.swift; sourceTree = "<group>"; };
 		052F4BC72093CC58000A308E /* HabilidadeDesafioCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HabilidadeDesafioCell.xib; sourceTree = "<group>"; };
 		052F4BC92093CF95000A308E /* HabilidadeDesafioCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabilidadeDesafioCell.swift; sourceTree = "<group>"; };
-		056906D02092823F006716CB /* DesafioCell1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesafioCell1.swift; sourceTree = "<group>"; };
-		056906D220928253006716CB /* DesafioCell2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesafioCell2.swift; sourceTree = "<group>"; };
-		056906D420928273006716CB /* DesafioCell3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesafioCell3.swift; sourceTree = "<group>"; };
+		05352296209BC8370064ED35 /* CadastrarDesafioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CadastrarDesafioViewController.swift; sourceTree = "<group>"; };
 		056A938E209251D1005BAA72 /* DesafioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesafioViewController.swift; sourceTree = "<group>"; };
+		05853D19209D0D0B008530C3 /* BasicLabelHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BasicLabelHeaderView.xib; sourceTree = "<group>"; };
+		05853D1B209D0E01008530C3 /* BasicLabelHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicLabelHeaderView.swift; sourceTree = "<group>"; };
 		0A0697442068335100FA11EB /* Challenges.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Challenges.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A0697472068335200FA11EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0A06974C2068335200FA11EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -170,9 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				056A938E209251D1005BAA72 /* DesafioViewController.swift */,
-				056906D02092823F006716CB /* DesafioCell1.swift */,
-				056906D220928253006716CB /* DesafioCell2.swift */,
-				056906D420928273006716CB /* DesafioCell3.swift */,
+				05352296209BC8370064ED35 /* CadastrarDesafioViewController.swift */,
 			);
 			path = Desafio;
 			sourceTree = "<group>";
@@ -276,10 +274,12 @@
 				0A855B36206C46AE001138DC /* BasicTextFieldCell.xib */,
 				052F4BC32093C67A000A308E /* BasicLabelCell.xib */,
 				052F4BC72093CC58000A308E /* HabilidadeDesafioCell.xib */,
+				05853D19209D0D0B008530C3 /* BasicLabelHeaderView.xib */,
 				0A855B3A206C48BD001138DC /* FotoPerfilCell.swift */,
 				0A855B38206C4842001138DC /* BasicTextFieldCell.swift */,
 				052F4BC52093C75B000A308E /* BasicLabelCell.swift */,
 				052F4BC92093CF95000A308E /* HabilidadeDesafioCell.swift */,
+				05853D1B209D0E01008530C3 /* BasicLabelHeaderView.swift */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -438,6 +438,7 @@
 				052F4BC82093CC58000A308E /* HabilidadeDesafioCell.xib in Resources */,
 				0AEEC7B52098B2F100F4C90C /* DK Cool Crayon.ttf in Resources */,
 				0A06974F2068335200FA11EB /* Assets.xcassets in Resources */,
+				05853D1A209D0D0B008530C3 /* BasicLabelHeaderView.xib in Resources */,
 				0A855B37206C46AE001138DC /* BasicTextFieldCell.xib in Resources */,
 				0A06974D2068335200FA11EB /* Main.storyboard in Resources */,
 			);
@@ -634,6 +635,7 @@
 			files = (
 				052F4BCA2093CF95000A308E /* HabilidadeDesafioCell.swift in Sources */,
 				056A938F209251D1005BAA72 /* DesafioViewController.swift in Sources */,
+				05853D1C209D0E01008530C3 /* BasicLabelHeaderView.swift in Sources */,
 				0A855B3F206C492A001138DC /* CadastroResponsavelController.swift in Sources */,
 				0A161FEB206EE37400A397E0 /* Crianca.swift in Sources */,
 				052F4BBB20939F91000A308E /* HomeCriancaViewController.swift in Sources */,
@@ -646,15 +648,13 @@
 				0A161FE9206EE25000A397E0 /* Responsavel.swift in Sources */,
 				0A855B39206C4842001138DC /* BasicTextFieldCell.swift in Sources */,
 				0A855B3D206C4919001138DC /* LoginController.swift in Sources */,
-				056906D520928273006716CB /* DesafioCell3.swift in Sources */,
+				05352297209BC8370064ED35 /* CadastrarDesafioViewController.swift in Sources */,
 				0A0697482068335200FA11EB /* AppDelegate.swift in Sources */,
 				0A06977A20683C1300FA11EB /* FirestoreObject.swift in Sources */,
 				050B58D9208E87C7002FDA31 /* NotificacaoResponsavelTableViewCell.swift in Sources */,
 				052F4BC22093B492000A308E /* PerfilResponsavelViewController.swift in Sources */,
 				052F4BC62093C75B000A308E /* BasicLabelCell.swift in Sources */,
 				0A0697762068336D00FA11EB /* Usuario.swift in Sources */,
-				056906D12092823F006716CB /* DesafioCell1.swift in Sources */,
-				056906D320928253006716CB /* DesafioCell2.swift in Sources */,
 				0A06977E2068974100FA11EB /* UsuarioDAO.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -10,7 +10,7 @@ import UIKit
 
 class BasicLabelCell: UITableViewCell {
 
-    static let BasicLabelCellID = "BasicLabelCell"
+    static let basicLabelCellID = "BasicLabelCell"
     
     @IBOutlet weak var TextoLabel: UILabel!
     
@@ -23,7 +23,7 @@ class BasicLabelCell: UITableViewCell {
     }
 
     class func defaultIdentifier() -> String {
-        return BasicLabelCellID
+        return basicLabelCellID
     }
     
 }

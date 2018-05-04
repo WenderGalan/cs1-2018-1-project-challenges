@@ -10,7 +10,7 @@ import UIKit
 
 class HabilidadeDesafioCell: UITableViewCell {
 
-    static let HabilidadeDesafioCellID = "HabilidadeDesafioCell"
+    static let habilidadeDesafioCellID = "HabilidadeDesafioCell"
     
     @IBOutlet weak var LabelHabilidade: UILabel!
     @IBOutlet weak var imagemHabilidade: UIImageView!
@@ -24,7 +24,7 @@ class HabilidadeDesafioCell: UITableViewCell {
     }
     
     class func defaultIdentifier() -> String {
-        return HabilidadeDesafioCellID
+        return habilidadeDesafioCellID
     }
 
 }

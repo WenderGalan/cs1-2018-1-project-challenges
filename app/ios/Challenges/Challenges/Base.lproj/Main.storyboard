@@ -630,6 +630,38 @@
             </objects>
             <point key="canvasLocation" x="-175.19999999999999" y="-305.39730134932535"/>
         </scene>
+        <!--Cadastrar Desafio View Controller-->
+        <scene sceneID="dXh-hu-lCx">
+            <objects>
+                <viewController id="MQb-AT-bOj" customClass="CadastrarDesafioViewController" customModule="Challenges" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="vL9-wT-1CQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MCE-bK-Vmx">
+                                <rect key="frame" x="0.0" y="64" width="375" height="533"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="epD-1m-pxa">
+                                <rect key="frame" x="22" y="610" width="330" height="43"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.67322857839469652" blue="0.12001656610445521" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                <state key="normal" title="Salvar">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="21V-xh-UUb"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Lxd-fL-IZ2"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sLg-Bo-1Qg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3384.8000000000002" y="-1845.4272863568217"/>
+        </scene>
     </scenes>
     <resources>
         <image name="challengesLogo" width="270" height="55"/>
