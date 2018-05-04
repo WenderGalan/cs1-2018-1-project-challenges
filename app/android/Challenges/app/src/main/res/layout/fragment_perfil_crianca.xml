@@ -152,12 +152,13 @@
                     android:layout_height="wrap_content"
                     android:layout_above="@+id/textView17"
                     android:layout_marginStart="41dp"
+                    android:layout_marginTop="15dp"
                     android:layout_toStartOf="@+id/foto_perfil"
                     android:text="2.7k"
                     android:textColor="@color/common_google_signin_btn_text_dark_focused"
                     android:textSize="18sp"
                     app:layout_constraintStart_toEndOf="@+id/qnt_pontos"
-                    tools:layout_editor_absoluteY="204dp"
+                    app:layout_constraintTop_toBottomOf="@+id/view"
                     tools:ignore="MissingConstraints" />
 
                 <TextView
@@ -198,12 +199,13 @@
                     android:layout_below="@+id/qnt_recompensas"
                     android:layout_marginEnd="20dp"
                     android:layout_marginStart="33dp"
+                    android:layout_marginTop="15dp"
                     android:text="Recompensas"
                     android:textColor="@color/common_google_signin_btn_text_dark_focused"
                     android:textSize="15sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView19"
-                    tools:layout_editor_absoluteY="243dp"
+                    app:layout_constraintTop_toBottomOf="@+id/qnt_recompensas"
                     tools:ignore="MissingConstraints" />
 
                 <TextView
