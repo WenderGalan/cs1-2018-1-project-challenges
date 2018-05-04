@@ -1,9 +1,11 @@
 package challenges.com.challenges.activities;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -23,6 +25,7 @@ import java.util.List;
 import challenges.com.challenges.R;
 import challenges.com.challenges.adapter.HintAdapter;
 import challenges.com.challenges.config.ConfiguracaoFirebase;
+import challenges.com.challenges.model.Crianca;
 import challenges.com.challenges.model.Desafio;
 import challenges.com.challenges.model.Responsavel;
 import challenges.com.challenges.util.Validator;
@@ -50,8 +53,13 @@ public class CadastrarDesafioActivity extends AppCompatActivity {
     private List<String> nomes;
     private ArrayList<DocumentReference> criancas;
     private DocumentReference responsavelReference;
+    private String tipo;
+    private Desafio desafioEditar;
+    private Crianca crianca;
+    private String nomeCrianca;
 
 
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,51 +84,178 @@ public class CadastrarDesafioActivity extends AppCompatActivity {
         });
         desafio = new Desafio();
         criancasReferencia = new ArrayList<DocumentReference>();
+        nomes = new ArrayList<String>();
+        List<String> ids = new ArrayList<String>();
+
+        tipo = getIntent().getStringExtra("tipo");
+
+
+        if (tipo.equals("editar")) {
+            desafioEditar = (Desafio) getIntent().getSerializableExtra("desafio");
+            titulo.setText(desafioEditar.getTitulo());
+            recompensa.setText(desafioEditar.getRecompensa());
+            pontos.setText(String.valueOf(desafioEditar.getPontos()));
+            observacoes.setText(desafioEditar.getObservacoes());
+            qtdRepeticoes.setText(String.valueOf(desafioEditar.getRepeticoes()));
+
+
+        } else if (tipo.equals("cadastrar")) {
+            nomes = getIntent().getStringArrayListExtra("nomes");
+            ids = getIntent().getStringArrayListExtra("ids");
+            nomes.add("Crianças");
+        }
 
         usuarioUID = ConfiguracaoFirebase.getFirebaseAutenticacao().getUid();
         desafio.setResponsavel(usuarioUID);
 
-        nomes = new ArrayList<String>();
-        List<String> ids = new ArrayList<String>();
+        //seta os spinners
+        setarSpinners();
 
-        nomes = getIntent().getStringArrayListExtra("nomes");
-        ids = getIntent().getStringArrayListExtra("ids");
+        if (tipo.equals("editar")) {
+            switch (desafioEditar.getHabilidade()) {
+                case "fisica":
+                    spinnerHabilidade.setSelection(0);
+                    break;
+                case "intelectual":
+                    spinnerHabilidade.setSelection(1);
+                    break;
+                case "criatividade":
+                    spinnerHabilidade.setSelection(2);
+                    break;
+                case "social":
+                    spinnerHabilidade.setSelection(3);
+                    break;
+            }
 
-        nomes.add("Crianças");
+            switch (desafioEditar.getFrequencia()) {
+                case "unica vez":
+                    spinnerFrequencia.setSelection(0);
+                    break;
+                case "diario":
+                    spinnerFrequencia.setSelection(1);
+                    break;
+                case "semanal":
+                    spinnerFrequencia.setSelection(2);
+                    break;
+                case "mensal":
+                    spinnerFrequencia.setSelection(3);
+                    break;
+            }
 
+            Log.i("DEBUG", "ID: " + desafioEditar.getCrianca());
+            DocumentReference reference = ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(desafioEditar.getCrianca());
+
+            reference.get().addOnSuccessListener(CadastrarDesafioActivity.this, new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    if (documentSnapshot.exists()){
+                        crianca = documentSnapshot.toObject(Crianca.class);
+                        Log.i("DEBUG", "getNome: " + crianca.getNome());
+                        nomeCrianca = crianca.getNome();
+
+                        //seta o spinner da crianca
+                        List<String> crianca = new ArrayList<String>();
+                        crianca.add(nomeCrianca);
+                        crianca.add(nomeCrianca);
+                        HintAdapter adapterCriancas = new HintAdapter(CadastrarDesafioActivity.this, R.layout.spinner_item, crianca);
+                        adapterCriancas.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinnerCriancas.setAdapter(adapterCriancas);
+                        spinnerCriancas.setSelection(adapterCriancas.getCount());
+                        spinnerCriancas.setClickable(false);
+                        spinnerCriancas.setFocusable(false);
+                        spinnerCriancas.setBackgroundColor(R.color.cinza);
+
+                    }
+                }
+            });
+
+
+
+
+
+        }
+
+
+        //botao salvar
+        salvar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (tipo.equals("cadastrar")) {
+                    if (validarCampos()) {
+                        //seta o titulo
+                        desafio.setTitulo(titulo.getText().toString());
+                        //seta a recompensa se for diferente de vazio
+                        if (!recompensa.getText().toString().equals("")) {
+                            desafio.setRecompensa(recompensa.getText().toString());
+                        }
+                        desafio.setPontos(Integer.parseInt(pontos.getText().toString()));
+                        if (!observacoes.getText().toString().equals("")) {
+                            desafio.setObservacoes(observacoes.getText().toString());
+                        }
+                        /**SETAR A HORA E A DATA ATUAL**/
+                        Calendar c = Calendar.getInstance();
+                        int ano = c.get(Calendar.YEAR);
+                        int mes = c.get(Calendar.MONTH) + 1;
+                        int dia = c.get(Calendar.DAY_OF_MONTH);
+                        int hora = c.get(Calendar.HOUR_OF_DAY);
+                        int minuto = c.get(Calendar.MINUTE);
+
+                        desafio.setData(dia + "/" + mes + "/" + ano);
+                        desafio.setHora(hora + ":" + minuto);
+
+                        ConfiguracaoFirebase.getFirestore().collection("Desafios").document().set(desafio.construirHash()).addOnSuccessListener(CadastrarDesafioActivity.this, new OnSuccessListener() {
+                            @Override
+                            public void onSuccess(Object o) {
+
+                                Toast.makeText(CadastrarDesafioActivity.this, "Desafio inserido com sucesso!", Toast.LENGTH_LONG).show();
+                                finish();
+                            }
+                        });
+
+                    }
+                } else if (tipo.equals("editar")) {
+
+                }
+            }
+        });
+
+    }
+
+    private void setarSpinners() {
         HintAdapter adapterCriancas = new HintAdapter(this, R.layout.spinner_item, nomes);
         adapterCriancas.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCriancas.setAdapter(adapterCriancas);
         spinnerHabilidade.setSelection(adapterCriancas.getCount());
 
-        spinnerCriancas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, final int i, long l) {
-                String resultado = nomes.get(i).toString();
-                if (resultado.equals("Crianças")){
-                    criancaSelecionada = true;
-                }else{
-                    responsavelReference = ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(usuarioUID);
-                    responsavelReference.get().addOnSuccessListener(CadastrarDesafioActivity.this, new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            if (documentSnapshot.exists()){
-                                Responsavel responsavel = documentSnapshot.toObject(Responsavel.class);
-                                criancas = responsavel.getCriancas();
-                                desafio.setCrianca(criancas.get(i).getId());
+        if (tipo.equals("cadastrar")){
+            spinnerCriancas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, final int i, long l) {
+                    String resultado = nomes.get(i).toString();
+                    if (resultado.equals("Crianças")) {
+                        criancaSelecionada = true;
+                    } else {
+                        responsavelReference = ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(usuarioUID);
+                        responsavelReference.get().addOnSuccessListener(CadastrarDesafioActivity.this, new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                if (documentSnapshot.exists()) {
+                                    Responsavel responsavel = documentSnapshot.toObject(Responsavel.class);
+                                    criancas = responsavel.getCriancas();
+                                    desafio.setCrianca(criancas.get(i).getId());
+                                }
                             }
-                        }
-                    });
-                    criancaSelecionada = false;
+                        });
+                        criancaSelecionada = false;
+                    }
                 }
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
 
-            }
-        });
-
+                }
+            });
+        }
 
         //seta as listas
         listaHabilidade = new ArrayList<String>();
@@ -204,47 +339,6 @@ public class CadastrarDesafioActivity extends AppCompatActivity {
 
             }
         });
-
-
-        //botao salvar
-        salvar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (validarCampos()) {
-                    //seta o titulo
-                    desafio.setTitulo(titulo.getText().toString());
-                    //seta a recompensa se for diferente de vazio
-                    if (!recompensa.getText().toString().equals("")) {
-                        desafio.setRecompensa(recompensa.getText().toString());
-                    }
-                    desafio.setPontos(Integer.parseInt(pontos.getText().toString()));
-                    if (!observacoes.getText().toString().equals("")) {
-                        desafio.setObservacoes(observacoes.getText().toString());
-                    }
-                    /**SETAR A HORA E A DATA ATUAL**/
-                    Calendar c = Calendar.getInstance();
-                    int ano = c.get(Calendar.YEAR);
-                    int mes = c.get(Calendar.MONTH)+1;
-                    int dia = c.get(Calendar.DAY_OF_MONTH);
-                    int hora = c.get(Calendar.HOUR_OF_DAY);
-                    int minuto = c.get(Calendar.MINUTE);
-
-                    desafio.setData(dia + "/" + mes + "/" + ano);
-                    desafio.setHora(hora + ":" + minuto);
-
-                    ConfiguracaoFirebase.getFirestore().collection("Desafios").document().set(desafio.construirHash()).addOnSuccessListener(CadastrarDesafioActivity.this, new OnSuccessListener() {
-                        @Override
-                        public void onSuccess(Object o) {
-
-                            Toast.makeText(CadastrarDesafioActivity.this, "Desafio inserido com sucesso!", Toast.LENGTH_LONG).show();
-                            finish();
-                        }
-                    });
-
-                }
-            }
-        });
-
     }
 
 

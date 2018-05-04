@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class Desafio implements Serializable {
 
-
+    private String id;
     private String titulo;
     private String recompensa;
     private String habilidade;
@@ -20,9 +20,25 @@ public class Desafio implements Serializable {
     private String data;
 
 
-
-
     public Desafio() { }
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
+    public String getResponsavel() {
+        return responsavel;
+    }
+    public void setResponsavel(String responsavel) {
+        this.responsavel = responsavel;
+    }
+    public String getCrianca() {
+        return crianca;
+    }
+    public void setCrianca(String crianca) {
+        this.crianca = crianca;
+    }
     public String getTitulo() {
         return titulo;
     }
@@ -52,18 +68,6 @@ public class Desafio implements Serializable {
     }
     public void setObservacoes(String observacoes) {
         this.observacoes = observacoes;
-    }
-    public String getResponsavel() {
-        return responsavel;
-    }
-    public void setResponsavel(String responsavel) {
-        this.responsavel = responsavel;
-    }
-    public String getCrianca() {
-        return crianca;
-    }
-    public void setCrianca(String crianca) {
-        this.crianca = crianca;
     }
     public String getFrequencia() {
         return frequencia;

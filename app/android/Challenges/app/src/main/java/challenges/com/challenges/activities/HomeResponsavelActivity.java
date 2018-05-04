@@ -20,8 +20,6 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,8 +51,7 @@ public class HomeResponsavelActivity extends AppCompatActivity {
 
     private ArrayList<DocumentReference> criancasObject2;
     private List<String> listaCriancas;
-
-    public static transient JSONObject json = null;
+    private ArrayList<Desafio> desafiosResult = new ArrayList<Desafio>();
 
     private FirebaseAuth autenticacao;
 
@@ -113,15 +110,8 @@ public class HomeResponsavelActivity extends AppCompatActivity {
             }
         });
 
-        Query query = ConfiguracaoFirebase.getFirestore().collection("Desafios").whereEqualTo("responsavel", usuarioUID);
-        query.addSnapshotListener(HomeResponsavelActivity.this, new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                List<Desafio> desafiosResult = documentSnapshots.toObjects(Desafio.class);
-                adapterDesafio = new DesafioAdapter((ArrayList<Desafio>) desafiosResult, "responsavel");
-                recyclerViewDesafio.setAdapter(adapterDesafio);
-            }
-        });
+        //carrega os desafios da view
+        carregarDesafios();
 
         configuracoes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,6 +156,23 @@ public class HomeResponsavelActivity extends AppCompatActivity {
 
     }
 
+    private void carregarDesafios() {
+        Query query = ConfiguracaoFirebase.getFirestore().collection("Desafios").whereEqualTo("responsavel", usuarioUID);
+        query.addSnapshotListener(HomeResponsavelActivity.this, new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                desafiosResult.clear();
+                for (DocumentSnapshot document : documentSnapshots){
+                    Desafio desafio = document.toObject(Desafio.class);
+                    desafio.setId(document.getId());
+                    desafiosResult.add(desafio);
+                }
+                adapterDesafio = new DesafioAdapter(desafiosResult, "responsavel");
+                recyclerViewDesafio.setAdapter(adapterDesafio);
+            }
+        });
+    }
+
 
     private void abrirNotificacoes() {
         Intent intent = new Intent(HomeResponsavelActivity.this, NotificacoesActivity.class);
@@ -185,6 +192,7 @@ public class HomeResponsavelActivity extends AppCompatActivity {
 
         intent.putStringArrayListExtra("nomes", (ArrayList<String>) nomes);
         intent.putStringArrayListExtra("ids", (ArrayList<String>) ids);
+        intent.putExtra("tipo", "cadastrar");
         startActivity(intent);
     }
 
@@ -203,9 +211,6 @@ public class HomeResponsavelActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        adapterCrianca.notifyDataSetChanged();
-        adapterCrianca.notify();
-        adapterDesafio.notifyDataSetChanged();
     }
 
 
