@@ -8,172 +8,235 @@
     <!-- TODO: Update blank fragment layout -->
 
 
-    <RelativeLayout
-        android:id="@+id/rl_id_perfil_crianca"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/foto_perfil"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="25dp"
-            android:layout_marginTop="33dp"
-            android:src="@drawable/ic_camera" />
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/nome_crianca"
-            android:layout_below="@+id/view"
-            android:layout_marginTop="20dp"
-            android:text="ESTATÍSTICAS"
-            android:textColor="@color/colorPrimary"
-            android:textSize="36sp" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView20"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/nome_crianca"
-            android:layout_below="@+id/view"
-            android:layout_marginTop="148dp"
-            android:text="AMIGOS"
-            android:textColor="@color/colorPrimary"
-            android:textSize="36sp" />
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/nome_crianca"
-            android:layout_width="170dp"
-            android:layout_height="90dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignTop="@+id/foto_perfil"
-            android:layout_marginStart="24dp"
-            android:text="NOME"
-            android:textColor="@color/colorPrimary"
-            android:textSize="36sp" />
+                <TextView
+                    android:id="@+id/nome_crianca"
+                    android:layout_width="231dp"
+                    android:layout_height="90dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignTop="@+id/foto_perfil"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:text="NOME"
+                    android:textColor="#4CC6F5"
+                    android:textSize="28sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/foto_perfil"
-            android:layout_alignStart="@+id/textView6"
-            android:layout_marginBottom="9dp"
-            android:text="Habilidade principal" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/foto_perfil"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="15dp"
+                    android:src="@drawable/ic_camera"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/nome_crianca"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <View
-            android:layout_width="400dp"
-            android:layout_height="2dp"
-            android:layout_below="@+id/textView8"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="33dp"
-            android:background="#CCCCCC"
-            android:id="@+id/view" />
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/foto_perfil"
+                    android:layout_alignStart="@+id/textView6"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:text="Habilidade principal"
+                    android:textColor="#999"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/nome_crianca" />
 
-        <TextView
-            android:id="@+id/habilidade_principal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/textView8"
-            android:layout_below="@+id/textView8"
-            android:text="Inteligência"
-            android:textColor="@color/common_google_signin_btn_text_dark_focused" />
+                <TextView
+                    android:id="@+id/habilidade_principal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/textView8"
+                    android:layout_below="@+id/textView8"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:text="Inteligência"
+                    android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/qnt_recompensas"
-            android:layout_below="@+id/qnt_recompensas"
-            android:text="Recompensas"
-            android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="15sp" />
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="400dp"
+                    android:layout_height="2dp"
+                    android:layout_below="@+id/textView8"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:background="#CCCCCC"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.517"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/habilidade_principal" />
 
-        <TextView
-            android:id="@+id/textView19"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/qnt_amigos"
-            android:layout_below="@+id/qnt_amigos"
-            android:text="Amigos"
-            android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/qnt_desafios"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/textView6"
+                    android:layout_below="@+id/textView6"
+                    android:layout_marginStart="34dp"
+                    android:layout_marginTop="15dp"
+                    android:text="128"
+                    android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view" />
 
-        <TextView
-            android:id="@+id/textView17"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/qnt_pontos"
-            android:layout_below="@+id/qnt_pontos"
-            android:text="Pontos"
-            android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/qnt_desafios"
+                    android:layout_below="@+id/qnt_desafios"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:text="Desafios"
+                    android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                    android:textSize="15sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/qnt_desafios" />
 
-        <TextView
-            android:id="@+id/textView14"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/qnt_desafios"
-            android:layout_below="@+id/qnt_desafios"
-            android:text="Desafios"
-            android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/qnt_pontos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/qnt_desafios"
+                    android:layout_alignBottom="@+id/qnt_desafios"
+                    android:layout_alignEnd="@+id/textView8"
+                    android:layout_marginStart="49dp"
+                    android:layout_marginTop="15dp"
+                    android:text="346"
+                    android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toEndOf="@+id/qnt_desafios"
+                    app:layout_constraintTop_toBottomOf="@+id/view" />
 
-        <TextView
-            android:id="@+id/qnt_recompensas"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/textView19"
-            android:layout_marginStart="38dp"
-            android:layout_toEndOf="@+id/textView19"
-            android:text="133"
-            android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/textView17"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/qnt_pontos"
+                    android:layout_below="@+id/qnt_pontos"
+                    android:layout_marginStart="27dp"
+                    android:layout_marginTop="15dp"
+                    android:text="Pontos"
+                    android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                    android:textSize="15sp"
+                    app:layout_constraintStart_toEndOf="@+id/textView14"
+                    app:layout_constraintTop_toBottomOf="@+id/qnt_pontos" />
 
-        <TextView
-            android:id="@+id/qnt_amigos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/textView17"
-            android:layout_marginEnd="14dp"
-            android:layout_toStartOf="@+id/foto_perfil"
-            android:text="2.7k"
-            android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/qnt_amigos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/textView17"
+                    android:layout_marginStart="41dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_toStartOf="@+id/foto_perfil"
+                    android:text="2.7k"
+                    android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toEndOf="@+id/qnt_pontos"
+                    app:layout_constraintTop_toBottomOf="@+id/view"
+                    tools:ignore="MissingConstraints" />
 
-        <TextView
-            android:id="@+id/qnt_pontos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/qnt_desafios"
-            android:layout_alignBottom="@+id/qnt_desafios"
-            android:layout_alignEnd="@+id/textView8"
-            android:text="346"
-            android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/textView19"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/qnt_amigos"
+                    android:layout_below="@+id/qnt_amigos"
+                    android:layout_marginStart="27dp"
+                    android:layout_marginTop="15dp"
+                    android:text="Amigos"
+                    android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                    android:textSize="15sp"
+                    app:layout_constraintStart_toEndOf="@+id/textView17"
+                    app:layout_constraintTop_toBottomOf="@+id/qnt_amigos" />
 
-        <TextView
-            android:id="@+id/qnt_desafios"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/textView6"
-            android:layout_below="@+id/textView6"
-            android:layout_marginTop="15dp"
-            android:text="128"
-            android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/qnt_recompensas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/textView19"
+                    android:layout_marginEnd="50dp"
+                    android:layout_marginStart="68dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_toEndOf="@+id/textView19"
+                    android:text="133"
+                    android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/qnt_amigos"
+                    app:layout_constraintTop_toBottomOf="@+id/view" />
 
-        <ImageView
-            android:id="@+id/adc_amigo"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignBottom="@+id/textView20"
-            android:layout_alignEnd="@+id/textView11"
-            android:src="@drawable/ic_plus" />
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/qnt_recompensas"
+                    android:layout_below="@+id/qnt_recompensas"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="33dp"
+                    android:layout_marginTop="15dp"
+                    android:text="Recompensas"
+                    android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView19"
+                    app:layout_constraintTop_toBottomOf="@+id/qnt_recompensas"
+                    tools:ignore="MissingConstraints" />
 
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/textView20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/nome_crianca"
+                    android:layout_below="@+id/view"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="AMIGOS"
+                    android:textColor="#4CC6F5"
+                    android:textSize="28sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+                <ImageView
+                    android:id="@+id/adc_amigo"
+                    android:layout_width="31dp"
+                    android:layout_height="31dp"
+                    android:layout_alignBottom="@+id/textView20"
+                    android:layout_alignEnd="@+id/textView11"
+                    android:layout_marginEnd="21dp"
+                    android:layout_marginStart="199dp"
+                    android:layout_marginTop="22dp"
+                    android:src="@drawable/ic_plus"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView20"
+                    app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+            </android.support.constraint.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
 </FrameLayout>
