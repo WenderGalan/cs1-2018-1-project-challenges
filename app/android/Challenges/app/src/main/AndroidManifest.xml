@@ -27,8 +27,6 @@
                   android:screenOrientation="portrait" />
         <activity android:name=".activities.HomeResponsavelActivity"
                   android:screenOrientation="portrait"/>
-        <activity android:name=".activities.ConfiguracoesResponsavelActivity"
-                  android:screenOrientation="portrait"/>
         <activity android:name=".activities.CadastrarDesafioActivity"
                   android:screenOrientation="portrait"/>
         <activity android:name=".activities.NotificacoesActivity"

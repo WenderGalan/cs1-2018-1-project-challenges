@@ -93,7 +93,7 @@
             android:layout_alignStart="@+id/editTextConfirmarSenha"
             android:layout_below="@+id/editTextConfirmarSenha"
             android:layout_marginTop="10dp"
-            android:background="@drawable/fundo_botao_branco"
+            android:background="@drawable/fundo_botao_cinza"
             android:text="Concluir"
             android:textAllCaps="false"
             android:textColor="@color/branco"

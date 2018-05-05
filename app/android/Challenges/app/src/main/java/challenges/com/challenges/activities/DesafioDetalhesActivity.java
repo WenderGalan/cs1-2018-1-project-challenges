@@ -206,7 +206,9 @@ public class DesafioDetalhesActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             Toast.makeText(DesafioDetalhesActivity.this, "Desafio deletado com sucesso!", Toast.LENGTH_LONG).show();
-                            finish();
+                            Intent intent = new Intent(DesafioDetalhesActivity.this, HomeResponsavelActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
                         }
                     });
                 }else if (tipo.equals("crianca")){

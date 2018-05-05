@@ -30,19 +30,19 @@
         android:paddingLeft="15dp"
         android:textColorHint="@android:color/darker_gray" />
 
-        <EditText
-            android:id="@+id/editTextNome"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_below="@+id/editTextEmail"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
-            android:ems="10"
-            android:hint="Nome"
-            android:inputType="textPersonName"
-            android:paddingLeft="15dp"
-            android:textColorHint="@android:color/darker_gray" />
+    <EditText
+        android:id="@+id/editTextNome"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/editTextEmail"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
+        android:ems="10"
+        android:hint="Nome"
+        android:inputType="textPersonName"
+        android:paddingLeft="15dp"
+        android:textColorHint="@android:color/darker_gray" />
 
         <EditText
             android:id="@+id/editTextSenha"
@@ -79,7 +79,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/editTextConfirmarSenha"
         android:layout_marginBottom="15dp"
-        android:background="@drawable/fundo_botao_branco"
+        android:background="@drawable/fundo_botao_azul_grande"
         android:text="Continuar"
         android:textAllCaps="false"
         android:textColor="@color/branco"

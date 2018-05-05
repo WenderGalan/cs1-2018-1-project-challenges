@@ -31,7 +31,7 @@
             android:layout_marginBottom="127dp"
             android:text="SUGESTÕES DE DESAFIOS"
             android:textColor="@color/rosa"
-            android:textSize="36sp" />
+            android:textSize="29sp" />
 
         <View
             android:id="@+id/view2"
@@ -61,7 +61,7 @@
             android:layout_marginTop="12dp"
             android:text="MEUS DESAFIOS"
             android:textColor="@color/rosa"
-            android:textSize="36sp" />
+            android:textSize="29sp" />
 
         <ImageView
             android:id="@+id/imageView4"

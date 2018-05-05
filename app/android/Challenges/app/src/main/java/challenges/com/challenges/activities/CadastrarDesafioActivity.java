@@ -1,8 +1,10 @@
 package challenges.com.challenges.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -163,7 +165,14 @@ public class CadastrarDesafioActivity extends AppCompatActivity {
                         spinnerCriancas.setSelection(adapterCriancas.getCount());
                         spinnerCriancas.setClickable(false);
                         spinnerCriancas.setFocusable(false);
-                        spinnerCriancas.setBackgroundColor(R.color.cinza);
+
+                        final int sdk = android.os.Build.VERSION.SDK_INT;
+
+                        if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                            spinnerCriancas.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.fundo_botao_cinza) );
+                        } else {
+                            spinnerCriancas.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.fundo_botao_cinza));
+                        }
 
                     }
                 }
@@ -214,6 +223,21 @@ public class CadastrarDesafioActivity extends AppCompatActivity {
 
                     }
                 } else if (tipo.equals("editar")) {
+                    desafioEditar.setTitulo(titulo.getText().toString());
+                    desafioEditar.setRecompensa(recompensa.getText().toString());
+                    desafioEditar.setObservacoes(observacoes.getText().toString());
+                    desafioEditar.setRepeticoes(Integer.parseInt(qtdRepeticoes.getText().toString()));
+                    desafioEditar.setPontos(Integer.parseInt(pontos.getText().toString()));
+                    DocumentReference referencia = ConfiguracaoFirebase.getFirestore().collection("Desafios").document(desafioEditar.getId());
+                    referencia.update(desafioEditar.construirHash()).addOnSuccessListener(CadastrarDesafioActivity.this, new OnSuccessListener() {
+                        @Override
+                        public void onSuccess(Object o) {
+                                Toast.makeText(CadastrarDesafioActivity.this, "Desafio atualizado com sucesso!", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(CadastrarDesafioActivity.this, HomeResponsavelActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                        }
+                    });
 
                 }
             }
@@ -279,15 +303,19 @@ public class CadastrarDesafioActivity extends AppCompatActivity {
                     habilidadeSelecionada = true;
                 } else if (resultado.equals("Física")) {
                     desafio.setHabilidade("fisica");
+                    desafioEditar.setHabilidade("fisica");
                     habilidadeSelecionada = false;
                 } else if (resultado.equals("Intelectual")) {
                     desafio.setHabilidade("intelectual");
+                    desafioEditar.setHabilidade("intelectual");
                     habilidadeSelecionada = false;
                 } else if (resultado.equals("Criatividade")) {
                     desafio.setHabilidade("criatividade");
+                    desafioEditar.setHabilidade("criatividade");
                     habilidadeSelecionada = false;
                 } else if (resultado.equals("Social")) {
                     desafio.setHabilidade("social");
+                    desafioEditar.setHabilidade("social");
                     habilidadeSelecionada = false;
                 }
 
@@ -320,16 +348,20 @@ public class CadastrarDesafioActivity extends AppCompatActivity {
                     frequenciaSelecionada = true;
                 } else if (resultado.equals("Única vez")) {
                     desafio.setFrequencia("unica vez");
+                    desafioEditar.setFrequencia("unica vez");
                     qtdRepeticoes.setText("1");
                     frequenciaSelecionada = false;
                 } else if (resultado.equals("Diário")) {
                     desafio.setFrequencia("diario");
+                    desafioEditar.setFrequencia("diario");
                     frequenciaSelecionada = false;
                 } else if (resultado.equals("Semanal")) {
                     desafio.setFrequencia("semanal");
+                    desafioEditar.setFrequencia("semanal");
                     frequenciaSelecionada = false;
                 } else if (resultado.equals("Mensal")) {
                     desafio.setFrequencia("Mensal");
+                    desafioEditar.setFrequencia("Mensal");
                     frequenciaSelecionada = false;
                 }
             }

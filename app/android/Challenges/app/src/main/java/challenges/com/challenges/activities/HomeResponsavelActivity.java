@@ -33,7 +33,7 @@ import challenges.com.challenges.model.Responsavel;
 
 public class HomeResponsavelActivity extends AppCompatActivity {
 
-    private ImageView configuracoes;
+    private ImageView editarUsuario;
     private TextView nome;
     private ImageView adicionarCrianca;
     private ImageView adicionarDesafio;
@@ -61,7 +61,7 @@ public class HomeResponsavelActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home_responsavel);
 
         nome = findViewById(R.id.textViewNomeResponsavel);
-        configuracoes = findViewById(R.id.imageViewConfiguracoes);
+        editarUsuario = findViewById(R.id.imageViewEditarUsuario);
         adicionarCrianca = findViewById(R.id.imageViewAddCrianca);
         adicionarDesafio = findViewById(R.id.imageViewAddDesafio);
         recyclerViewCrianca = findViewById(R.id.recyclerViewCriancas);
@@ -113,10 +113,10 @@ public class HomeResponsavelActivity extends AppCompatActivity {
         //carrega os desafios da view
         carregarDesafios();
 
-        configuracoes.setOnClickListener(new View.OnClickListener() {
+        editarUsuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                abrirConfiguracoes();
+                abrirEditarUsuario();
             }
         });
 
@@ -203,8 +203,9 @@ public class HomeResponsavelActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void abrirConfiguracoes() {
-        Intent intent = new Intent(HomeResponsavelActivity.this, ConfiguracoesResponsavelActivity.class);
+    private void abrirEditarUsuario() {
+        Intent intent = new Intent(HomeResponsavelActivity.this, CadastroActivity.class);
+        intent.putExtra("tipo", "editar");
         startActivity(intent);
     }
 
@@ -214,4 +215,11 @@ public class HomeResponsavelActivity extends AppCompatActivity {
     }
 
 
+    public void sairDaConta(View view) {
+        FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        autenticacao.signOut();
+        Intent intent = new Intent(HomeResponsavelActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

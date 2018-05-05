@@ -157,6 +157,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void criarNovaConta(View view) {
         Intent intent = new Intent(LoginActivity.this, CadastroActivity.class);
+        intent.putExtra("tipo", "novo");
         startActivity(intent);
         finish();
     }
