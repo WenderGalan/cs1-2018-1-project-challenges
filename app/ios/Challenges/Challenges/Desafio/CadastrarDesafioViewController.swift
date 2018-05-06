@@ -57,53 +57,47 @@ class CadastrarDesafioViewController: UIViewController, UITableViewDelegate, UIT
                 //cell.TextoLabel.textColor = UIColor.orange
                 return cell
                 
-                break
             case 1:
                 let cell = tableView.dequeueReusableCell(withIdentifier: BasicTextFieldCell.defaultIdentifier(), for: indexPath) as! BasicTextFieldCell
                 cell.textField.placeholder = "Nome do Desafio"
                 return cell
                 
-                break
             case 2:
                 let cell = tableView.dequeueReusableCell(withIdentifier: BasicTextFieldCell.defaultIdentifier(), for: indexPath) as! BasicTextFieldCell
                 cell.textField.placeholder = "Recompensa"
                 return cell
                 
-                break
             case 3:
                 let cell = tableView.dequeueReusableCell(withIdentifier: BasicTextFieldCell.defaultIdentifier(), for: indexPath) as! BasicTextFieldCell
                 cell.textField.placeholder = "Pontos"
                 return cell
                 
-                break
             case 4:
                 let cell = tableView.dequeueReusableCell(withIdentifier: BasicLabelCell.defaultIdentifier(), for: indexPath) as! BasicLabelCell
                 cell.TextoLabel.text = "Habilidade"
                 //cell.TextoLabel.textColor = UIColor.orange
                 return cell
                 
-                break
             case 5:
                 let cell = tableView.dequeueReusableCell(withIdentifier: BasicLabelCell.defaultIdentifier(), for: indexPath) as! BasicLabelCell
                 cell.TextoLabel.text = "Frequência"
                 //cell.TextoLabel.textColor = UIColor.orange
                 return cell
                 
-                break
             case 6:
                 let cell = tableView.dequeueReusableCell(withIdentifier: BasicTextFieldCell.defaultIdentifier(), for: indexPath) as! BasicTextFieldCell
                 cell.textField.placeholder = "Quantas Repetições?"
                 return cell
                 
-                break
             case 7:
                 let cell = tableView.dequeueReusableCell(withIdentifier: BasicTextFieldCell.defaultIdentifier(), for: indexPath) as! BasicTextFieldCell
                 cell.textField.placeholder = "Observações"
                 return cell
                 
-                break
             default:
-                break
+                let cell = tableView.dequeueReusableCell(withIdentifier: BasicTextFieldCell.defaultIdentifier(), for: indexPath) as! BasicTextFieldCell
+                cell.textField.placeholder = "Observações"
+                return cell
         }
     }
 

@@ -24,7 +24,23 @@ class Usuario: FirestoreObject {
         }
     }
     
-    func logOut() {
+    func createUserWithBlock(success: @escaping (Bool) -> (), failed: @escaping (Error?) -> ()) {
+        guard let ref = ref else {
+            return
+        }
         
+        if let uid = objectId {
+            
+            ref.document(uid).setData(toDictionary()) { (error) in
+                if let e = error {
+                    print(e.localizedDescription)
+                    failed(e)
+                } else {
+                    success(true)
+                }
+            }
+        }
     }
+    
+    
 }

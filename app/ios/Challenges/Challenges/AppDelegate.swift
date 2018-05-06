@@ -13,6 +13,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         FirebaseApp.configure()
 
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let initialController = storyboard.instantiateViewController(withIdentifier: "inicioController") as! UINavigationController
+        self.window?.rootViewController = initialController
+        
+        if let currentUser = Auth.auth().currentUser {
+            UsuarioDAO.sharedInstance.getUsuarioInfo(objectId: currentUser.uid, success: { (usuario) in
+                if usuario.tipo == 0 {
+                    let perfilController = storyboard.instantiateViewController(withIdentifier: "PerfilResponsavel") as! PerfilResponsavelViewController
+                    perfilController.user = usuario as? Responsavel
+                    initialController.navigationItem.hidesBackButton = true;
+                    initialController.pushViewController(perfilController, animated: false)
+                } else {
+                    let tabController = storyboard.instantiateViewController(withIdentifier: "TabBarController")
+                    initialController.isNavigationBarHidden = true;
+                    initialController.navigationItem.hidesBackButton = true;
+                    initialController.pushViewController(tabController, animated: false)
+                }
+            }) { (error) in
+                
+            }
+            
+            
+            
+            
+            
+        }
+        
+        self.window?.makeKeyAndVisible()
+        
+        
         return true
     }
 

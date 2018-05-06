@@ -23,9 +23,12 @@ class CadastroCriancaController: UIViewController, UITableViewDelegate, UITableV
     var confirmaSenha: String?
     
     var editandoCadastro = false
+    var fromPerfil = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        senhaResponsavel = UserDefaults.standard.value(forKey: "Key") as! String
         
         navigationController?.isNavigationBarHidden = false
         
@@ -192,14 +195,19 @@ class CadastroCriancaController: UIViewController, UITableViewDelegate, UITableV
             if editandoCadastro {
                 
             } else {
+                print(user.objectId)
                 crianca.responsavel = user
                 UsuarioDAO.sharedInstance.cadastrarCrianca(crianca: crianca, senha: senha!, foto: foto, success: { [unowned self] (_) in
                     if let c = self.crianca {
-                        self.user.criancas?.append(c)
+                        self.user.criancas.append(c)
                         self.user.save()
                     }
                     UsuarioDAO.sharedInstance.login(email: self.user.email!, senha: self.senhaResponsavel, success: { (_) in
-                        self.performSegue(withIdentifier: "SeguePerfilResponsavel", sender: self)
+                        if self.fromPerfil {
+                            self.navigationController?.popViewController(animated: true)
+                        } else {
+                            self.performSegue(withIdentifier: "SeguePerfilResponsavel", sender: self)
+                        }
                     }, failed: { (error) in
                         // TODO: Alert error login
                     })

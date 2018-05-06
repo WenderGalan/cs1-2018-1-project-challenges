@@ -22,43 +22,44 @@ class DesafioViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        switch (section) {
-        case 0:
-            let headerView = BasicLabelHeaderView()
-            headerView.labelTitulo = "DESAFIO"
-            headerView.plusButton.isHidden = true
-            return headerView
-            
-            break
-        case 1:
-            let headerView = BasicLabelHeaderView()
-            headerView.labelTitulo = "FREQUÊNCIA"
-            headerView.plusButton.isHidden = true
-            return headerView
-            
-            break
-        case 2:
-            let headerView = BasicLabelHeaderView()
-            headerView.labelTitulo = "HABILIDADE"
-            headerView.plusButton.isHidden = true
-            return headerView
-            
-            break
-        case 3:
-            let headerView = BasicLabelHeaderView()
-            headerView.labelTitulo = "RECOMPENSA"
-            headerView.plusButton.isHidden = true
-            return headerView
-            
-            break
-        case 4:
-            let headerView = BasicLabelHeaderView()
-            headerView.labelTitulo = "PROGRESSO"
-            headerView.plusButton.isHidden = true
-            return headerView
-            
-            break
-        }
+//        switch (section) {
+//        case 0:
+//            let headerView = BasicLabelHeaderView()
+//            headerView.tituloLabel = "DESAFIO"
+//            headerView.plusButton.isHidden = true
+//            return headerView
+//
+//            break
+//        case 1:
+//            let headerView = BasicLabelHeaderView()
+//            headerView.tituloLabel = "FREQUÊNCIA"
+//            headerView.plusButton.isHidden = true
+//            return headerView
+//
+//            break
+//        case 2:
+//            let headerView = BasicLabelHeaderView()
+//            headerView.tituloLabel = "HABILIDADE"
+//            headerView.plusButton.isHidden = true
+//            return headerView
+//
+//            break
+//        case 3:
+//            let headerView = BasicLabelHeaderView()
+//            headerView.tituloLabel = "RECOMPENSA"
+//            headerView.plusButton.isHidden = true
+//            return headerView
+//
+//            break
+//        case 4:
+//            let headerView = BasicLabelHeaderView()
+//            headerView.tituloLabel = "PROGRESSO"
+//            headerView.plusButton.isHidden = true
+//            return headerView
+//
+//            break
+//        }
+        return UIView.init()
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -101,6 +102,7 @@ class DesafioViewController: UIViewController, UITableViewDelegate, UITableViewD
         default:
             break
         }
+        return UITableViewCell.init()
     }
 
     override func didReceiveMemoryWarning() {

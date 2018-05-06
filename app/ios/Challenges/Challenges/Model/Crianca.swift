@@ -29,11 +29,11 @@ class Crianca: Usuario {
         return sharedInstance
     }()
     
-    private override init() {
+    override init() {
         super.init()
     }
     
-    private override init(objectId: String) {
+    override init(objectId: String) {
         super.init(objectId: objectId)
         setReference()
     }

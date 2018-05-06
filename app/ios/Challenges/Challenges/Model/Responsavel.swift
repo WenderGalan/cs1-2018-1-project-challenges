@@ -12,7 +12,7 @@ import FirebaseFirestore
 import FirebaseAuth
 
 class Responsavel: Usuario {
-    var criancas: [Crianca]?
+    lazy var criancas: [Crianca] = [Crianca]()
     
     private static var sharedInstance: Responsavel? = {
         
@@ -24,12 +24,12 @@ class Responsavel: Usuario {
         return Responsavel.init()
     }()
     
-    private override init() {
+    override init() {
         super.init()
         setReference()
     }
     
-    private override init(objectId: String) {
+    override init(objectId: String) {
         super.init(objectId: objectId)
         setReference()
     }
@@ -73,6 +73,14 @@ class Responsavel: Usuario {
         
         if let email = email {
             data["email"] = email
+        }
+        
+        if criancas.count > 0 {
+            var criancasRef = [DocumentReference]()
+            for crianca in criancas {
+                criancasRef.append((crianca.ref?.document(crianca.objectId!))!)
+            }
+            data["criancas"] = criancasRef
         }
         
         data["tipo"] = NSNumber(integerLiteral: 0)

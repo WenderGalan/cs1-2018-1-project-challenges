@@ -67,11 +67,13 @@ class CadastroResponsavelController: UIViewController, UITableViewDelegate, UITa
             break
         case 2:
             cell.textField.placeholder = "Senha"
-
+            cell.textField.isSecureTextEntry = true
+            
             break
         case 3:
             cell.textField.placeholder = "Confirme a senha"
-
+            cell.textField.isSecureTextEntry = true
+            
             break
         default:
             break

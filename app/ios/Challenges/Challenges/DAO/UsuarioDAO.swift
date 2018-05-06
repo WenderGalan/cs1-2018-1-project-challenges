@@ -32,6 +32,9 @@ class UsuarioDAO: NSObject {
                     
                     if let snapshot = snapshot {
                         if (snapshot.data()!["tipo"] as! Int) == 0 {
+                            UserDefaults.standard.set(senha, forKey: "Key")
+                            UserDefaults.standard.synchronize()
+                            
                             let user = Responsavel.sharedUser()
                             if let usuario = user {
                                 usuario.from(document: snapshot)
@@ -70,6 +73,10 @@ class UsuarioDAO: NSObject {
             if let authUser = firUser {
                 responsavel.objectId = authUser.uid
                 responsavel.createUser()
+                
+                UserDefaults.standard.set(senha, forKey: "Key")
+                UserDefaults.standard.synchronize()
+                
                 success(true)
             } else {
                 failed(errorCadastro)
@@ -89,16 +96,21 @@ class UsuarioDAO: NSObject {
             
             if let authUser = firUser {
                 crianca.objectId = authUser.uid
-                crianca.createUser()
-                crianca.responsavel!.ref!.document(crianca.responsavel!.objectId!).collection("criancas").addDocument(data: ["0" : crianca.objectId])
-                if let foto = foto {
-                    self.salvarFotoPerfil(crianca: crianca, image: foto, success: { (criancaFoto) in
-                        crianca.fotoURL = criancaFoto.fotoURL
+                crianca.createUserWithBlock(success: { (_) in
+                    if let foto = foto {
+                        self.salvarFotoPerfil(crianca: crianca, image: foto, success: { (criancaFoto) in
+                            crianca.fotoURL = criancaFoto.fotoURL
+                            success(true)
+                        }, failed: { (_) in
+                            success(true)
+                        })
+                    } else {
                         success(true)
-                    }, failed: { (_) in
-                        success(true)
-                    })
-                }
+                    }
+                }, failed: { (error) in
+                    failed(error)
+                })
+                
             } else {
                 failed(errorCadastro)
             }
@@ -130,6 +142,61 @@ class UsuarioDAO: NSObject {
                     failed(error)
                 }
             }
+        }
+    }
+    
+    func getUsuarioInfo(objectId: String, success: @escaping (Usuario) -> (), failed: @escaping (Error?) -> ()) {
+        let childRef = self.ref.document(objectId)
+
+        childRef.getDocument(completion: { (snapshot, error) in
+            
+            if let snapshot = snapshot {
+                guard let snapshotData = snapshot.data() else {
+                    failed(nil)
+                    return
+                }
+                
+                if (snapshotData["tipo"] as! Int) == 0 {
+                    let user = Responsavel.sharedUser()
+                    if let usuario = user {
+                        usuario.from(document: snapshot)
+                        if let criancasData = snapshotData["criancas"] as? [DocumentReference] {
+                            if criancasData.count == 0 {
+                                success(user!)
+                            } else {
+                                for criancaRef in criancasData {
+                                    criancaRef.getDocument(completion: { (criancaSnapshot, error) in
+                                        if let criancaSnapshot = criancaSnapshot {
+                                            let crianca = Crianca.init(objectId: criancaSnapshot.documentID)
+                                            crianca.from(document: criancaSnapshot)
+                                            user?.criancas.append(crianca)
+                                            if criancasData.count == user?.criancas.count {
+                                                success(user!)
+                                            }
+                                        }
+                                    })
+                                }
+                            }
+                            
+                        } else {
+                            success(usuario)
+                        }
+                    }
+                } else {
+                    
+                }
+            } else {
+                failed(nil)
+            }
+            
+        })
+    }
+    
+    func logOut() {
+        do {
+            try Auth.auth().signOut()
+        } catch {
+            print("error")
         }
     }
     
