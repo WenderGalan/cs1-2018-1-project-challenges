@@ -88,6 +88,7 @@ public class CadastrarDesafioActivity extends AppCompatActivity {
         criancasReferencia = new ArrayList<DocumentReference>();
         nomes = new ArrayList<String>();
         List<String> ids = new ArrayList<String>();
+        desafioEditar = new Desafio();
 
         tipo = getIntent().getStringExtra("tipo");
 
@@ -150,7 +151,7 @@ public class CadastrarDesafioActivity extends AppCompatActivity {
             reference.get().addOnSuccessListener(CadastrarDesafioActivity.this, new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    if (documentSnapshot.exists()){
+                    if (documentSnapshot.exists()) {
                         crianca = documentSnapshot.toObject(Crianca.class);
                         Log.i("DEBUG", "getNome: " + crianca.getNome());
                         nomeCrianca = crianca.getNome();
@@ -168,8 +169,8 @@ public class CadastrarDesafioActivity extends AppCompatActivity {
 
                         final int sdk = android.os.Build.VERSION.SDK_INT;
 
-                        if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                            spinnerCriancas.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.fundo_botao_cinza) );
+                        if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                            spinnerCriancas.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.fundo_botao_cinza));
                         } else {
                             spinnerCriancas.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.fundo_botao_cinza));
                         }
@@ -177,9 +178,6 @@ public class CadastrarDesafioActivity extends AppCompatActivity {
                     }
                 }
             });
-
-
-
 
 
         }
@@ -217,7 +215,9 @@ public class CadastrarDesafioActivity extends AppCompatActivity {
                             public void onSuccess(Object o) {
 
                                 Toast.makeText(CadastrarDesafioActivity.this, "Desafio inserido com sucesso!", Toast.LENGTH_LONG).show();
-                                finish();
+                                Intent intent = new Intent(CadastrarDesafioActivity.this, HomeResponsavelActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
                             }
                         });
 
@@ -232,10 +232,10 @@ public class CadastrarDesafioActivity extends AppCompatActivity {
                     referencia.update(desafioEditar.construirHash()).addOnSuccessListener(CadastrarDesafioActivity.this, new OnSuccessListener() {
                         @Override
                         public void onSuccess(Object o) {
-                                Toast.makeText(CadastrarDesafioActivity.this, "Desafio atualizado com sucesso!", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(CadastrarDesafioActivity.this, HomeResponsavelActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
+                            Toast.makeText(CadastrarDesafioActivity.this, "Desafio atualizado com sucesso!", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(CadastrarDesafioActivity.this, HomeResponsavelActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
                         }
                     });
 
@@ -251,7 +251,7 @@ public class CadastrarDesafioActivity extends AppCompatActivity {
         spinnerCriancas.setAdapter(adapterCriancas);
         spinnerHabilidade.setSelection(adapterCriancas.getCount());
 
-        if (tipo.equals("cadastrar")){
+        if (tipo.equals("cadastrar")) {
             spinnerCriancas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, final int i, long l) {

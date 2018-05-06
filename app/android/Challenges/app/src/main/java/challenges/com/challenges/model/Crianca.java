@@ -1,22 +1,14 @@
 package challenges.com.challenges.model;
 
-import android.support.annotation.NonNull;
-import android.util.Log;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Crianca extends Usuario implements Serializable{
+public class Crianca extends Usuario implements Serializable {
 
-    private DocumentReference habilidade;
     private CollectionReference amigos;
     private DocumentReference responsavel;
     private int tipo = 1;
@@ -28,14 +20,6 @@ public class Crianca extends Usuario implements Serializable{
 
     public int getTipo() {
         return tipo;
-    }
-
-    public DocumentReference getHabilidade() {
-        return habilidade;
-    }
-
-    public void setHabilidade(DocumentReference habilidade) {
-        this.habilidade = habilidade;
     }
 
     public CollectionReference getAmigos() {
@@ -70,7 +54,7 @@ public class Crianca extends Usuario implements Serializable{
         this.foto = foto;
     }
 
-    public Map construirHash(){
+    public Map construirHash() {
         Map<String, Object> hashMap = new HashMap<String, Object>();
 
         //seta o tipo do usuario
@@ -80,12 +64,9 @@ public class Crianca extends Usuario implements Serializable{
         if (getFoto() != null) hashMap.put("foto", getFoto());
         if (getPontos() != 0) hashMap.put("pontos", getPontos());
         if (getResponsavel() != null) hashMap.put("responsavel", getResponsavel());
-        if (getHabilidade() != null) hashMap.put("habilidade", getHabilidade());
         if (getAmigos() != null) hashMap.put("amigos", getAmigos());
 
         return hashMap;
     }
-
-
 
 }

@@ -1,17 +1,18 @@
 package challenges.com.challenges.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import challenges.com.challenges.R;
+import challenges.com.challenges.activities.CriancaDetalhesActivity;
 import challenges.com.challenges.model.Crianca;
 
 public class CriancaAdapter extends RecyclerView.Adapter<ViewHolderCrianca> {
@@ -66,9 +67,9 @@ public class CriancaAdapter extends RecyclerView.Adapter<ViewHolderCrianca> {
     }
 
         private void abrirDetalhesCriança (Crianca crianca, Context context){
-
-            Toast.makeText(context, "Clicou no " + crianca.getNome(), Toast.LENGTH_LONG).show();
-
+            Intent intent = new Intent(context, CriancaDetalhesActivity.class);
+            intent.putExtra("id", crianca.getId());
+            context.startActivity(intent);
         }
 
         @Override

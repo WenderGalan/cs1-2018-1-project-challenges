@@ -48,7 +48,7 @@ public class PerfilCriancaFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_perfil_crianca, container, false);
         fotoCrianca = view.findViewById(R.id.foto_perfil);
-        nomeCrianca = view.findViewById(R.id.nome_crianca);
+        nomeCrianca = view.findViewById(R.id.NomeCrianca);
         inteligenciaPrincipalCrianca = view.findViewById(R.id.habilidade_principal);
         qntDesafios = view.findViewById(R.id.qnt_desafios);
         qntPontos = view.findViewById(R.id.qnt_pontos);

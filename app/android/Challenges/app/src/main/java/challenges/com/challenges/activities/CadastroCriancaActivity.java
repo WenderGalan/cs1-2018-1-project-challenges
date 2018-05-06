@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -21,9 +22,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthEmailException;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.firestore.CollectionReference;
@@ -31,6 +30,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,6 +64,10 @@ public class CadastroCriancaActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private boolean tipoDeConclusao = true; //true significa o fluxo normal, false é o fluxo de dentro do app
     private SharedPreferences sharedPreferences;
+    private String tipo;
+    private String id;
+    private Crianca criancaEditavel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +76,11 @@ public class CadastroCriancaActivity extends AppCompatActivity {
 
         responsavel = getIntent().getStringExtra("responsavel");
         segundoCadastro = getIntent().getStringExtra("segundoCadastro");
+        try {
+            tipo = getIntent().getStringExtra("tipo");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
         cadastrarDepois = findViewById(R.id.textViewCadastrarDepois);
@@ -83,11 +92,64 @@ public class CadastroCriancaActivity extends AppCompatActivity {
         concluir = findViewById(R.id.buttonConcluir);
         toolbar = findViewById(R.id.toolbarCadastroCrianca);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Cadastre uma criança");
 
-        if(segundoCadastro.equals("verdade")){
+
+        if (tipo.equals("editar")) {
+            getSupportActionBar().setTitle("Alterar a criança");
             cadastrarDepois.setVisibility(View.INVISIBLE);
-            tipoDeConclusao = false;
+            id = getIntent().getStringExtra("id");
+
+            ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(id).get().addOnSuccessListener(CadastroCriancaActivity.this, new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    criancaEditavel = documentSnapshot.toObject(Crianca.class);
+
+                    if (criancaEditavel.getFoto() != null){
+                        Picasso.get().load(criancaEditavel.getFoto()).into(imagem);
+                    }else{
+                        Picasso.get().load(R.drawable.user).into(imagem);
+                    }
+
+                    nome.setText(criancaEditavel.getNome());
+
+                    email.setText(criancaEditavel.getEmail());
+                    email.setClickable(false);
+                    email.setFocusable(false);
+                    senha.setText("0000000000");
+                    senha.setClickable(false);
+                    senha.setFocusable(false);
+                    confirmarSenha.setText("0000000000");
+                    confirmarSenha.setClickable(false);
+                    confirmarSenha.setFocusable(false);
+
+                    final int sdk = android.os.Build.VERSION.SDK_INT;
+
+                    if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                        email.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.fundo_botao_cinza));
+                        senha.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.fundo_botao_cinza));
+                        confirmarSenha.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.fundo_botao_cinza));
+                    } else {
+                        email.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.fundo_botao_cinza));
+                        senha.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.fundo_botao_cinza));
+                        confirmarSenha.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.fundo_botao_cinza));
+                    }
+
+
+                }
+            });
+
+
+        }else{
+            getSupportActionBar().setTitle("Cadastre uma criança");
+        }
+
+
+
+        if (tipo.equals(null)){
+            if (segundoCadastro.equals("verdade") || tipo.equals("editar")) {
+                cadastrarDepois.setVisibility(View.INVISIBLE);
+                tipoDeConclusao = false;
+            }
         }
 
         cadastrarDepois.setOnClickListener(new View.OnClickListener() {
@@ -112,16 +174,61 @@ public class CadastroCriancaActivity extends AppCompatActivity {
         concluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (validarCampos()) {
-                    crianca = new Crianca();
-                    crianca.setNome(nome.getText().toString());
-                    crianca.setSenha(senha.getText().toString());
-                    crianca.setEmail(email.getText().toString());
-                    crianca.setPontos(0);
-                    //pega a referencia do pai
-                    DocumentReference responsavelReferencia = ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(responsavel);
-                    crianca.setResponsavel(responsavelReferencia);
-                    cadastrarCrianca();
+                if (tipo.equals("editar")) {
+                    //salva no banco a alteraçao
+                    progressDialog = new ProgressDialog(CadastroCriancaActivity.this);
+                    progressDialog.setMessage("Atualizando a criança...");
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progressDialog.show();
+
+                    if (imagemCarregada != null) {
+                        //inserir no Storage e salva no banco
+                        StorageReference storageRef = ConfiguracaoFirebase.getStorage();
+                        //Cada usuario tem uma pasta com seu UID e dentro tem duas pastas com sua foto de perfil e a foto de seus anuncios
+                        StorageReference imagemPerfil = storageRef.child(id + "/" + "perfil/" + imagemCarregada.getLastPathSegment());
+                        //upa a imagem ao storage
+                        UploadTask uploadTask = imagemPerfil.putFile(imagemCarregada);
+                        //Listener para verificar o estado da task de upload
+                        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                //pega o link da foto
+                                final Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                                //seta a foto no usuario
+                                criancaEditavel.setFoto(downloadUrl.toString());
+
+                                Map<String, Object> hashMap = new HashMap<String, Object>();
+                                hashMap.put("foto", criancaEditavel.getFoto());
+                                hashMap.put("nome", nome.getText().toString());
+                                ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(id).update(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(getApplicationContext(), "Criança atualizada com sucesso!", Toast.LENGTH_LONG).show();
+                                        Intent intent = new Intent(CadastroCriancaActivity.this, HomeResponsavelActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(intent);
+                                    }
+                                });
+                            }
+                        });
+                    }
+
+
+
+                    progressDialog.dismiss();
+
+                } else {
+                    if (validarCampos()) {
+                        crianca = new Crianca();
+                        crianca.setNome(nome.getText().toString());
+                        crianca.setSenha(senha.getText().toString());
+                        crianca.setEmail(email.getText().toString());
+                        crianca.setPontos(0);
+                        //pega a referencia do pai
+                        DocumentReference responsavelReferencia = ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(responsavel);
+                        crianca.setResponsavel(responsavelReferencia);
+                        cadastrarCrianca();
+                    }
                 }
             }
         });
@@ -220,9 +327,9 @@ public class CadastroCriancaActivity extends AppCompatActivity {
                     }
 
                     progressDialog.dismiss();
-                    if (tipoDeConclusao == true){
+                    if (tipoDeConclusao == true) {
                         abrirTelaPrincipal();
-                    }else{
+                    } else {
                         finish();
                         autenticarNovamente();
                     }
@@ -315,7 +422,6 @@ public class CadastroCriancaActivity extends AppCompatActivity {
         });
 
     }
-
 
 }
 

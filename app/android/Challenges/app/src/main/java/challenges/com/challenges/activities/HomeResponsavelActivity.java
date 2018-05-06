@@ -100,6 +100,7 @@ public class HomeResponsavelActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                 Crianca crianca = documentSnapshot.toObject(Crianca.class);
+                                crianca.setId(documentSnapshot.getId());
                                 criancasObject.add(crianca);
                                 adapterCrianca = new CriancaAdapter(criancasObject, "crianca");
                                 recyclerViewCrianca.setAdapter(adapterCrianca);

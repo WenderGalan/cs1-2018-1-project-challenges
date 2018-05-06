@@ -1,9 +1,10 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="challenges.com.challenges.fragments.PerfilCriancaFragment">
+    tools:context="challenges.com.challenges.fragments.PerfilCriancaFragment"
+    android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -19,10 +20,11 @@
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp">
 
                 <TextView
-                    android:id="@+id/NomeCrianca"
+                    android:id="@+id/labelNomeCrianca"
                     android:layout_width="150dp"
                     android:layout_height="80dp"
                     android:layout_alignParentStart="true"
@@ -36,7 +38,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/foto_perfil"
+                    android:id="@+id/foto_perfil_image"
                     android:layout_width="130dp"
                     android:layout_height="130dp"
                     android:layout_alignParentEnd="true"
@@ -54,13 +56,14 @@
                     android:layout_alignBottom="@+id/foto_perfil"
                     android:layout_alignStart="@+id/textView6"
                     android:layout_marginStart="20dp"
+                    android:layout_marginTop="8dp"
                     android:text="Habilidade principal"
                     android:textColor="#999"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/NomeCrianca" />
+                    app:layout_constraintTop_toBottomOf="@+id/labelNomeCrianca" />
 
                 <TextView
-                    android:id="@+id/habilidade_principal"
+                    android:id="@+id/label_habilidade_principal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@+id/textView8"
@@ -74,31 +77,28 @@
 
                 <View
                     android:id="@+id/view"
-                    android:layout_width="400dp"
-                    android:layout_height="2dp"
+                    android:layout_width="344dp"
+                    android:layout_height="1dp"
                     android:layout_below="@+id/textView8"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
                     android:background="#CCCCCC"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.517"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/habilidade_principal" />
+                    app:layout_constraintTop_toBottomOf="@+id/label_habilidade_principal" />
 
                 <TextView
-                    android:id="@+id/qnt_desafios"
+                    android:id="@+id/label_qnt_desafios"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@+id/textView6"
                     android:layout_below="@+id/textView6"
-                    android:layout_marginStart="34dp"
+                    android:layout_marginStart="14dp"
                     android:layout_marginTop="15dp"
-                    android:text="128"
+                    android:text="000"
                     android:textColor="@color/common_google_signin_btn_text_dark_focused"
                     android:textSize="18sp"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/textView14"
                     app:layout_constraintTop_toBottomOf="@+id/view" />
 
                 <TextView
@@ -107,27 +107,29 @@
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@+id/qnt_desafios"
                     android:layout_below="@+id/qnt_desafios"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="1dp"
                     android:layout_marginTop="15dp"
                     android:text="Desafios"
                     android:textColor="@color/common_google_signin_btn_text_dark_focused"
                     android:textSize="15sp"
+                    app:layout_constraintEnd_toStartOf="@+id/textView17"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/qnt_desafios" />
+                    app:layout_constraintTop_toBottomOf="@+id/label_qnt_desafios" />
 
                 <TextView
-                    android:id="@+id/qnt_pontos"
+                    android:id="@+id/label_qnt_pontos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@+id/qnt_desafios"
                     android:layout_alignBottom="@+id/qnt_desafios"
                     android:layout_alignEnd="@+id/textView8"
-                    android:layout_marginStart="49dp"
+                    android:layout_marginStart="7dp"
                     android:layout_marginTop="15dp"
-                    android:text="346"
+                    android:text="000"
                     android:textColor="@color/common_google_signin_btn_text_dark_focused"
                     android:textSize="18sp"
-                    app:layout_constraintStart_toEndOf="@+id/qnt_desafios"
+                    app:layout_constraintStart_toStartOf="@+id/textView17"
                     app:layout_constraintTop_toBottomOf="@+id/view" />
 
                 <TextView
@@ -136,26 +138,27 @@
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@+id/qnt_pontos"
                     android:layout_below="@+id/qnt_pontos"
-                    android:layout_marginStart="27dp"
+                    android:layout_marginEnd="11dp"
                     android:layout_marginTop="15dp"
                     android:text="Pontos"
                     android:textColor="@color/common_google_signin_btn_text_dark_focused"
                     android:textSize="15sp"
+                    app:layout_constraintEnd_toStartOf="@+id/textView19"
                     app:layout_constraintStart_toEndOf="@+id/textView14"
-                    app:layout_constraintTop_toBottomOf="@+id/qnt_pontos" />
+                    app:layout_constraintTop_toBottomOf="@+id/label_qnt_pontos" />
 
                 <TextView
-                    android:id="@+id/qnt_amigos"
+                    android:id="@+id/label_qnt_amigos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_above="@+id/textView17"
-                    android:layout_marginStart="41dp"
+                    android:layout_marginStart="3dp"
                     android:layout_marginTop="15dp"
                     android:layout_toStartOf="@+id/foto_perfil"
                     android:text="2.7k"
                     android:textColor="@color/common_google_signin_btn_text_dark_focused"
                     android:textSize="18sp"
-                    app:layout_constraintStart_toEndOf="@+id/qnt_pontos"
+                    app:layout_constraintStart_toStartOf="@+id/textView19"
                     app:layout_constraintTop_toBottomOf="@+id/view"
                     tools:ignore="MissingConstraints" />
 
@@ -165,29 +168,30 @@
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@+id/qnt_amigos"
                     android:layout_below="@+id/qnt_amigos"
-                    android:layout_marginStart="27dp"
+                    android:layout_marginEnd="14dp"
                     android:layout_marginTop="15dp"
                     android:text="Amigos"
                     android:textColor="@color/common_google_signin_btn_text_dark_focused"
                     android:textSize="15sp"
+                    app:layout_constraintEnd_toStartOf="@+id/textView11"
                     app:layout_constraintStart_toEndOf="@+id/textView17"
-                    app:layout_constraintTop_toBottomOf="@+id/qnt_amigos" />
+                    app:layout_constraintTop_toBottomOf="@+id/label_qnt_amigos" />
 
                 <TextView
-                    android:id="@+id/qnt_recompensas"
+                    android:id="@+id/label_qnt_recompensas"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="22dp"
                     android:layout_above="@+id/textView19"
-                    android:layout_marginEnd="50dp"
-                    android:layout_marginStart="68dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="39dp"
+                    android:layout_marginEnd="29dp"
+                    android:layout_marginTop="39dp"
                     android:layout_toEndOf="@+id/textView19"
-                    android:text="133"
+                    android:text="000"
                     android:textColor="@color/common_google_signin_btn_text_dark_focused"
                     android:textSize="18sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/qnt_amigos"
-                    app:layout_constraintTop_toBottomOf="@+id/view" />
+                    app:layout_constraintBottom_toBottomOf="@+id/textView11"
+                    app:layout_constraintEnd_toEndOf="@+id/view"
+                    app:layout_constraintTop_toTopOf="@+id/label_habilidade_principal" />
 
                 <TextView
                     android:id="@+id/textView11"
@@ -195,15 +199,12 @@
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@+id/qnt_recompensas"
                     android:layout_below="@+id/qnt_recompensas"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginStart="33dp"
-                    android:layout_marginTop="15dp"
                     android:text="Recompensas"
                     android:textColor="@color/common_google_signin_btn_text_dark_focused"
                     android:textSize="15sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView19"
-                    app:layout_constraintTop_toBottomOf="@+id/qnt_recompensas"
+                    app:layout_constraintTop_toTopOf="@+id/textView19"
                     tools:ignore="MissingConstraints" />
 
                 <TextView
@@ -213,28 +214,14 @@
                     android:layout_alignStart="@+id/NomeCrianca"
                     android:layout_below="@+id/view"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="5dp"
                     android:text="AMIGOS"
                     android:textColor="#4CC6F5"
                     android:textSize="28sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
-                <ImageView
-                    android:id="@+id/adc_amigo"
-                    android:layout_width="31dp"
-                    android:layout_height="31dp"
-                    android:layout_alignBottom="@+id/textView20"
-                    android:layout_alignEnd="@+id/textView11"
-                    android:layout_marginEnd="21dp"
-                    android:layout_marginStart="199dp"
-                    android:layout_marginTop="22dp"
-                    android:src="@drawable/ic_plus"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView20"
-                    app:layout_constraintTop_toBottomOf="@+id/textView11" />
-
             </android.support.constraint.ConstraintLayout>
         </LinearLayout>
     </ScrollView>
-</FrameLayout>
+</LinearLayout>
