@@ -65,36 +65,13 @@ public class PerfilCriancaFragment extends Fragment {
             public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
                 if (documentSnapshot.exists()){
                     crianca = documentSnapshot.toObject(Crianca.class);
-                    nomeCrianca.setText(crianca.getNome());
+                    nomeCrianca.setText(crianca.getNome().toUpperCase());
                     if (crianca.getFoto() != null){
                         Picasso.get().load(crianca.getFoto()).into(fotoCrianca);
                     }
                 }
             }
         });
-
-
-        /**
-         * ANTIGO CÓDIGO OLHE A DIFERENÇA DE UM E OUTRO...
-         * ***/
-       /* try {
-            ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(idUsuarioAtual).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    if (documentSnapshot.exists()){
-                        crianca = documentSnapshot.toObject(Crianca.class);
-                        nomeCrianca.setText(crianca.getNome());
-                        System.out.println(crianca.getFoto());
-                        Picasso.get().load(crianca.getFoto()).into(fotoCrianca);
-
-                    }
-                }
-            });
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-            System.out.println("caiu excecao");
-        }*/
-
         adicionarAmigo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View vie) {

@@ -18,8 +18,22 @@ public class Desafio implements Serializable {
     private int repeticoes = 1;
     private String hora;
     private String data;
+    private boolean completado = false;
+    private boolean checado = false;
 
+    public boolean isCompletado() {
+        return completado;
+    }
 
+    public void setCompletado(boolean completado) {
+        this.completado = completado;
+    }
+    public boolean isChecado() {
+        return checado;
+    }
+    public void setChecado(boolean checado) {
+        this.checado = checado;
+    }
     public Desafio() { }
     public String getId() {
         return id;
