@@ -1,6 +1,7 @@
 package challenges.com.challenges.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -8,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -23,6 +25,7 @@ import java.util.List;
 
 import challenges.com.challenges.R;
 import challenges.com.challenges.activities.HomeResponsavelActivity;
+import challenges.com.challenges.activities.NotificacoesActivity;
 import challenges.com.challenges.adapter.DesafioAdapter;
 import challenges.com.challenges.config.ConfiguracaoFirebase;
 import challenges.com.challenges.model.Crianca;
@@ -35,6 +38,7 @@ public class HomeFragment extends Fragment {
 
     private RecyclerView recyclerViewDesafioCrianca;
     private RecyclerView recyclerViewSugestoesDesafioCrianca;
+    private ImageView notificacaoCrianca;
 
     private FirebaseAuth autenticacao;
     private Crianca crianca;
@@ -59,12 +63,11 @@ public class HomeFragment extends Fragment {
 
         recyclerViewDesafioCrianca = view.findViewById(R.id.recyclerViewDesafios);
         recyclerViewSugestoesDesafioCrianca = view.findViewById(R.id.recyclerViewSugestoesDesafios);
+        notificacaoCrianca = view.findViewById(R.id.notificacaoCrianca);
 
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerViewDesafioCrianca.setLayoutManager(layoutManager);
 //        recyclerViewSugestoesDesafioCrianca.setLayoutManager(layoutManager);
-
-        Toast.makeText(getContext(),idUsuarioAtual, Toast.LENGTH_LONG).show();
 
         Query query = ConfiguracaoFirebase.getFirestore().collection("Desafios").whereEqualTo("crianca", idUsuarioAtual);
         query.addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
@@ -73,6 +76,14 @@ public class HomeFragment extends Fragment {
                 List<Desafio> desafiosResult = documentSnapshots.toObjects(Desafio.class);
                 desafioAdapter = new DesafioAdapter((ArrayList<Desafio>) desafiosResult, "crianca");
                 recyclerViewDesafioCrianca.setAdapter(desafioAdapter);
+            }
+        });
+
+        notificacaoCrianca.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), NotificacoesActivity.class);
+                startActivity(intent);
             }
         });
 
