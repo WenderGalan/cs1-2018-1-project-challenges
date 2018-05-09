@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import com.squareup.picasso.Picasso;
 
 import challenges.com.challenges.R;
 import challenges.com.challenges.activities.AdicionarAmigoActivity;
+import challenges.com.challenges.activities.LoginActivity;
 import challenges.com.challenges.config.ConfiguracaoFirebase;
 import challenges.com.challenges.model.Crianca;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -30,6 +32,7 @@ public class PerfilCriancaFragment extends Fragment {
     private FirebaseAuth autenticacao;
     private Crianca crianca;
     private ImageView adicionarAmigo;
+    private TextView sair;
 
     private TextView nomeCrianca;
     private TextView inteligenciaPrincipalCrianca;
@@ -55,6 +58,7 @@ public class PerfilCriancaFragment extends Fragment {
         qntAmigos = view.findViewById(R.id.qnt_amigos);
         qntRecompensas = view.findViewById(R.id.qnt_recompensas);
         adicionarAmigo = view.findViewById(R.id.adc_amigo);
+        sair = view.findViewById(R.id.button_sair);
 
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         String idUsuarioAtual = autenticacao.getCurrentUser().getUid();
@@ -77,6 +81,18 @@ public class PerfilCriancaFragment extends Fragment {
             public void onClick(View vie) {
                 Intent intent = new Intent(getActivity(), AdicionarAmigoActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        sair.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //desloga o usuario e volta para a tela incial de Login
+                FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+                autenticacao.signOut();
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                getActivity().finish();
             }
         });
         return view;

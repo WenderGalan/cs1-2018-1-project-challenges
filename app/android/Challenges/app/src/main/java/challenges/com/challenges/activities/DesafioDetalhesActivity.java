@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 
@@ -36,6 +37,7 @@ public class DesafioDetalhesActivity extends AppCompatActivity {
     private Button primeiroBotao;
     private Button segundoBotao;
     private Desafio desafio;
+    private Desafio desafioEditar;
     /**TIPO vai ter três para poder saber qual activity será aberta
      * responsavel que é a padrão,
      * crianca,
@@ -181,10 +183,19 @@ public class DesafioDetalhesActivity extends AppCompatActivity {
                     startActivity(intent);
 
                 }else if (tipo.equals("crianca")){
-
+                    //COMPLETAR O DESAFIO
+                    DocumentReference completarDesafio = ConfiguracaoFirebase.getFirestore().collection("Desafios").document(desafio.getId());
+                    completarDesafio.update("completado", true).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(getApplicationContext(), "Desafio completado com sucesso!", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(DesafioDetalhesActivity.this, HomeCriancaActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        }
+                    });
 
                 }else if(tipo.equals("ajuda")){
-
 
                 }else if (tipo.equals("completo")){
 

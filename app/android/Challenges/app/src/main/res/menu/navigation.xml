@@ -4,11 +4,11 @@
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/homeicon"
-        android:title="@string/title_home" />
+        android:title="Pagina inicial" />
 
     <item
         android:id="@+id/navigation_notifications"
         android:icon="@drawable/profileiconoff"
-        android:title="@string/title_notifications" />
+        android:title="Meu perfil" />
 
 </menu>

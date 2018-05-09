@@ -389,6 +389,14 @@ public class CadastrarDesafioActivity extends AppCompatActivity {
             pontos.requestFocus();
             retorno = false;
         }
+        if (!pontos.getText().toString().equals("")){
+            if (Integer.parseInt(pontos.getText().toString()) > 10000){
+                pontos.setError("Insira um número entre 0 e 10000");
+                pontos.setFocusable(true);
+                pontos.requestFocus();
+                retorno = false;
+            }
+        }
         if (habilidadeSelecionada) {
             TextView errorText3 = (TextView) spinnerHabilidade.getSelectedView();
             errorText3.setError("Habilidade não selecionada");

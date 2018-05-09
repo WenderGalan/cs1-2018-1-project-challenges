@@ -14,7 +14,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <android.support.constraint.ConstraintLayout
@@ -80,12 +80,11 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginEnd="20dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
                     android:background="#C7C7C7"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.517"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/habilidade_principal" />
+                    app:layout_constraintTop_toBottomOf="@+id/button_sair" />
 
                 <TextView
                     android:id="@+id/qnt_desafios"
@@ -95,7 +94,7 @@
                     android:layout_below="@+id/textView6"
                     android:layout_marginStart="34dp"
                     android:layout_marginTop="15dp"
-                    android:text="128"
+                    android:text="000"
                     android:textColor="@color/common_google_signin_btn_text_dark_focused"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -124,7 +123,7 @@
                     android:layout_alignEnd="@+id/textView8"
                     android:layout_marginStart="49dp"
                     android:layout_marginTop="15dp"
-                    android:text="346"
+                    android:text="000"
                     android:textColor="@color/common_google_signin_btn_text_dark_focused"
                     android:textSize="18sp"
                     app:layout_constraintStart_toEndOf="@+id/qnt_desafios"
@@ -152,7 +151,7 @@
                     android:layout_marginStart="41dp"
                     android:layout_marginTop="15dp"
                     android:layout_toStartOf="@+id/foto_perfil"
-                    android:text="2.7k"
+                    android:text="000"
                     android:textColor="@color/common_google_signin_btn_text_dark_focused"
                     android:textSize="18sp"
                     app:layout_constraintStart_toEndOf="@+id/qnt_pontos"
@@ -182,7 +181,7 @@
                     android:layout_marginStart="68dp"
                     android:layout_marginTop="15dp"
                     android:layout_toEndOf="@+id/textView19"
-                    android:text="133"
+                    android:text="000"
                     android:textColor="@color/common_google_signin_btn_text_dark_focused"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -233,6 +232,18 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView20"
                     app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+                <TextView
+                    android:id="@+id/button_sair"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Sair desta conta"
+                    android:textColor="#828282"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/habilidade_principal" />
 
             </android.support.constraint.ConstraintLayout>
         </LinearLayout>
