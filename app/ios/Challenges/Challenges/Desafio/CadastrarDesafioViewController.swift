@@ -28,33 +28,13 @@ class CadastrarDesafioViewController: UIViewController, UITableViewDelegate, UIT
         return 8
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        switch indexPath.row {
-        case 0: //Criança
-            
-            
-            break
-        case 4: //Habilidade
-            
-            
-            break
-        case 5: //Frequência
-            
-            
-            break
-        default:
-            break
-        }
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         switch indexPath.row {
             case 0:
                 let cell = tableView.dequeueReusableCell(withIdentifier: BasicLabelCell.defaultIdentifier(), for: indexPath) as! BasicLabelCell
-                cell.TextoLabel.text = "Criança"
-                //cell.TextoLabel.textColor = UIColor.orange
+                cell.textoLabel.text = "Criança"
+
                 return cell
                 
             case 1:
@@ -74,14 +54,13 @@ class CadastrarDesafioViewController: UIViewController, UITableViewDelegate, UIT
                 
             case 4:
                 let cell = tableView.dequeueReusableCell(withIdentifier: BasicLabelCell.defaultIdentifier(), for: indexPath) as! BasicLabelCell
-                cell.TextoLabel.text = "Habilidade"
-                //cell.TextoLabel.textColor = UIColor.orange
+                cell.textoLabel.text = "Habilidade"
+
                 return cell
                 
             case 5:
                 let cell = tableView.dequeueReusableCell(withIdentifier: BasicLabelCell.defaultIdentifier(), for: indexPath) as! BasicLabelCell
-                cell.TextoLabel.text = "Frequência"
-                //cell.TextoLabel.textColor = UIColor.orange
+                cell.textoLabel.text = "Frequência"
                 return cell
                 
             case 6:
@@ -98,6 +77,26 @@ class CadastrarDesafioViewController: UIViewController, UITableViewDelegate, UIT
                 let cell = tableView.dequeueReusableCell(withIdentifier: BasicTextFieldCell.defaultIdentifier(), for: indexPath) as! BasicTextFieldCell
                 cell.textField.placeholder = "Observações"
                 return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        switch indexPath.row {
+        case 0: //Criança
+            
+            
+            break
+        case 4: //Habilidade
+            
+            
+            break
+        case 5: //Frequência
+            
+            
+            break
+        default:
+            break
         }
     }
 

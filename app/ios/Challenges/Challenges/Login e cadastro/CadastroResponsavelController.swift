@@ -18,6 +18,7 @@ class CadastroResponsavelController: UIViewController, UITableViewDelegate, UITa
     
     var editandoCadastro = false
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -59,19 +60,31 @@ class CadastroResponsavelController: UIViewController, UITableViewDelegate, UITa
         
         switch indexPath.row {
         case 0:
+            cell.textField.text = user?.nome
             cell.textField.placeholder = "Nome completo"
             break
         case 1:
+            cell.textField.text = user?.email
             cell.textField.placeholder = "E-mail"
 
             break
         case 2:
-            cell.textField.placeholder = "Senha"
+            if editandoCadastro {
+                cell.textField.placeholder = "Senha atual"
+            } else {
+                cell.textField.placeholder = "Senha"
+            }
+            
             cell.textField.isSecureTextEntry = true
             
             break
         case 3:
-            cell.textField.placeholder = "Confirme a senha"
+            if editandoCadastro {
+                cell.textField.placeholder = "Nova senha"
+            } else {
+                cell.textField.placeholder = "Confirme a senha"
+            }
+            
             cell.textField.isSecureTextEntry = true
             
             break
@@ -94,18 +107,19 @@ class CadastroResponsavelController: UIViewController, UITableViewDelegate, UITa
         case 0:
             user?.nome = textField.text
             break
+            
         case 1:
             user?.email = textField.text
-            
             break
+            
         case 2:
             senha = textField.text
-            
             break
+            
         case 3:
             confirmaSenha = textField.text
-            
             break
+            
         default:
             break
         }
@@ -116,7 +130,19 @@ class CadastroResponsavelController: UIViewController, UITableViewDelegate, UITa
         
         if validarDados() {
             if editandoCadastro {
-                
+                user?.saveInBackground(success: { (_) in
+                    if let senha = self.senha, let nova = self.confirmaSenha {
+                        UsuarioDAO.sharedInstance.mudarSenha(senha: senha, novaSenha: nova, success: { (_) in
+                            self.navigationController?.popViewController(animated: true)
+                        }, failed: { (error) in
+                            // TODO: Alert error login
+                        })
+                    } else {
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                }, failed: { (error) in
+                    // TODO: Alert error cadastro
+                })
             } else {                
                 UsuarioDAO.sharedInstance.cadastrarResponsavel(responsavel: user!, senha: senha!, success: { [unowned self] (_)  in
                     self.performSegue(withIdentifier: "SegueCadastroCrianca", sender: self)
@@ -127,13 +153,10 @@ class CadastroResponsavelController: UIViewController, UITableViewDelegate, UITa
         } else {
             // TODO: Alert error validacao
         }
-        
     }
     
     func validarDados() -> Bool {
         return true
-        
-        
     }
     
     

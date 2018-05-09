@@ -167,7 +167,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		052F4BBE2093A35A000A308E /* Responsável */ = {
+		052F4BBE2093A35A000A308E /* Responsável */ = {
 			isa = PBXGroup;
 			children = (
 				052F4BC12093B492000A308E /* PerfilResponsavelViewController.swift */,
@@ -178,7 +178,7 @@
 			path = "Responsável";
 			sourceTree = "<group>";
 		};
-		052F4BBF2093A36A000A308E /* Criança */ = {
+		052F4BBF2093A36A000A308E /* Criança */ = {
 			isa = PBXGroup;
 			children = (
 				052F4BBA20939F91000A308E /* HomeCriancaViewController.swift */,
@@ -229,8 +229,8 @@
 				0A855B44206C49BD001138DC /* Login e cadastro */,
 				0A855B43206C499F001138DC /* DAO */,
 				0A855B42206C4990001138DC /* Model */,
-				052F4BBE2093A35A000A308E /* Responsável */,
-				052F4BBF2093A36A000A308E /* Criança */,
+				052F4BBE2093A35A000A308E /* Responsável */,
+				052F4BBF2093A36A000A308E /* Criança */,
 				052F4BC02093A3B6000A308E /* Desafio */,
 				0A0697472068335200FA11EB /* AppDelegate.swift */,
 				0A06974E2068335200FA11EB /* Assets.xcassets */,
@@ -616,6 +616,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Challenges/Pods-Challenges-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
 				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
@@ -629,6 +630,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",

@@ -12,7 +12,7 @@ class BasicLabelCell: UITableViewCell {
 
     static let basicLabelCellID = "BasicLabelCell"
     
-    @IBOutlet weak var TextoLabel: UILabel!
+    @IBOutlet weak var textoLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

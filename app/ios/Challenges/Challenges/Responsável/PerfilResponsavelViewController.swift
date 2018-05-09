@@ -36,6 +36,12 @@ class PerfilResponsavelViewController: UIViewController, UITableViewDelegate, UI
         super.didReceiveMemoryWarning()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.isNavigationBarHidden = true
+    }
+    
     func setupTableView() {
         
         tableView.dataSource = self
@@ -102,7 +108,11 @@ class PerfilResponsavelViewController: UIViewController, UITableViewDelegate, UI
             if indexPath.section == 1 {
                 let ccvc = storyboard.instantiateViewController(withIdentifier: "CriancasCVC") as! CriancasCollectionViewController
                 ccvc.criancas = user!.criancas
+                ccvc.user = user!
                 self.addChildViewController(ccvc)
+                var frame = cell.containerView.frame
+                frame.origin.y = 0
+                ccvc.view.frame = frame
                 cell.containerView.addSubview(ccvc.view)
                 ccvc.didMove(toParentViewController: self)
             } else {
@@ -139,6 +149,9 @@ class PerfilResponsavelViewController: UIViewController, UITableViewDelegate, UI
     }
     
     @objc func configuracoesButtonTapped(_ sender: UIButton) {
-        
+        let responsavelController = self.storyboard?.instantiateViewController(withIdentifier: "CadastroResponsavel") as! CadastroResponsavelController
+        responsavelController.user = user!
+        responsavelController.editandoCadastro = false
+        navigationController?.pushViewController(responsavelController, animated: true)
     }
 }

@@ -117,7 +117,7 @@ class UsuarioDAO: NSObject {
         }
     }
     
-    private func salvarFotoPerfil(crianca: Crianca, image: UIImage, success: @escaping (Crianca) -> (), failed: @escaping (Error?) -> ()) {
+    func salvarFotoPerfil(crianca: Crianca, image: UIImage, success: @escaping (Crianca) -> (), failed: @escaping (Error?) -> ()) {
         
         let storageRef = Storage.storage().reference(withPath: String.init(format: "/%@/perfil/fotoPerfil.jpg", crianca.objectId!))
         
@@ -197,6 +197,36 @@ class UsuarioDAO: NSObject {
             try Auth.auth().signOut()
         } catch {
             print("error")
+        }
+    }
+    
+    func reautenticarUsuario(senha: String, success: @escaping (Bool) -> (), failed: @escaping (Error?) -> ()) {
+        let user = Auth.auth().currentUser
+        let credential = EmailAuthProvider.credential(withEmail: (user?.email)!, password: senha)
+        user?.reauthenticate(with: credential, completion: { (error) in
+            if let e = error {
+                print(e.localizedDescription)
+                failed(e)
+            } else {
+                success(true)
+            }
+        })
+    }
+    
+    func mudarSenha(senha: String, novaSenha: String, success: @escaping (Bool) -> (), failed: @escaping (Error?) -> ()) {
+        let user = Auth.auth().currentUser
+        
+        self.reautenticarUsuario(senha: senha, success: { (_) in
+            user?.updatePassword(to: senha, completion: { (errorChange) in
+                if let ec = errorChange {
+                    print(ec.localizedDescription)
+                    failed(ec)
+                } else {
+                    success(true)
+                }
+            })
+        }) { (errorAuth) in
+            failed(errorAuth)
         }
     }
     

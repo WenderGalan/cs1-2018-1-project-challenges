@@ -18,7 +18,8 @@ class LoginController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        senhaField.isSecureTextEntry = true
     }
     
     override func viewWillAppear(_ animated: Bool) {

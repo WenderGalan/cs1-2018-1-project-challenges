@@ -13,6 +13,7 @@ import MobileCoreServices
 class CadastroCriancaController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var cadastrarDepoisButton: UIButton!
     
     var user: Responsavel!
     var senhaResponsavel: String!
@@ -28,10 +29,15 @@ class CadastroCriancaController: UIViewController, UITableViewDelegate, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = "Cadastre uma criança"
+
         senhaResponsavel = UserDefaults.standard.value(forKey: "Key") as! String
         
         navigationController?.isNavigationBarHidden = false
         
+        if fromPerfil || editandoCadastro {
+            cadastrarDepoisButton.isHidden = true
+        }
         setupTableView()
     }
     
@@ -65,10 +71,20 @@ class CadastroCriancaController: UIViewController, UITableViewDelegate, UITableV
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: FotoPerfilCell.defaultIdentifier(), for: indexPath) as! FotoPerfilCell
             
+            cell.fotoPerfilImageView.layer.masksToBounds  = true
+            cell.fotoPerfilImageView.layer.cornerRadius = cell.fotoPerfilImageView.frame.size.height / 2
+
             if let foto = foto {
                 cell.fotoPerfilImageView.image = foto
             } else {
-                cell.fotoPerfilImageView.image = #imageLiteral(resourceName: "addPhoto")
+                if editandoCadastro {
+                    if let criancaFoto = crianca?.fotoURL {
+                        let url = URL.init(string: criancaFoto)
+                        cell.fotoPerfilImageView.setImageWith(url!, placeholderImage: #imageLiteral(resourceName: "addPhoto"))
+                    }
+                } else {
+                    cell.fotoPerfilImageView.image = #imageLiteral(resourceName: "addPhoto")
+                }
             }
             
             return cell
@@ -79,19 +95,31 @@ class CadastroCriancaController: UIViewController, UITableViewDelegate, UITableV
             switch indexPath.row {
             
             case 1:
+                cell.textField.text = crianca?.nome
                 cell.textField.placeholder = "Nome completo"
                 break
             case 2:
+                cell.textField.text = crianca?.email
                 cell.textField.placeholder = "E-mail"
                 
                 break
             case 3:
-                cell.textField.placeholder = "Senha"
-                
+                if editandoCadastro {
+                    cell.textField.placeholder = "Senha atual"
+                } else {
+                    cell.textField.placeholder = "Senha"
+                }
+                cell.textField.isSecureTextEntry = true
+
                 break
             case 4:
-                cell.textField.placeholder = "Confirme a senha"
-                
+                if editandoCadastro {
+                    cell.textField.placeholder = "Nova senha"
+                } else {
+                    cell.textField.placeholder = "Confirme a senha"
+                }
+                cell.textField.isSecureTextEntry = true
+
                 break
             default:
                 break
@@ -193,9 +221,36 @@ class CadastroCriancaController: UIViewController, UITableViewDelegate, UITableV
             }
             
             if editandoCadastro {
-                
+                crianca.saveInBackground(success: { (_) in
+                    if let senha = self.senha, let nova = self.confirmaSenha {
+                        UsuarioDAO.sharedInstance.mudarSenha(senha: senha, novaSenha: nova, success: { (_) in
+                            if let foto = self.foto {
+                                UsuarioDAO.sharedInstance.salvarFotoPerfil(crianca: crianca, image: foto, success: { (_) in
+                                    self.navigationController?.popViewController(animated: true)
+                                }, failed: { (error) in
+                                    // TODO: Alert error login
+                                })
+                            } else {
+                                self.navigationController?.popViewController(animated: true)
+                            }
+                        }, failed: { (error) in
+                            // TODO: Alert error login
+                        })
+                    } else {
+                        if let foto = self.foto {
+                            UsuarioDAO.sharedInstance.salvarFotoPerfil(crianca: crianca, image: foto, success: { (_) in
+                                self.navigationController?.popViewController(animated: true)
+                            }, failed: { (error) in
+                                // TODO: Alert error login
+                            })
+                        } else {
+                            self.navigationController?.popViewController(animated: true)
+                        }
+                    }
+                }) { (error) in
+                    // TODO: Alert error login
+                }
             } else {
-                print(user.objectId)
                 crianca.responsavel = user
                 UsuarioDAO.sharedInstance.cadastrarCrianca(crianca: crianca, senha: senha!, foto: foto, success: { [unowned self] (_) in
                     if let c = self.crianca {

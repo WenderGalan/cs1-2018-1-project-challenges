@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import AFNetworking
 
-class CriancasCollectionViewController: UICollectionViewController {
+class CriancasCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
+    var user: Responsavel!
     lazy var criancas: [Crianca] = [Crianca]()
     
     override func viewDidLoad() {
@@ -35,13 +37,13 @@ class CriancasCollectionViewController: UICollectionViewController {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let numberOfSets = CGFloat(2)
-        let padding = CGFloat(7)
-        let paddingSpaces = CGFloat(3)
+        let numberOfSets = CGFloat(4)
+        let padding = CGFloat(10)
+        let paddingSpaces = CGFloat(5)
         
         let width = (collectionView.frame.size.width - (padding * paddingSpaces))/numberOfSets
         
-        let height = width
+        let height = width + (width / 3)
         
         return CGSize(width: width, height: height)
     }
@@ -50,8 +52,8 @@ class CriancasCollectionViewController: UICollectionViewController {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
         
-        let cellWidthPadding = CGFloat(7)
-        let cellHeightPadding = CGFloat(7)
+        let cellWidthPadding = CGFloat(10)
+        let cellHeightPadding = CGFloat(10)
         
         return UIEdgeInsets(top: cellHeightPadding,left: cellWidthPadding, bottom: cellHeightPadding,right: cellWidthPadding)
     }
@@ -60,10 +62,33 @@ class CriancasCollectionViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CriancaCollectionViewCell.defaultIdentifier(), for: indexPath) as! CriancaCollectionViewCell
         
         let crianca = criancas[indexPath.row]
-//        cell.iconeImageView.image = desafio.habilidade?.iconeGrande
-//        cell.nomeLabel.text = desafio.nome
+        if let foto = crianca.fotoURL {
+            let url = URL.init(string: foto)
+            cell.avatarImageView.setImageWith(url!, placeholderImage: #imageLiteral(resourceName: "profilePlaceholderSmall"))
+        }
+
+        cell.holdingView.clipsToBounds = true
+        cell.holdingView.layer.borderWidth = 1;
+        cell.holdingView.layer.borderColor = UIColor.init(red: 236/255, green: 236/255, blue: 236/255, alpha: 1.0).cgColor
+        cell.holdingView.layer.cornerRadius = cell.holdingView.frame.size.height / 2
+
+        cell.avatarImageView.layer.masksToBounds  = true
+        cell.avatarImageView.layer.cornerRadius = cell.avatarImageView.frame.size.height / 2
+
+        cell.nomeLabel.text = crianca.nome!
         
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        
+        let criancaController = self.storyboard?.instantiateViewController(withIdentifier: "CadastroCrianca") as! CadastroCriancaController
+        criancaController.user = user!
+        criancaController.crianca = criancas[indexPath.row]
+        criancaController.editandoCadastro = true
+        criancaController.fromPerfil = true
+        navigationController?.pushViewController(criancaController, animated: true)
     }
 
     // MARK: UICollectionViewDelegate
