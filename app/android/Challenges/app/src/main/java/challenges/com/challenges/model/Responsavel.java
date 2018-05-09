@@ -10,6 +10,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Responsavel extends Usuario implements Serializable{
 
@@ -31,15 +33,16 @@ public class Responsavel extends Usuario implements Serializable{
         this.criancas = criancas;
     }
 
-    public void salvar(){
-        DocumentReference responsavel = FirebaseFirestore.getInstance().collection("usuarios").document(getId());
-        responsavel.set(this).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
-                    Log.i("DEBUG", "Responsável salvo com sucesso!");
-                }
-            }
-        });
+    public Map construirHash(){
+        Map<String, Object> hashMap = new HashMap<String, Object>();
+
+        //seta o tipo do usuario
+        hashMap.put("tipo", getTipo());
+        if (getNome() != null) hashMap.put("nome", getNome());
+        if (getEmail() != null) hashMap.put("email", getEmail());
+        if (getCriancas() != null) hashMap.put("criancas", getCriancas());
+
+        return hashMap;
     }
+
 }

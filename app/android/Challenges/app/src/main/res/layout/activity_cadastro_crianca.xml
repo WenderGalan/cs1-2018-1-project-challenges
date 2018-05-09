@@ -93,14 +93,14 @@
             android:layout_alignStart="@+id/editTextConfirmarSenha"
             android:layout_below="@+id/editTextConfirmarSenha"
             android:layout_marginTop="10dp"
-            android:background="@drawable/fundo_botao_branco"
+            android:background="@drawable/fundo_botao_azul_grande"
             android:text="Concluir"
             android:textAllCaps="false"
             android:textColor="@color/branco"
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/textViewCadastrarDepois"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/buttonConcluir"

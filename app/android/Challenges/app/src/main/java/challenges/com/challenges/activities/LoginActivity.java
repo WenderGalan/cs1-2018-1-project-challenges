@@ -1,7 +1,9 @@
 package challenges.com.challenges.activities;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -14,15 +16,18 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthEmailException;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import challenges.com.challenges.R;
 import challenges.com.challenges.config.ConfiguracaoFirebase;
+import challenges.com.challenges.model.Usuario;
 import challenges.com.challenges.util.Validator;
 
 public class LoginActivity extends AppCompatActivity {
@@ -31,13 +36,13 @@ public class LoginActivity extends AppCompatActivity {
     private EditText senha;
     private Button entrar;
     private FirebaseAuth autenticacao;
+    private SharedPreferences sharedPreferences;
+    private final String CHALLENGES = "CHALLENGES";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        verificarUsuarioLogado();
 
         email = findViewById(R.id.editTextEmailLogin);
         senha = findViewById(R.id.editTextSenhaLogin);
@@ -53,20 +58,39 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void verificarUsuarioLogado() {
-        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-        if (autenticacao.getCurrentUser() != null){
-            abrirTelaPrincipal();
-        }
+    private void destinarUsuario(){
+        String idUsuarioAtual = autenticacao.getCurrentUser().getUid();
+        ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(idUsuarioAtual).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()){
+                    Usuario usuario = documentSnapshot.toObject(Usuario.class);
+                    if (usuario.getTipo() == 0){
+                        //responsavel
+                        abrirHomeResponsavel();
+                    }else if (usuario.getTipo() == 1){
+                        //crianca
+                        abrirHomeCrianca();
+                    }
+                }else{
+                    Log.i("DEBUG", "Usuário não encontrado!");
+                }
+
+            }
+        });
     }
 
-    private void validarLogin(String email, String senha) {
+    private void validarLogin(final String email, final String senha) {
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         autenticacao.signInWithEmailAndPassword(email, senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    abrirTelaPrincipal();
+                    destinarUsuario();
+
+                    //salvar email e senha do usuario nas preferencias
+                    gravarPreferencias(email, senha);
+
                 }else{
                     String erroExcecao = "";
                     try {
@@ -88,8 +112,27 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void abrirTelaPrincipal() {
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+    private void gravarPreferencias(String email, String senha) {
+
+            sharedPreferences = getSharedPreferences(CHALLENGES, Context.MODE_PRIVATE);
+
+            SharedPreferences.Editor prefsPrivateEditor = sharedPreferences.edit();
+
+            prefsPrivateEditor.putString("email", email);
+            prefsPrivateEditor.putString("senha", senha);
+
+            prefsPrivateEditor.commit();
+
+    }
+
+    private void abrirHomeResponsavel() {
+        Intent intent = new Intent(LoginActivity.this, HomeResponsavelActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void abrirHomeCrianca() {
+        Intent intent = new Intent(LoginActivity.this, HomeCriancaActivity.class);
         startActivity(intent);
         finish();
     }
@@ -114,6 +157,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void criarNovaConta(View view) {
         Intent intent = new Intent(LoginActivity.this, CadastroActivity.class);
+        intent.putExtra("tipo", "novo");
         startActivity(intent);
         finish();
     }

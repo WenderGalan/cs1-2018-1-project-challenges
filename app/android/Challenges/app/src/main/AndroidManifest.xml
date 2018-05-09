@@ -16,10 +16,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.CadastroActivity" />
-        <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.CadastroCriancaActivity" />
-        <activity android:name=".activities.MainActivity"></activity>
+        <activity android:name=".activities.AdicionarAmigoActivity" />
+        <activity
+            android:name=".activities.CadastroActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.CadastroCriancaActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.HomeCriancaActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.HomeResponsavelActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.CadastrarDesafioActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.NotificacoesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.DesafioDetalhesActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.CriancaDetalhesActivity"></activity>
     </application>
 
 </manifest>
