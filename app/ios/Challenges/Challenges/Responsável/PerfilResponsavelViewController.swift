@@ -17,6 +17,8 @@ class PerfilResponsavelViewController: UIViewController, UITableViewDelegate, UI
     lazy var notificacoes: [Any] = [Any]()
     lazy var desafios: [Desafio] = [Desafio]()
 
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -26,25 +28,13 @@ class PerfilResponsavelViewController: UIViewController, UITableViewDelegate, UI
             UsuarioDAO.sharedInstance.getUsuarioInfo(objectId: user!.objectId!, success: { (responsavel) in
                 self.user = responsavel as? Responsavel
                 self.setupTableView()
-                DesafioDAO.sharedInstance.getDesafiosPara(responsavelID: responsavel.objectId!, success: { (array) in
-                    self.desafios = array
-                    self.tableView.reloadData()
-                    MBProgressHUD.hide(for: self.view, animated: true)
-                }, failed: { (error) in
-                    MBProgressHUD.hide(for: self.view, animated: true)
-                })
+                self.getDesafios()
             }) { (error) in
                 MBProgressHUD.hide(for: self.view, animated: true)
             }
         } else {
             MBProgressHUD.showAdded(to: view, animated: true)
-            DesafioDAO.sharedInstance.getDesafiosPara(responsavelID: user!.objectId!, success: { (array) in
-                self.desafios = array
-                self.tableView.reloadData()
-                MBProgressHUD.hide(for: self.view, animated: true)
-            }, failed: { (error) in
-                MBProgressHUD.hide(for: self.view, animated: true)
-            })
+            getDesafios()
             self.setupTableView()
         }
     }
@@ -57,7 +47,17 @@ class PerfilResponsavelViewController: UIViewController, UITableViewDelegate, UI
         super.viewWillAppear(animated)
         
         navigationController?.isNavigationBarHidden = true
-        tableView.reloadData()
+        getDesafios()
+    }
+    
+    fileprivate func getDesafios() {
+        DesafioDAO.sharedInstance.getDesafiosPara(responsavelID: user!.objectId!, success: { (array) in
+            self.desafios = array
+            self.tableView.reloadData()
+            MBProgressHUD.hide(for: self.view, animated: true)
+        }, failed: { (error) in
+            MBProgressHUD.hide(for: self.view, animated: true)
+        })
     }
     
     func setupTableView() {
@@ -138,6 +138,7 @@ class PerfilResponsavelViewController: UIViewController, UITableViewDelegate, UI
             } else {
                 let dcvc = storyboard.instantiateViewController(withIdentifier: "DesafiosCVC") as! DesafiosCollectionViewController
                 dcvc.desafios = desafios
+                dcvc.tipoDesafio = .responsavel
                 self.addChildViewController(dcvc)
                 cell.containerView.addSubview(dcvc.view)
                 dcvc.didMove(toParentViewController: self)

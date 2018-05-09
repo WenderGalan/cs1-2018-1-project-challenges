@@ -78,6 +78,22 @@ class FirestoreObject: NSObject {
         }
     }
     
+    func deleteInBackground(success: @escaping (Bool) -> (), failed: @escaping (Error?) -> ())  {
+        guard let ref = ref else {
+            return
+        }
+        
+        if let uid = objectId {
+            ref.document(uid).delete { (error) in
+                if let erro = error {
+                    failed(erro)
+                } else {
+                    success(true)
+                }
+            }
+        }
+    }
+    
     func toDictionary() -> Dictionary<String, Any> {
         return Dictionary<String, Any>()
     }

@@ -10,10 +10,11 @@ import UIKit
 
 class HabilidadeDesafioCell: UITableViewCell {
 
-    static let habilidadeDesafioCellID = "HabilidadeDesafioCell"
+    static let kHabilidadeDesafilCellID = "HabilidadeDesafioCell"
     
-    @IBOutlet weak var LabelHabilidade: UILabel!
-    @IBOutlet weak var imagemHabilidade: UIImageView!
+    @IBOutlet weak var holdingView: UIView!
+    @IBOutlet weak var nomeHabilidadeLabel: UILabel!
+    @IBOutlet weak var iconeHabilidadeImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,7 +25,7 @@ class HabilidadeDesafioCell: UITableViewCell {
     }
     
     class func defaultIdentifier() -> String {
-        return habilidadeDesafioCellID
+        return kHabilidadeDesafilCellID
     }
 
 }

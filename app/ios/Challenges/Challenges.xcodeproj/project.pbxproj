@@ -54,6 +54,8 @@
 		0A855B41206C497D001138DC /* CadastroCriancaController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A855B40206C497D001138DC /* CadastroCriancaController.swift */; };
 		0A879F9C20A3593B007A9E62 /* AlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A879F9B20A3593A007A9E62 /* AlertHelper.swift */; };
 		0A879F9E20A35949007A9E62 /* ValidationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A879F9D20A35949007A9E62 /* ValidationHelper.swift */; };
+		0A879FA120A392D5007A9E62 /* EstatisticaCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A879FA020A392D5007A9E62 /* EstatisticaCell.xib */; };
+		0A879FA320A39419007A9E62 /* EstatisticaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A879FA220A39419007A9E62 /* EstatisticaCell.swift */; };
 		0A8D22EF20A32482002675F1 /* PickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8D22EE20A32482002675F1 /* PickerController.swift */; };
 		0A8D22F420A327E9002675F1 /* PickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8D22F220A327E8002675F1 /* PickerTableViewCell.swift */; };
 		0A8D22F520A327E9002675F1 /* PickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A8D22F320A327E9002675F1 /* PickerTableViewCell.xib */; };
@@ -135,6 +137,8 @@
 		0A855B40206C497D001138DC /* CadastroCriancaController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CadastroCriancaController.swift; sourceTree = "<group>"; };
 		0A879F9B20A3593A007A9E62 /* AlertHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertHelper.swift; sourceTree = "<group>"; };
 		0A879F9D20A35949007A9E62 /* ValidationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationHelper.swift; sourceTree = "<group>"; };
+		0A879FA020A392D5007A9E62 /* EstatisticaCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EstatisticaCell.xib; sourceTree = "<group>"; };
+		0A879FA220A39419007A9E62 /* EstatisticaCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstatisticaCell.swift; sourceTree = "<group>"; };
 		0A8D22EE20A32482002675F1 /* PickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerController.swift; sourceTree = "<group>"; };
 		0A8D22F220A327E8002675F1 /* PickerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerTableViewCell.swift; sourceTree = "<group>"; };
 		0A8D22F320A327E9002675F1 /* PickerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PickerTableViewCell.xib; sourceTree = "<group>"; };
@@ -234,12 +238,10 @@
 		0A0697462068335100FA11EB /* Challenges */ = {
 			isa = PBXGroup;
 			children = (
-				0A879F9B20A3593A007A9E62 /* AlertHelper.swift */,
-				0A879F9D20A35949007A9E62 /* ValidationHelper.swift */,
 				0A06977B2068593C00FA11EB /* FirestoreService.swift */,
 				0A0DE4AC209F3745009106FE /* DesafiosCollectionViewController.swift */,
 				0A0DE4B8209F5106009106FE /* CriancasCollectionViewController.swift */,
-				0A8D22EE20A32482002675F1 /* PickerController.swift */,
+				0A879F9F20A38D9F007A9E62 /* Helpers */,
 				0A855B45206C49CD001138DC /* Custom Views */,
 				0A855B44206C49BD001138DC /* Login e cadastro */,
 				0A855B43206C499F001138DC /* DAO */,
@@ -325,6 +327,8 @@
 				052F4BC52093C75B000A308E /* BasicLabelCell.swift */,
 				052F4BC72093CC58000A308E /* HabilidadeDesafioCell.xib */,
 				052F4BC92093CF95000A308E /* HabilidadeDesafioCell.swift */,
+				0A879FA020A392D5007A9E62 /* EstatisticaCell.xib */,
+				0A879FA220A39419007A9E62 /* EstatisticaCell.swift */,
 				05853D19209D0D0B008530C3 /* DefaultSectionHeaderView.xib */,
 				05853D1B209D0E01008530C3 /* DefaultSectionHeaderView.swift */,
 				0A0DE4A8209F33C0009106FE /* ContainerTableViewCell.xib */,
@@ -333,6 +337,16 @@
 				0A8D22F320A327E9002675F1 /* PickerTableViewCell.xib */,
 			);
 			path = "Custom Views";
+			sourceTree = "<group>";
+		};
+		0A879F9F20A38D9F007A9E62 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				0A879F9B20A3593A007A9E62 /* AlertHelper.swift */,
+				0A879F9D20A35949007A9E62 /* ValidationHelper.swift */,
+				0A8D22EE20A32482002675F1 /* PickerController.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		0AEEC7B42098B2A600F4C90C /* Fonts */ = {
@@ -488,6 +502,7 @@
 				0A695A6A206FDF5100DED428 /* FotoPerfilCell.xib in Resources */,
 				0A0DE4B1209F47CE009106FE /* DesafioCollectionViewCell.xib in Resources */,
 				0A069778206833DA00FA11EB /* GoogleService-Info.plist in Resources */,
+				0A879FA120A392D5007A9E62 /* EstatisticaCell.xib in Resources */,
 				0A0DE4BB209F5615009106FE /* NotificationHeaderSectionView.xib in Resources */,
 				052F4BC82093CC58000A308E /* HabilidadeDesafioCell.xib in Resources */,
 				0AEEC7B52098B2F100F4C90C /* DK Cool Crayon.ttf in Resources */,
@@ -717,6 +732,7 @@
 				0A879F9E20A35949007A9E62 /* ValidationHelper.swift in Sources */,
 				050B58D7208E7D85002FDA31 /* NotificacoesResponsavelViewController.swift in Sources */,
 				0A06977C2068593C00FA11EB /* FirestoreService.swift in Sources */,
+				0A879FA320A39419007A9E62 /* EstatisticaCell.swift in Sources */,
 				0A8D22EF20A32482002675F1 /* PickerController.swift in Sources */,
 				0A161FED206EE4E000A397E0 /* Habilidade.swift in Sources */,
 				0A161FE9206EE25000A397E0 /* Responsavel.swift in Sources */,

@@ -136,30 +136,85 @@
         <!--Desafio View Controller-->
         <scene sceneID="cVE-Fj-HXJ">
             <objects>
-                <viewController id="XdI-sz-gpa" customClass="DesafioViewController" customModule="Challenges" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DesafioVC" id="XdI-sz-gpa" customClass="DesafioViewController" customModule="Challenges" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fIO-2a-LFx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fSC-Da-fW7">
-                                <rect key="frame" x="0.0" y="64" width="375" height="529"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fSC-Da-fW7">
+                                <rect key="frame" x="0.0" y="20" width="375" height="517"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
                             </tableView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RXy-C4-pFM">
-                                <rect key="frame" x="0.0" y="601" width="375" height="66"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RXy-C4-pFM">
+                                <rect key="frame" x="0.0" y="537" width="375" height="130"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="kkT-yB-9sE">
+                                        <rect key="frame" x="20" y="10" width="335" height="110"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kqb-Pm-Map">
+                                                <rect key="frame" x="0.0" y="0.0" width="335" height="50"/>
+                                                <color key="backgroundColor" red="0.98039215690000003" green="0.59999999999999998" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="QYZ-7x-avt"/>
+                                                </constraints>
+                                                <state key="normal" title="Salvar">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="firstButtonTapped:" destination="XdI-sz-gpa" eventType="touchUpInside" id="U75-UK-ylm"/>
+                                                    <action selector="salvarButtonTapped:" destination="Hwk-1D-AaT" eventType="touchUpInside" id="ZX3-Br-qOq"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7gg-zD-vTe">
+                                                <rect key="frame" x="0.0" y="60" width="335" height="50"/>
+                                                <color key="backgroundColor" red="0.98039215690000003" green="0.59999999999999998" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="fhU-Se-sDm"/>
+                                                </constraints>
+                                                <state key="normal" title="Salvar">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="salvarButtonTapped:" destination="Hwk-1D-AaT" eventType="touchUpInside" id="rdy-9T-lBa"/>
+                                                    <action selector="secondButtonTapped:" destination="XdI-sz-gpa" eventType="touchUpInside" id="3Ba-0R-dlv"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="kkT-yB-9sE" secondAttribute="bottom" constant="10" id="INB-df-xWe"/>
+                                    <constraint firstAttribute="trailing" secondItem="kkT-yB-9sE" secondAttribute="trailing" constant="20" id="MoC-5R-QfC"/>
+                                    <constraint firstItem="kkT-yB-9sE" firstAttribute="top" secondItem="RXy-C4-pFM" secondAttribute="top" constant="10" id="Ysa-Yk-Tws"/>
+                                    <constraint firstItem="kkT-yB-9sE" firstAttribute="leading" secondItem="RXy-C4-pFM" secondAttribute="leading" constant="20" id="pyl-j4-Aeb"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="RXy-C4-pFM" firstAttribute="leading" secondItem="Ukk-Uj-41t" secondAttribute="leading" id="MHK-Aw-ZzQ"/>
+                            <constraint firstItem="RXy-C4-pFM" firstAttribute="bottom" secondItem="Ukk-Uj-41t" secondAttribute="bottom" id="MRC-7H-COn"/>
+                            <constraint firstItem="fSC-Da-fW7" firstAttribute="top" secondItem="Ukk-Uj-41t" secondAttribute="top" id="bQ7-AO-bSe"/>
+                            <constraint firstItem="RXy-C4-pFM" firstAttribute="top" secondItem="fSC-Da-fW7" secondAttribute="bottom" id="fp3-Ff-cbB"/>
+                            <constraint firstItem="fSC-Da-fW7" firstAttribute="trailing" secondItem="Ukk-Uj-41t" secondAttribute="trailing" id="j0O-bf-eP1"/>
+                            <constraint firstItem="RXy-C4-pFM" firstAttribute="trailing" secondItem="Ukk-Uj-41t" secondAttribute="trailing" id="kS7-A4-w5V"/>
+                            <constraint firstItem="fSC-Da-fW7" firstAttribute="leading" secondItem="Ukk-Uj-41t" secondAttribute="leading" id="uji-EK-HIi"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Ukk-Uj-41t"/>
                     </view>
                     <navigationItem key="navigationItem" id="N6E-Z7-aQi"/>
+                    <connections>
+                        <outlet property="holdingView" destination="RXy-C4-pFM" id="Jj7-8p-oZl"/>
+                        <outlet property="primeiroButton" destination="Kqb-Pm-Map" id="DiC-Eu-YWi"/>
+                        <outlet property="segundoButton" destination="7gg-zD-vTe" id="sNe-gW-seo"/>
+                        <outlet property="tableView" destination="fSC-Da-fW7" id="Ofh-7Z-6ts"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1v0-QQ-YqA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2580" y="-1845"/>
+            <point key="canvasLocation" x="2580" y="-1845.4272863568217"/>
         </scene>
         <!--Notificacoes Responsavel View Controller-->
         <scene sceneID="IEJ-Ck-IfB">
@@ -631,41 +686,9 @@
             <point key="canvasLocation" x="-175.19999999999999" y="-305.39730134932535"/>
         </scene>
         <!--Cadastro Desafio Controller-->
-        <scene sceneID="dXh-hu-lCx">
-            <objects>
-                <viewController id="MQb-AT-bOj" customClass="CadastroDesafioController" customModule="Challenges" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="vL9-wT-1CQ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MCE-bK-Vmx">
-                                <rect key="frame" x="0.0" y="64" width="375" height="533"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="epD-1m-pxa">
-                                <rect key="frame" x="22" y="610" width="330" height="43"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="0.67322857839469652" blue="0.12001656610445521" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                                <state key="normal" title="Salvar">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="21V-xh-UUb"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="Lxd-fL-IZ2"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="sLg-Bo-1Qg" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3384.8000000000002" y="-1845.4272863568217"/>
-        </scene>
-        <!--Cadastro Desafio Controller-->
         <scene sceneID="ov0-c9-wMz">
             <objects>
-                <viewController id="Hwk-1D-AaT" customClass="CadastroDesafioController" customModule="Challenges" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CadastroDesafio" id="Hwk-1D-AaT" customClass="CadastroDesafioController" customModule="Challenges" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1tf-3N-mBT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

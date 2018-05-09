@@ -12,7 +12,8 @@ import UIKit
 class DesafiosCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
     lazy var desafios: [Desafio] = [Desafio]()
-    
+    var tipoDesafio: DesafioViewController.DesafioType!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -70,6 +71,16 @@ class DesafiosCollectionViewController: UICollectionViewController, UICollection
         return cell
     }
 
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let dvc = storyboard.instantiateViewController(withIdentifier: "DesafioVC") as! DesafioViewController
+        dvc.desafio = desafios[indexPath.row]
+        dvc.tipoDesafio = .responsavel
+        navigationController?.pushViewController(dvc, animated: true)
+    }
+    
     // MARK: UICollectionViewDelegate
 
     /*
