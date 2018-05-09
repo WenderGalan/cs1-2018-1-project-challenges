@@ -43,6 +43,7 @@ public class HomeFragment extends Fragment {
     private FirebaseAuth autenticacao;
     private Crianca crianca;
     private DesafioAdapter desafioAdapter;
+    private List<Desafio> desafiosResult = new ArrayList<>();
 
     private String UID;
 
@@ -73,7 +74,14 @@ public class HomeFragment extends Fragment {
         query.addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                List<Desafio> desafiosResult = documentSnapshots.toObjects(Desafio.class);
+                desafiosResult.clear();
+                for (DocumentSnapshot document : documentSnapshots){
+                    Desafio desafio = document.toObject(Desafio.class);
+                    if (desafio.isCompletado() == false){
+                        desafio.setId(document.getId());
+                        desafiosResult.add(desafio);
+                    }
+                }
                 desafioAdapter = new DesafioAdapter((ArrayList<Desafio>) desafiosResult, "crianca");
                 recyclerViewDesafioCrianca.setAdapter(desafioAdapter);
             }
@@ -86,18 +94,6 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
-//        sair.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //desloga o usuario e volta para a tela incial de Login
-//                FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-//                autenticacao.signOut();
-//                Intent intent = new Intent(getActivity(), LoginActivity.class);
-//                startActivity(intent);
-//                getActivity().finish();
-//            }
-//        });
 
         return view;
     }

@@ -121,6 +121,8 @@ public class Desafio implements Serializable {
         if (getRepeticoes() >= 1) hashMap.put("repeticoes", getRepeticoes());
         if (getHora() != null) hashMap.put("hora", getHora());
         if (getData() != null) hashMap.put("data", getData());
+        hashMap.put("completado", isCompletado());
+        hashMap.put("checado", isChecado());
         return hashMap;
     }
 
