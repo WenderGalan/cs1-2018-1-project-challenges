@@ -183,7 +183,11 @@ class UsuarioDAO: NSObject {
                         }
                     }
                 } else {
-                    
+                    let user = Crianca.sharedUser()
+                    if let usuario = user {
+                        usuario.from(document: snapshot)
+                        success(usuario)
+                    }
                 }
             } else {
                 failed(nil)

@@ -38,9 +38,9 @@ class Crianca: Usuario {
         setReference()
     }
     
-//    class func sharedInstance() -> Crianca? {
-//        return sharedInstance
-//    }
+    class func sharedUser() -> Crianca? {
+        return sharedInstance
+    }
     
     func setReference() {
         ref = db.collection("Usuarios")

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class LoginController: UIViewController {
 
@@ -30,6 +31,7 @@ class LoginController: UIViewController {
     
     @IBAction func entrarButtonTapped(_ sender: UIButton) {
         view.endEditing(true)
+        MBProgressHUD.showAdded(to: view, animated: true)
         UsuarioDAO.sharedInstance.login(email: emailField.text!, senha: senhaField.text!, success: { [unowned self] (usuario) in
             if usuario.tipo == 0 {
                 self.userResponsavel = usuario as? Responsavel
@@ -38,9 +40,10 @@ class LoginController: UIViewController {
                 self.userCrianca = usuario as? Crianca
                 self.performSegue(withIdentifier: "SegueLoginCrianca", sender: self)
             }
-
+            MBProgressHUD.hide(for: self.view, animated: true)
         }) { (error) in
-            print("erro de login")
+            MBProgressHUD.hide(for: self.view, animated: true)
+            AlertHelper.sharedInstance.createFirestoreErrorAlert(error: error!, from: self)
         }
     }
     
@@ -55,7 +58,7 @@ class LoginController: UIViewController {
                 UsuarioDAO.sharedInstance.requisitarNovaSenha(email: email, success: { (_) in
                     //TODO: success message
                 }, failed: { (error) in
-                    //TODO: error message
+                    AlertHelper.sharedInstance.createFirestoreErrorAlert(error: error!, from: self)
                 })
             }
         })

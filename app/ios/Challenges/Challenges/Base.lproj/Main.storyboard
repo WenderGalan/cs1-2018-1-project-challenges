@@ -515,21 +515,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="aqq-yY-Puf">
-                                <rect key="frame" x="0.0" y="20" width="375" height="598"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="aqq-yY-Puf">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="aqq-yY-Puf" firstAttribute="leading" secondItem="i3E-nh-TiQ" secondAttribute="leading" id="Evi-iL-2qm"/>
+                            <constraint firstItem="aqq-yY-Puf" firstAttribute="top" secondItem="i3E-nh-TiQ" secondAttribute="top" id="Fsi-BP-9cP"/>
+                            <constraint firstItem="aqq-yY-Puf" firstAttribute="bottom" secondItem="i3E-nh-TiQ" secondAttribute="bottom" id="X9M-gV-ACi"/>
+                            <constraint firstItem="aqq-yY-Puf" firstAttribute="trailing" secondItem="i3E-nh-TiQ" secondAttribute="trailing" id="sXg-eP-R7G"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="i3E-nh-TiQ"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 1" id="KfG-WX-kft"/>
                     <navigationItem key="navigationItem" id="g8W-c5-ezI"/>
+                    <connections>
+                        <outlet property="tableView" destination="aqq-yY-Puf" id="G13-qZ-t7a"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C5q-YI-MDh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1622" y="-1845"/>
+            <point key="canvasLocation" x="1621.5999999999999" y="-1845.4272863568217"/>
         </scene>
         <!--Cadastro Crianca Controller-->
         <scene sceneID="TW5-zn-kPG">
@@ -612,11 +620,11 @@
             </objects>
             <point key="canvasLocation" x="-175" y="-1101"/>
         </scene>
-        <!--Item 1-->
+        <!--Navigation Controller-->
         <scene sceneID="iSN-XC-NPd">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="EgE-nU-2B5" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item 1" id="Ro0-k1-fbg"/>
+                    <tabBarItem key="tabBarItem" title="" image="homeIconOn" selectedImage="homeIconOn" id="Ro0-k1-fbg"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="mZv-EX-ZyH">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -631,11 +639,11 @@
             </objects>
             <point key="canvasLocation" x="735" y="-1844"/>
         </scene>
-        <!--Item 2-->
+        <!--Navigation Controller-->
         <scene sceneID="YiX-DE-7YC">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="u3I-ZZ-5ka" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item 2" id="flt-8m-NIt"/>
+                    <tabBarItem key="tabBarItem" title="" image="profileIconOff" selectedImage="profileIconOff" id="flt-8m-NIt"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="kyL-Ge-40j">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -868,6 +876,8 @@
     </scenes>
     <resources>
         <image name="challengesLogo" width="270" height="55"/>
+        <image name="homeIconOn" width="30" height="30"/>
+        <image name="profileIconOff" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="qFO-Id-f7l"/>

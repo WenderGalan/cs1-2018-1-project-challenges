@@ -117,6 +117,7 @@ class PerfilResponsavelViewController: UIViewController, UITableViewDelegate, UI
             cell.notificationBadge.text = "\(notificacoes.count)"
             
             cell.logoutButton.addTarget(self, action: #selector(logoutButtonTapped(_:)), for: .touchUpInside)
+            cell.notificationButton.setImage(#imageLiteral(resourceName: "notificationIconBlue"), for: .normal)
             cell.notificationButton.addTarget(self, action: #selector(notificacoesButtonTapped(_:)), for: .touchUpInside)
             cell.editarPerfilButton.addTarget(self, action: #selector(configuracoesButtonTapped(_:)), for: .touchUpInside)
             

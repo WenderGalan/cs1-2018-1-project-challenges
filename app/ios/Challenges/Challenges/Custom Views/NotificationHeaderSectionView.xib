@@ -24,7 +24,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Sqg-Hf-XYe">
                                 <rect key="frame" x="0.0" y="0.0" width="300" height="65.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Btx-ZZ-pls">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Btx-ZZ-pls">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="33.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                         <color key="textColor" red="0.29803921568627451" green="0.77647058823529413" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
@@ -104,6 +104,6 @@
     </objects>
     <resources>
         <image name="editIcon" width="25" height="25"/>
-        <image name="notificationIcon" width="24" height="34"/>
+        <image name="notificationIcon" width="29" height="38"/>
     </resources>
 </document>

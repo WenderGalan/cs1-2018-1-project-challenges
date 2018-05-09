@@ -69,6 +69,7 @@ class DesafioViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         title = "Desafio"
         
+        tabBarController?.tabBar.isHidden = true
         
         holdingView.addDefaultDropShadow()
         

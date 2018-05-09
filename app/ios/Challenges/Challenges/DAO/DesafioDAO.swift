@@ -40,4 +40,26 @@ class DesafioDAO: NSObject {
 
     }
     
+    func getDesafiosPara(criancaID: String, success: @escaping ([Desafio]) -> (), failed: @escaping (Error?) -> ()) {
+        let childRef = self.ref.whereField("crianca", isEqualTo: criancaID)
+        
+        childRef.getDocuments { (snapshot, error) in
+            if let e = error {
+                failed(e)
+            } else {
+                if let snap = snapshot {
+                    var desafios = [Desafio]()
+                    for doc in snap.documents {
+                        let desafio = Desafio.init(document: doc)
+                        desafio.objectId = doc.documentID
+                        desafios.append(desafio)
+                    }
+                    success(desafios)
+                }
+            }
+            
+        }
+        
+    }
+    
 }

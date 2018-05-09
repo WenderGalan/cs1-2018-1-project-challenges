@@ -56,6 +56,7 @@
 		0A879F9E20A35949007A9E62 /* ValidationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A879F9D20A35949007A9E62 /* ValidationHelper.swift */; };
 		0A879FA120A392D5007A9E62 /* EstatisticaCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A879FA020A392D5007A9E62 /* EstatisticaCell.xib */; };
 		0A879FA320A39419007A9E62 /* EstatisticaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A879FA220A39419007A9E62 /* EstatisticaCell.swift */; };
+		0A879FA520A3BAF7007A9E62 /* CriancaPerfilHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A879FA420A3BAF7007A9E62 /* CriancaPerfilHeaderCell.xib */; };
 		0A8D22EF20A32482002675F1 /* PickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8D22EE20A32482002675F1 /* PickerController.swift */; };
 		0A8D22F420A327E9002675F1 /* PickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8D22F220A327E8002675F1 /* PickerTableViewCell.swift */; };
 		0A8D22F520A327E9002675F1 /* PickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A8D22F320A327E9002675F1 /* PickerTableViewCell.xib */; };
@@ -139,6 +140,7 @@
 		0A879F9D20A35949007A9E62 /* ValidationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationHelper.swift; sourceTree = "<group>"; };
 		0A879FA020A392D5007A9E62 /* EstatisticaCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EstatisticaCell.xib; sourceTree = "<group>"; };
 		0A879FA220A39419007A9E62 /* EstatisticaCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstatisticaCell.swift; sourceTree = "<group>"; };
+		0A879FA420A3BAF7007A9E62 /* CriancaPerfilHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CriancaPerfilHeaderCell.xib; sourceTree = "<group>"; };
 		0A8D22EE20A32482002675F1 /* PickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerController.swift; sourceTree = "<group>"; };
 		0A8D22F220A327E8002675F1 /* PickerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerTableViewCell.swift; sourceTree = "<group>"; };
 		0A8D22F320A327E9002675F1 /* PickerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PickerTableViewCell.xib; sourceTree = "<group>"; };
@@ -313,6 +315,7 @@
 		0A855B45206C49CD001138DC /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
+				0A879FA420A3BAF7007A9E62 /* CriancaPerfilHeaderCell.xib */,
 				0A0DE4BA209F5615009106FE /* NotificationHeaderSectionView.xib */,
 				0A0DE4BC209F58FE009106FE /* NotificationHeaderSectionView.swift */,
 				0A0DE4B0209F47CE009106FE /* DesafioCollectionViewCell.xib */,
@@ -510,6 +513,7 @@
 				0A8D22F520A327E9002675F1 /* PickerTableViewCell.xib in Resources */,
 				05853D1A209D0D0B008530C3 /* DefaultSectionHeaderView.xib in Resources */,
 				0A855B37206C46AE001138DC /* BasicTextFieldCell.xib in Resources */,
+				0A879FA520A3BAF7007A9E62 /* CriancaPerfilHeaderCell.xib in Resources */,
 				0A06974D2068335200FA11EB /* Main.storyboard in Resources */,
 				0A0DE4B3209F4881009106FE /* CriancaCollectionViewCell.xib in Resources */,
 			);

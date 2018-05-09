@@ -77,7 +77,8 @@ class DesafiosCollectionViewController: UICollectionViewController, UICollection
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let dvc = storyboard.instantiateViewController(withIdentifier: "DesafioVC") as! DesafioViewController
         dvc.desafio = desafios[indexPath.row]
-        dvc.tipoDesafio = .responsavel
+        dvc.tipoDesafio = tipoDesafio
+        
         navigationController?.pushViewController(dvc, animated: true)
     }
     
