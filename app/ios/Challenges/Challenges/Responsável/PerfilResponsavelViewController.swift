@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class PerfilResponsavelViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -20,14 +21,30 @@ class PerfilResponsavelViewController: UIViewController, UITableViewDelegate, UI
         super.viewDidLoad()
         
         if user == nil {
+            MBProgressHUD.showAdded(to: view, animated: true)
             user = Responsavel.sharedUser()
             UsuarioDAO.sharedInstance.getUsuarioInfo(objectId: user!.objectId!, success: { (responsavel) in
                 self.user = responsavel as? Responsavel
                 self.setupTableView()
+                DesafioDAO.sharedInstance.getDesafiosPara(responsavelID: responsavel.objectId!, success: { (array) in
+                    self.desafios = array
+                    self.tableView.reloadData()
+                    MBProgressHUD.hide(for: self.view, animated: true)
+                }, failed: { (error) in
+                    MBProgressHUD.hide(for: self.view, animated: true)
+                })
             }) { (error) in
-                
+                MBProgressHUD.hide(for: self.view, animated: true)
             }
         } else {
+            MBProgressHUD.showAdded(to: view, animated: true)
+            DesafioDAO.sharedInstance.getDesafiosPara(responsavelID: user!.objectId!, success: { (array) in
+                self.desafios = array
+                self.tableView.reloadData()
+                MBProgressHUD.hide(for: self.view, animated: true)
+            }, failed: { (error) in
+                MBProgressHUD.hide(for: self.view, animated: true)
+            })
             self.setupTableView()
         }
     }
@@ -40,6 +57,7 @@ class PerfilResponsavelViewController: UIViewController, UITableViewDelegate, UI
         super.viewWillAppear(animated)
         
         navigationController?.isNavigationBarHidden = true
+        tableView.reloadData()
     }
     
     func setupTableView() {
@@ -73,9 +91,11 @@ class PerfilResponsavelViewController: UIViewController, UITableViewDelegate, UI
         
         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: DefaultSectionHeaderView.defaultIdentifier()) as! DefaultSectionHeaderView
         
+        headerView.plusButton.tag = section
         if section == 1 {
             headerView.tituloLabel.text = "CRIANÇAS"
             headerView.plusButton.addTarget(self, action: #selector(addCriancaButtonTapped(_:)), for: .touchUpInside)
+            headerView.borderView.isHidden = true
         } else {
             headerView.tituloLabel.text = "DESAFIOS"
             headerView.plusButton.addTarget(self, action: #selector(addDesafioButtonTapped(_:)), for: .touchUpInside)
@@ -121,6 +141,7 @@ class PerfilResponsavelViewController: UIViewController, UITableViewDelegate, UI
                 self.addChildViewController(dcvc)
                 cell.containerView.addSubview(dcvc.view)
                 dcvc.didMove(toParentViewController: self)
+                cell.heightConstraint.constant = (dcvc.collectionView?.frame.size.height)!
             }
             return cell
         }
@@ -133,15 +154,19 @@ class PerfilResponsavelViewController: UIViewController, UITableViewDelegate, UI
     }
     
     @objc func addCriancaButtonTapped(_ sender: UIButton) {
-        let criancaController = self.storyboard?.instantiateViewController(withIdentifier: "CadastroCrianca") as! CadastroCriancaController
-        criancaController.user = user!
-        criancaController.editandoCadastro = false
-        criancaController.fromPerfil = true
-        navigationController?.pushViewController(criancaController, animated: true)
+        if sender.tag == 1 {
+            let criancaController = self.storyboard?.instantiateViewController(withIdentifier: "CadastroCrianca") as! CadastroCriancaController
+            criancaController.user = user!
+            criancaController.editandoCadastro = false
+            criancaController.fromPerfil = true
+            navigationController?.pushViewController(criancaController, animated: true)
+        }
     }
     
     @objc func addDesafioButtonTapped(_ sender: UIButton) {
-        
+        if sender.tag == 2 {
+            self.performSegue(withIdentifier: "SegueCadastroDesafio", sender: self)
+        }
     }
     
     @objc func notificacoesButtonTapped(_ sender: UIButton) {
@@ -151,7 +176,14 @@ class PerfilResponsavelViewController: UIViewController, UITableViewDelegate, UI
     @objc func configuracoesButtonTapped(_ sender: UIButton) {
         let responsavelController = self.storyboard?.instantiateViewController(withIdentifier: "CadastroResponsavel") as! CadastroResponsavelController
         responsavelController.user = user!
-        responsavelController.editandoCadastro = false
+        responsavelController.editandoCadastro = true
         navigationController?.pushViewController(responsavelController, animated: true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SegueCadastroDesafio" {
+            let cadastroDesafio = segue.destination as! CadastroDesafioController
+            cadastroDesafio.user = user!
+        }
     }
 }

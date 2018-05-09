@@ -2,6 +2,9 @@
 
 import UIKit
 import Firebase
+import IQKeyboardManagerSwift
+import MBProgressHUD
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,6 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         
+        IQKeyboardManager.sharedManager().enable = true
+
         FirebaseApp.configure()
 
         self.window = UIWindow(frame: UIScreen.main.bounds)
@@ -23,17 +28,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.rootViewController = initialController
         
         if let currentUser = Auth.auth().currentUser {
+            MBProgressHUD.showAdded(to: initialController.view, animated: true)
             UsuarioDAO.sharedInstance.getUsuarioInfo(objectId: currentUser.uid, success: { (usuario) in
                 if usuario.tipo == 0 {
                     let perfilController = storyboard.instantiateViewController(withIdentifier: "PerfilResponsavel") as! PerfilResponsavelViewController
                     perfilController.user = usuario as? Responsavel
                     initialController.navigationItem.hidesBackButton = true;
                     initialController.pushViewController(perfilController, animated: false)
+                    MBProgressHUD.hide(for: initialController.view, animated: true)
                 } else {
                     let tabController = storyboard.instantiateViewController(withIdentifier: "TabBarController")
                     initialController.isNavigationBarHidden = true;
                     initialController.navigationItem.hidesBackButton = true;
                     initialController.pushViewController(tabController, animated: false)
+                    MBProgressHUD.hide(for: initialController.view, animated: true)
                 }
             }) { (error) in
                 

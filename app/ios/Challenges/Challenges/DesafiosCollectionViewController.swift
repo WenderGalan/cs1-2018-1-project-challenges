@@ -9,7 +9,7 @@
 import UIKit
 
 
-class DesafiosCollectionViewController: UICollectionViewController {
+class DesafiosCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
     lazy var desafios: [Desafio] = [Desafio]()
     
@@ -37,7 +37,7 @@ class DesafiosCollectionViewController: UICollectionViewController {
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let numberOfSets = CGFloat(2)
-        let padding = CGFloat(7)
+        let padding = CGFloat(10)
         let paddingSpaces = CGFloat(3)
         
         let width = (collectionView.frame.size.width - (padding * paddingSpaces))/numberOfSets
@@ -51,8 +51,8 @@ class DesafiosCollectionViewController: UICollectionViewController {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
         
-        let cellWidthPadding = CGFloat(7)
-        let cellHeightPadding = CGFloat(7)
+        let cellWidthPadding = CGFloat(10)
+        let cellHeightPadding = CGFloat(10)
         
         return UIEdgeInsets(top: cellHeightPadding,left: cellWidthPadding, bottom: cellHeightPadding,right: cellWidthPadding)
     }
@@ -62,6 +62,9 @@ class DesafiosCollectionViewController: UICollectionViewController {
         
         let desafio = desafios[indexPath.row]
         cell.iconeImageView.image = desafio.habilidade?.iconeGrande
+        cell.iconeImageView.layer.masksToBounds  = true
+        cell.iconeImageView.layer.cornerRadius = 5
+        
         cell.nomeLabel.text = desafio.nome
         
         return cell

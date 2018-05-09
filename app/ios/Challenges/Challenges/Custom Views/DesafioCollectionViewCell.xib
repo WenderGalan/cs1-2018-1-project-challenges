@@ -23,7 +23,7 @@
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="biX-Ee-jv2">
                         <rect key="frame" x="0.0" y="0.0" width="155" height="197"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SGW-ab-RWW">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SGW-ab-RWW">
                                 <rect key="frame" x="0.0" y="0.0" width="155" height="155"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="SGW-ab-RWW" secondAttribute="height" multiplier="1:1" id="3FR-0X-KuO"/>
@@ -31,6 +31,9 @@
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7lZ-v0-Vh1">
                                 <rect key="frame" x="0.0" y="158" width="155" height="39"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="39" id="YvG-02-g3R"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>

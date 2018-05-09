@@ -13,6 +13,7 @@ class ContainerTableViewCell: UITableViewCell {
     static let kContainerCellID = "CellContainer"
 
     @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -14,6 +14,7 @@ class DefaultSectionHeaderView: UITableViewHeaderFooterView {
 
     @IBOutlet weak var tituloLabel: UILabel!
     @IBOutlet weak var plusButton: UIButton!
+    @IBOutlet weak var borderView: UIView!
     
     class func defaultIdentifier() -> String {
         return kDefaultHeaderID

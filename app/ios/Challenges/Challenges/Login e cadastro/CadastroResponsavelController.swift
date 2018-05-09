@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class CadastroResponsavelController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 
@@ -23,7 +24,15 @@ class CadastroResponsavelController: UIViewController, UITableViewDelegate, UITa
         super.viewDidLoad()
         
         navigationController?.isNavigationBarHidden = false
-        title = "Crie sua conta"
+        
+        if editandoCadastro {
+            title = "Editar seus dados"
+        } else {
+            title = "Crie sua conta"
+        }
+        
+        navigationController?.navigationBar.tintColor = UIColor.init(red: 74/255, green: 144/255, blue: 226/255, alpha: 1.0)
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.init(red: 74/255, green: 144/255, blue: 226/255, alpha: 1.0), NSAttributedStringKey.font : UIFont.init(name: "DK Cool Crayon", size: 16)!]
         
         setupTableView()
     }
@@ -34,7 +43,6 @@ class CadastroResponsavelController: UIViewController, UITableViewDelegate, UITa
     }
     
     func setupTableView() {
-        
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -49,6 +57,9 @@ class CadastroResponsavelController: UIViewController, UITableViewDelegate, UITa
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if editandoCadastro {
+            return 2
+        }
         return 4
     }
     
@@ -128,37 +139,46 @@ class CadastroResponsavelController: UIViewController, UITableViewDelegate, UITa
     @IBAction func continuarButtonTapped(_ sender: UIButton) {
         view.endEditing(true)
         
-        if validarDados() {
-            if editandoCadastro {
-                user?.saveInBackground(success: { (_) in
-                    if let senha = self.senha, let nova = self.confirmaSenha {
-                        UsuarioDAO.sharedInstance.mudarSenha(senha: senha, novaSenha: nova, success: { (_) in
-                            self.navigationController?.popViewController(animated: true)
-                        }, failed: { (error) in
-                            // TODO: Alert error login
-                        })
+        if let usuario = user {
+            let validacao = ValidationHelper.sharedInstance.validar(responsavel: usuario)
+            if validacao.status {
+                if editandoCadastro {
+                    editarUsuario()
+                } else {
+                    let validacaoSenha = ValidationHelper.sharedInstance.validarCadastroSenha(senha: senha, confirmaSenha: confirmaSenha)
+                    
+                    if validacaoSenha.status {
+                        cadastrarUsuario()
                     } else {
-                        self.navigationController?.popViewController(animated: true)
+                        AlertHelper.sharedInstance.createInternalErrorAlert(error: validacao.codigo!, camposObrigatorios: validacao.campos, from: self)
                     }
-                }, failed: { (error) in
-                    // TODO: Alert error cadastro
-                })
-            } else {                
-                UsuarioDAO.sharedInstance.cadastrarResponsavel(responsavel: user!, senha: senha!, success: { [unowned self] (_)  in
-                    self.performSegue(withIdentifier: "SegueCadastroCrianca", sender: self)
-                }) { (_) in
-                    // TODO: Alert error cadastro
                 }
+            } else {
+                AlertHelper.sharedInstance.createInternalErrorAlert(error: validacao.codigo!, camposObrigatorios: validacao.campos, from: self)
             }
-        } else {
-            // TODO: Alert error validacao
+        }
+    }
+
+    func cadastrarUsuario() {
+        MBProgressHUD.showAdded(to: view, animated: true)
+        UsuarioDAO.sharedInstance.cadastrarResponsavel(responsavel: user!, senha: senha!, success: { [unowned self] (_)  in
+            self.performSegue(withIdentifier: "SegueCadastroCrianca", sender: self)
+            MBProgressHUD.hide(for: self.view, animated: true)
+        }) { (error) in
+            AlertHelper.sharedInstance.createFirestoreErrorAlert(error: error!, from: self)
+            MBProgressHUD.hide(for: self.view, animated: true)
         }
     }
     
-    func validarDados() -> Bool {
-        return true
+    func editarUsuario() {
+        MBProgressHUD.showAdded(to: view, animated: true)
+        user?.saveInBackground(success: { (_) in
+            self.navigationController?.popViewController(animated: true)
+        }, failed: { (error) in
+            AlertHelper.sharedInstance.createFirestoreErrorAlert(error: error!, from: self)
+            MBProgressHUD.hide(for: self.view, animated: true)
+        })
     }
-    
     
     // MARK: - Navigation
 

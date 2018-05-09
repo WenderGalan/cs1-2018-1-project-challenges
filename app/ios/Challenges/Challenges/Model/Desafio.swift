@@ -18,12 +18,21 @@ class Desafio: FirestoreObject {
     var dataCriacao: Date?
     var dataUpdate: Date?
     var recompensa: String?
-    var pontos: NSNumber?
+    var pontos: Int?
     var habilidade: Habilidade?
     var frequencia: String?
-    var repeticoes: NSNumber?
+    var repeticoes: Int?
     var observacoes: String?
     
+    override init() {
+        super.init()
+        ref = Firestore.firestore().collection("Desafios")
+    }
+    
+    convenience init(document: DocumentSnapshot) {
+        self.init()
+        self.from(document: document)
+    }
     
     override func toDictionary() -> Dictionary<String, Any> {
         var data = [String : Any]()
@@ -65,8 +74,8 @@ class Desafio: FirestoreObject {
         }
         
         if let habilidade = habilidade {
-            data["habilidade"] = habilidade.nome
-            data["habilidadeID"] = habilidade.objectId
+            data["habilidade"] = habilidade.nome?.lowercased()
+//            data["habilidadeID"] = habilidade.objectId
         }
         
         if let frequencia = frequencia {
@@ -120,7 +129,7 @@ class Desafio: FirestoreObject {
             self.recompensa = recompensa
         }
         
-        if let pontos = data["pontos"] as? NSNumber {
+        if let pontos = data["pontos"] as? Int {
             self.pontos = pontos
         }
         
@@ -131,13 +140,14 @@ class Desafio: FirestoreObject {
         
         if let habilidade = data["habilidade"] as? String {
             self.habilidade?.nome = habilidade
+            self.habilidade?.setIcones()
         }
         
         if let frequencia = data["frequencia"] as? String {
             self.frequencia = frequencia
         }
         
-        if let repeticoes = data["repeticoes"] as? NSNumber {
+        if let repeticoes = data["repeticoes"] as? Int {
             self.repeticoes = repeticoes
         }
         

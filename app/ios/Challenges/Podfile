@@ -11,6 +11,9 @@ target 'Challenges' do
   pod 'Firebase/Firestore'
   pod 'Firebase/Storage'
   pod 'AFNetworking', '~> 3.0'
+  pod 'IQKeyboardManagerSwift'
+  pod 'MZFormSheetPresentationController'
+  pod 'MBProgressHUD'
 
 
   target 'ChallengesTests' do

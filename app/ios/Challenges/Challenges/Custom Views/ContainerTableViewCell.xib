@@ -34,6 +34,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="containerView" destination="Zxe-cR-Sa8" id="tFj-GO-Zff"/>
+                <outlet property="heightConstraint" destination="Ndu-dC-Vl2" id="Txo-Yx-nxW"/>
             </connections>
             <point key="canvasLocation" x="80.5" y="-211"/>
         </tableViewCell>

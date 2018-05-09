@@ -16,7 +16,7 @@
 		052F4BC62093C75B000A308E /* BasicLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 052F4BC52093C75B000A308E /* BasicLabelCell.swift */; };
 		052F4BC82093CC58000A308E /* HabilidadeDesafioCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 052F4BC72093CC58000A308E /* HabilidadeDesafioCell.xib */; };
 		052F4BCA2093CF95000A308E /* HabilidadeDesafioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 052F4BC92093CF95000A308E /* HabilidadeDesafioCell.swift */; };
-		05352297209BC8370064ED35 /* CadastrarDesafioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05352296209BC8370064ED35 /* CadastrarDesafioViewController.swift */; };
+		05352297209BC8370064ED35 /* CadastroDesafioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05352296209BC8370064ED35 /* CadastroDesafioController.swift */; };
 		056A938F209251D1005BAA72 /* DesafioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056A938E209251D1005BAA72 /* DesafioViewController.swift */; };
 		05853D1A209D0D0B008530C3 /* DefaultSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05853D19209D0D0B008530C3 /* DefaultSectionHeaderView.xib */; };
 		05853D1C209D0E01008530C3 /* DefaultSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05853D1B209D0E01008530C3 /* DefaultSectionHeaderView.swift */; };
@@ -52,6 +52,12 @@
 		0A855B3D206C4919001138DC /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A855B3C206C4919001138DC /* LoginController.swift */; };
 		0A855B3F206C492A001138DC /* CadastroResponsavelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A855B3E206C492A001138DC /* CadastroResponsavelController.swift */; };
 		0A855B41206C497D001138DC /* CadastroCriancaController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A855B40206C497D001138DC /* CadastroCriancaController.swift */; };
+		0A879F9C20A3593B007A9E62 /* AlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A879F9B20A3593A007A9E62 /* AlertHelper.swift */; };
+		0A879F9E20A35949007A9E62 /* ValidationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A879F9D20A35949007A9E62 /* ValidationHelper.swift */; };
+		0A8D22EF20A32482002675F1 /* PickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8D22EE20A32482002675F1 /* PickerController.swift */; };
+		0A8D22F420A327E9002675F1 /* PickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8D22F220A327E8002675F1 /* PickerTableViewCell.swift */; };
+		0A8D22F520A327E9002675F1 /* PickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A8D22F320A327E9002675F1 /* PickerTableViewCell.xib */; };
+		0A8D22F720A32D57002675F1 /* DesafioDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8D22F620A32D57002675F1 /* DesafioDAO.swift */; };
 		0AEEC7B52098B2F100F4C90C /* DK Cool Crayon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0AEEC7B22098B29C00F4C90C /* DK Cool Crayon.ttf */; };
 		1B3E1E6AEA17E454C510F0F4 /* Pods_Challenges.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DEFFBA0C8FD8175AAE1AFB3 /* Pods_Challenges.framework */; };
 		28D87721B82DA581E6AB8190 /* Pods_ChallengesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 903E5C5493AF3B1C3A5B8538 /* Pods_ChallengesTests.framework */; };
@@ -85,7 +91,7 @@
 		052F4BC52093C75B000A308E /* BasicLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicLabelCell.swift; sourceTree = "<group>"; };
 		052F4BC72093CC58000A308E /* HabilidadeDesafioCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HabilidadeDesafioCell.xib; sourceTree = "<group>"; };
 		052F4BC92093CF95000A308E /* HabilidadeDesafioCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabilidadeDesafioCell.swift; sourceTree = "<group>"; };
-		05352296209BC8370064ED35 /* CadastrarDesafioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CadastrarDesafioViewController.swift; sourceTree = "<group>"; };
+		05352296209BC8370064ED35 /* CadastroDesafioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CadastroDesafioController.swift; sourceTree = "<group>"; };
 		056A938E209251D1005BAA72 /* DesafioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesafioViewController.swift; sourceTree = "<group>"; };
 		05853D19209D0D0B008530C3 /* DefaultSectionHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DefaultSectionHeaderView.xib; sourceTree = "<group>"; };
 		05853D1B209D0E01008530C3 /* DefaultSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSectionHeaderView.swift; sourceTree = "<group>"; };
@@ -127,6 +133,12 @@
 		0A855B3C206C4919001138DC /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		0A855B3E206C492A001138DC /* CadastroResponsavelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CadastroResponsavelController.swift; sourceTree = "<group>"; };
 		0A855B40206C497D001138DC /* CadastroCriancaController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CadastroCriancaController.swift; sourceTree = "<group>"; };
+		0A879F9B20A3593A007A9E62 /* AlertHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertHelper.swift; sourceTree = "<group>"; };
+		0A879F9D20A35949007A9E62 /* ValidationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationHelper.swift; sourceTree = "<group>"; };
+		0A8D22EE20A32482002675F1 /* PickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerController.swift; sourceTree = "<group>"; };
+		0A8D22F220A327E8002675F1 /* PickerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerTableViewCell.swift; sourceTree = "<group>"; };
+		0A8D22F320A327E9002675F1 /* PickerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PickerTableViewCell.xib; sourceTree = "<group>"; };
+		0A8D22F620A32D57002675F1 /* DesafioDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesafioDAO.swift; sourceTree = "<group>"; };
 		0AEEC7B22098B29C00F4C90C /* DK Cool Crayon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DK Cool Crayon.ttf"; sourceTree = "<group>"; };
 		1B3A1525BF220B55AF99B895 /* Pods-ChallengesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChallengesUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ChallengesUITests/Pods-ChallengesUITests.release.xcconfig"; sourceTree = "<group>"; };
 		27BC87AE5A8C3692A1A72D64 /* Pods-Challenges.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Challenges.release.xcconfig"; path = "Pods/Target Support Files/Pods-Challenges/Pods-Challenges.release.xcconfig"; sourceTree = "<group>"; };
@@ -167,7 +179,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		052F4BBE2093A35A000A308E /* Responsável */ = {
+		052F4BBE2093A35A000A308E /* Responsável */ = {
 			isa = PBXGroup;
 			children = (
 				052F4BC12093B492000A308E /* PerfilResponsavelViewController.swift */,
@@ -178,7 +190,7 @@
 			path = "Responsável";
 			sourceTree = "<group>";
 		};
-		052F4BBF2093A36A000A308E /* Criança */ = {
+		052F4BBF2093A36A000A308E /* Criança */ = {
 			isa = PBXGroup;
 			children = (
 				052F4BBA20939F91000A308E /* HomeCriancaViewController.swift */,
@@ -192,7 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				056A938E209251D1005BAA72 /* DesafioViewController.swift */,
-				05352296209BC8370064ED35 /* CadastrarDesafioViewController.swift */,
+				05352296209BC8370064ED35 /* CadastroDesafioController.swift */,
 			);
 			path = Desafio;
 			sourceTree = "<group>";
@@ -222,15 +234,18 @@
 		0A0697462068335100FA11EB /* Challenges */ = {
 			isa = PBXGroup;
 			children = (
+				0A879F9B20A3593A007A9E62 /* AlertHelper.swift */,
+				0A879F9D20A35949007A9E62 /* ValidationHelper.swift */,
 				0A06977B2068593C00FA11EB /* FirestoreService.swift */,
 				0A0DE4AC209F3745009106FE /* DesafiosCollectionViewController.swift */,
 				0A0DE4B8209F5106009106FE /* CriancasCollectionViewController.swift */,
+				0A8D22EE20A32482002675F1 /* PickerController.swift */,
 				0A855B45206C49CD001138DC /* Custom Views */,
 				0A855B44206C49BD001138DC /* Login e cadastro */,
 				0A855B43206C499F001138DC /* DAO */,
 				0A855B42206C4990001138DC /* Model */,
-				052F4BBE2093A35A000A308E /* Responsável */,
-				052F4BBF2093A36A000A308E /* Criança */,
+				052F4BBE2093A35A000A308E /* Responsável */,
+				052F4BBF2093A36A000A308E /* Criança */,
 				052F4BC02093A3B6000A308E /* Desafio */,
 				0A0697472068335200FA11EB /* AppDelegate.swift */,
 				0A06974E2068335200FA11EB /* Assets.xcassets */,
@@ -277,6 +292,7 @@
 		0A855B43206C499F001138DC /* DAO */ = {
 			isa = PBXGroup;
 			children = (
+				0A8D22F620A32D57002675F1 /* DesafioDAO.swift */,
 				0A06977D2068974100FA11EB /* UsuarioDAO.swift */,
 			);
 			path = DAO;
@@ -313,6 +329,8 @@
 				05853D1B209D0E01008530C3 /* DefaultSectionHeaderView.swift */,
 				0A0DE4A8209F33C0009106FE /* ContainerTableViewCell.xib */,
 				0A0DE4AA209F3533009106FE /* ContainerTableViewCell.swift */,
+				0A8D22F220A327E8002675F1 /* PickerTableViewCell.swift */,
+				0A8D22F320A327E9002675F1 /* PickerTableViewCell.xib */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -474,6 +492,7 @@
 				052F4BC82093CC58000A308E /* HabilidadeDesafioCell.xib in Resources */,
 				0AEEC7B52098B2F100F4C90C /* DK Cool Crayon.ttf in Resources */,
 				0A06974F2068335200FA11EB /* Assets.xcassets in Resources */,
+				0A8D22F520A327E9002675F1 /* PickerTableViewCell.xib in Resources */,
 				05853D1A209D0D0B008530C3 /* DefaultSectionHeaderView.xib in Resources */,
 				0A855B37206C46AE001138DC /* BasicTextFieldCell.xib in Resources */,
 				0A06974D2068335200FA11EB /* Main.storyboard in Resources */,
@@ -620,6 +639,10 @@
 				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/MZAppearance/MZAppearance.framework",
+				"${BUILT_PRODUCTS_DIR}/MZFormSheetPresentationController/MZFormSheetPresentationController.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
@@ -634,6 +657,10 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MZAppearance.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MZFormSheetPresentationController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
@@ -675,6 +702,7 @@
 				0A0DE4B7209F4BBC009106FE /* DesafioCollectionViewCell.swift in Sources */,
 				052F4BCA2093CF95000A308E /* HabilidadeDesafioCell.swift in Sources */,
 				0A0DE4AF209F37A1009106FE /* Desafio.swift in Sources */,
+				0A8D22F720A32D57002675F1 /* DesafioDAO.swift in Sources */,
 				056A938F209251D1005BAA72 /* DesafioViewController.swift in Sources */,
 				05853D1C209D0E01008530C3 /* DefaultSectionHeaderView.swift in Sources */,
 				0A855B3F206C492A001138DC /* CadastroResponsavelController.swift in Sources */,
@@ -683,17 +711,21 @@
 				0A0DE4AD209F3745009106FE /* DesafiosCollectionViewController.swift in Sources */,
 				052F4BBD2093A00A000A308E /* PerfilCriancaViewController.swift in Sources */,
 				0A855B3B206C48BD001138DC /* FotoPerfilCell.swift in Sources */,
+				0A879F9C20A3593B007A9E62 /* AlertHelper.swift in Sources */,
 				0A855B41206C497D001138DC /* CadastroCriancaController.swift in Sources */,
 				0A0DE4B9209F5106009106FE /* CriancasCollectionViewController.swift in Sources */,
+				0A879F9E20A35949007A9E62 /* ValidationHelper.swift in Sources */,
 				050B58D7208E7D85002FDA31 /* NotificacoesResponsavelViewController.swift in Sources */,
 				0A06977C2068593C00FA11EB /* FirestoreService.swift in Sources */,
+				0A8D22EF20A32482002675F1 /* PickerController.swift in Sources */,
 				0A161FED206EE4E000A397E0 /* Habilidade.swift in Sources */,
 				0A161FE9206EE25000A397E0 /* Responsavel.swift in Sources */,
 				0A0DE4AB209F3533009106FE /* ContainerTableViewCell.swift in Sources */,
 				0A855B39206C4842001138DC /* BasicTextFieldCell.swift in Sources */,
 				0A855B3D206C4919001138DC /* LoginController.swift in Sources */,
+				0A8D22F420A327E9002675F1 /* PickerTableViewCell.swift in Sources */,
 				0A0DE4BD209F58FE009106FE /* NotificationHeaderSectionView.swift in Sources */,
-				05352297209BC8370064ED35 /* CadastrarDesafioViewController.swift in Sources */,
+				05352297209BC8370064ED35 /* CadastroDesafioController.swift in Sources */,
 				0A0697482068335200FA11EB /* AppDelegate.swift in Sources */,
 				0A06977A20683C1300FA11EB /* FirestoreObject.swift in Sources */,
 				0A0DE4B5209F4BA9009106FE /* CriancaCollectionViewCell.swift in Sources */,

@@ -72,14 +72,24 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IVM-3k-ccw">
+                        <rect key="frame" x="20" y="99.5" width="335" height="1"/>
+                        <color key="backgroundColor" red="0.7803921568627451" green="0.7803921568627451" blue="0.7803921568627451" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="ZjC-ke-9CL"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="SEH-hd-uq4" firstAttribute="leading" secondItem="8vu-Nw-FHG" secondAttribute="leading" constant="20" id="1y2-3u-qNB"/>
+                    <constraint firstAttribute="bottom" secondItem="IVM-3k-ccw" secondAttribute="bottom" id="DUl-ym-s8n"/>
                     <constraint firstAttribute="bottom" secondItem="SEH-hd-uq4" secondAttribute="bottom" constant="15" id="EJf-8d-Jtr"/>
                     <constraint firstItem="W7w-De-YfD" firstAttribute="top" secondItem="8vu-Nw-FHG" secondAttribute="top" constant="11" id="SoI-oQ-hnn"/>
                     <constraint firstAttribute="trailing" secondItem="SEH-hd-uq4" secondAttribute="trailing" constant="20" id="VqU-Up-Hdc"/>
                     <constraint firstAttribute="trailing" secondItem="W7w-De-YfD" secondAttribute="trailing" constant="11" id="e56-cC-2p5"/>
                     <constraint firstItem="SEH-hd-uq4" firstAttribute="top" secondItem="8vu-Nw-FHG" secondAttribute="top" constant="15" id="hQb-v0-CsA"/>
+                    <constraint firstAttribute="trailing" secondItem="IVM-3k-ccw" secondAttribute="trailing" constant="20" id="sU7-Ca-2hf"/>
+                    <constraint firstItem="IVM-3k-ccw" firstAttribute="leading" secondItem="8vu-Nw-FHG" secondAttribute="leading" constant="20" id="z1X-dh-Nvi"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

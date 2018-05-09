@@ -8,7 +8,7 @@
 
 import UIKit
 import MobileCoreServices
-
+import MBProgressHUD
 
 class CadastroCriancaController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -29,8 +29,15 @@ class CadastroCriancaController: UIViewController, UITableViewDelegate, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Cadastre uma criança"
-
+        if editandoCadastro {
+            title = "Editar dados da criança"
+        } else {
+            title = "Cadastre uma criança"
+        }
+        
+        navigationController?.navigationBar.tintColor = UIColor.init(red: 74/255, green: 144/255, blue: 226/255, alpha: 1.0)
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.init(red: 74/255, green: 144/255, blue: 226/255, alpha: 1.0), NSAttributedStringKey.font : UIFont.init(name: "DK Cool Crayon", size: 16)!]
+        
         senhaResponsavel = UserDefaults.standard.value(forKey: "Key") as! String
         
         navigationController?.isNavigationBarHidden = false
@@ -63,6 +70,9 @@ class CadastroCriancaController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if editandoCadastro {
+            return 3
+        }
         return 5
     }
     
@@ -215,74 +225,76 @@ class CadastroCriancaController: UIViewController, UITableViewDelegate, UITableV
     @IBAction func concluirButtonTapped(_ sender: UIButton) {
         view.endEditing(true)
         
-        if validarDados() {
-            guard let crianca = crianca else {
-                return
-            }
-            
-            if editandoCadastro {
-                crianca.saveInBackground(success: { (_) in
-                    if let senha = self.senha, let nova = self.confirmaSenha {
-                        UsuarioDAO.sharedInstance.mudarSenha(senha: senha, novaSenha: nova, success: { (_) in
-                            if let foto = self.foto {
-                                UsuarioDAO.sharedInstance.salvarFotoPerfil(crianca: crianca, image: foto, success: { (_) in
-                                    self.navigationController?.popViewController(animated: true)
-                                }, failed: { (error) in
-                                    // TODO: Alert error login
-                                })
-                            } else {
-                                self.navigationController?.popViewController(animated: true)
-                            }
-                        }, failed: { (error) in
-                            // TODO: Alert error login
-                        })
+        if let crianca = crianca {
+            let validacao = ValidationHelper.sharedInstance.validar(crianca: crianca)
+            if validacao.status {
+                if editandoCadastro {
+                    editarCrianca()
+                } else {
+                    let validacaoSenha = ValidationHelper.sharedInstance.validarCadastroSenha(senha: senha, confirmaSenha: confirmaSenha)
+
+                    if validacaoSenha.status {
+                        crianca.responsavel = user
+                        cadastrarCrianca()
                     } else {
-                        if let foto = self.foto {
-                            UsuarioDAO.sharedInstance.salvarFotoPerfil(crianca: crianca, image: foto, success: { (_) in
-                                self.navigationController?.popViewController(animated: true)
-                            }, failed: { (error) in
-                                // TODO: Alert error login
-                            })
-                        } else {
-                            self.navigationController?.popViewController(animated: true)
-                        }
+                        AlertHelper.sharedInstance.createInternalErrorAlert(error: validacao.codigo!, camposObrigatorios: validacao.campos, from: self)
                     }
-                }) { (error) in
-                    // TODO: Alert error login
                 }
             } else {
-                crianca.responsavel = user
-                UsuarioDAO.sharedInstance.cadastrarCrianca(crianca: crianca, senha: senha!, foto: foto, success: { [unowned self] (_) in
-                    if let c = self.crianca {
-                        self.user.criancas.append(c)
-                        self.user.save()
-                    }
-                    UsuarioDAO.sharedInstance.login(email: self.user.email!, senha: self.senhaResponsavel, success: { (_) in
-                        if self.fromPerfil {
-                            self.navigationController?.popViewController(animated: true)
-                        } else {
-                            self.performSegue(withIdentifier: "SeguePerfilResponsavel", sender: self)
-                        }
-                    }, failed: { (error) in
-                        // TODO: Alert error login
-                    })
-                }) { (error) in
-                    // TODO: Alert error cadastro
-                }
+                AlertHelper.sharedInstance.createInternalErrorAlert(error: validacao.codigo!, camposObrigatorios: validacao.campos, from: self)
             }
-        } else {
-            // TODO: Alert error validacao
+        }
+    }
+    
+    func cadastrarCrianca() {
+        MBProgressHUD.showAdded(to: view, animated: true)
+        UsuarioDAO.sharedInstance.cadastrarCrianca(crianca: crianca!, senha: senha!, foto: foto, success: { [unowned self] (_) in
+            if let c = self.crianca {
+                self.user.criancas.append(c)
+                self.user.save()
+            }
+            UsuarioDAO.sharedInstance.login(email: self.user.email!, senha: self.senhaResponsavel, success: { (_) in
+                if self.fromPerfil {
+                    MBProgressHUD.hide(for: self.view, animated: true)
+                    self.navigationController?.popViewController(animated: true)
+                } else {
+                    MBProgressHUD.hide(for: self.view, animated: true)
+                    self.performSegue(withIdentifier: "SeguePerfilResponsavel", sender: self)
+                }
+            }, failed: { (error) in
+                MBProgressHUD.hide(for: self.view, animated: true)
+                AlertHelper.sharedInstance.createFirestoreErrorAlert(error: error!, from: self)
+            })
+        }) { (error) in
+            MBProgressHUD.hide(for: self.view, animated: true)
+            AlertHelper.sharedInstance.createFirestoreErrorAlert(error: error!, from: self)
+        }
+    }
+    
+    func editarCrianca() {
+        MBProgressHUD.showAdded(to: view, animated: true)
+        crianca?.saveInBackground(success: { (_) in
+            if let foto = self.foto {
+                UsuarioDAO.sharedInstance.salvarFotoPerfil(crianca: self.crianca!, image: foto, success: { (_) in
+                    MBProgressHUD.hide(for: self.view, animated: true)
+                    self.navigationController?.popViewController(animated: true)
+                }, failed: { (error) in
+                    MBProgressHUD.hide(for: self.view, animated: true)
+                    AlertHelper.sharedInstance.createFirestoreErrorAlert(error: error!, from: self)
+                })
+            } else {
+                MBProgressHUD.hide(for: self.view, animated: true)
+                self.navigationController?.popViewController(animated: true)
+            }
+        }) { (error) in
+            MBProgressHUD.hide(for: self.view, animated: true)
+            AlertHelper.sharedInstance.createFirestoreErrorAlert(error: error!, from: self)
         }
     }
     
     @IBAction func cadastrarDepoisButtonTapped(_ sender: UIButton) {
         self.performSegue(withIdentifier: "SeguePerfilResponsavel", sender: self)
     }
-    
-    func validarDados() -> Bool {
-        return true
-    }
-    
     
     // MARK: - Navigation
     
@@ -291,7 +303,8 @@ class CadastroCriancaController: UIViewController, UITableViewDelegate, UITableV
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == "SeguePerfilResponsavel" {
-            
+            let pr = segue.destination as! PerfilResponsavelViewController
+            pr.user = user
         }
     }
 
