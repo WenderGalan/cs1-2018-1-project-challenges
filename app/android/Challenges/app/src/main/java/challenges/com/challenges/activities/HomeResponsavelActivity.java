@@ -199,6 +199,7 @@ public class HomeResponsavelActivity extends AppCompatActivity {
 
     private void abrirAdicionarCrianca() {
         Intent intent = new Intent(HomeResponsavelActivity.this, CadastroCriancaActivity.class);
+        intent.putExtra("tipo", "cadastrar");
         intent.putExtra("responsavel", usuarioUID);
         intent.putExtra("segundoCadastro", "verdade");
         startActivity(intent);
