@@ -17,8 +17,6 @@ class PerfilResponsavelViewController: UIViewController, UITableViewDelegate, UI
     lazy var notificacoes: [Any] = [Any]()
     lazy var desafios: [Desafio] = [Desafio]()
 
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         

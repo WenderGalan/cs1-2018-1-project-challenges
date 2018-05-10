@@ -57,6 +57,7 @@
 		0A879FA120A392D5007A9E62 /* EstatisticaCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A879FA020A392D5007A9E62 /* EstatisticaCell.xib */; };
 		0A879FA320A39419007A9E62 /* EstatisticaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A879FA220A39419007A9E62 /* EstatisticaCell.swift */; };
 		0A879FA520A3BAF7007A9E62 /* CriancaPerfilHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A879FA420A3BAF7007A9E62 /* CriancaPerfilHeaderCell.xib */; };
+		0A879FA720A3C71F007A9E62 /* CriancaPerfilHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A879FA620A3C71F007A9E62 /* CriancaPerfilHeaderCell.swift */; };
 		0A8D22EF20A32482002675F1 /* PickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8D22EE20A32482002675F1 /* PickerController.swift */; };
 		0A8D22F420A327E9002675F1 /* PickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8D22F220A327E8002675F1 /* PickerTableViewCell.swift */; };
 		0A8D22F520A327E9002675F1 /* PickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A8D22F320A327E9002675F1 /* PickerTableViewCell.xib */; };
@@ -141,6 +142,7 @@
 		0A879FA020A392D5007A9E62 /* EstatisticaCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EstatisticaCell.xib; sourceTree = "<group>"; };
 		0A879FA220A39419007A9E62 /* EstatisticaCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstatisticaCell.swift; sourceTree = "<group>"; };
 		0A879FA420A3BAF7007A9E62 /* CriancaPerfilHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CriancaPerfilHeaderCell.xib; sourceTree = "<group>"; };
+		0A879FA620A3C71F007A9E62 /* CriancaPerfilHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CriancaPerfilHeaderCell.swift; sourceTree = "<group>"; };
 		0A8D22EE20A32482002675F1 /* PickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerController.swift; sourceTree = "<group>"; };
 		0A8D22F220A327E8002675F1 /* PickerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerTableViewCell.swift; sourceTree = "<group>"; };
 		0A8D22F320A327E9002675F1 /* PickerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PickerTableViewCell.xib; sourceTree = "<group>"; };
@@ -316,6 +318,7 @@
 			isa = PBXGroup;
 			children = (
 				0A879FA420A3BAF7007A9E62 /* CriancaPerfilHeaderCell.xib */,
+				0A879FA620A3C71F007A9E62 /* CriancaPerfilHeaderCell.swift */,
 				0A0DE4BA209F5615009106FE /* NotificationHeaderSectionView.xib */,
 				0A0DE4BC209F58FE009106FE /* NotificationHeaderSectionView.swift */,
 				0A0DE4B0209F47CE009106FE /* DesafioCollectionViewCell.xib */,
@@ -754,6 +757,7 @@
 				052F4BC62093C75B000A308E /* BasicLabelCell.swift in Sources */,
 				0A0697762068336D00FA11EB /* Usuario.swift in Sources */,
 				0A06977E2068974100FA11EB /* UsuarioDAO.swift in Sources */,
+				0A879FA720A3C71F007A9E62 /* CriancaPerfilHeaderCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

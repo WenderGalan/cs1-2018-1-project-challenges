@@ -12,6 +12,7 @@ import AFNetworking
 class CriancasCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
     var user: Responsavel!
+    var userCrianca: Crianca!
     lazy var criancas: [Crianca] = [Crianca]()
     
     override func viewDidLoad() {
