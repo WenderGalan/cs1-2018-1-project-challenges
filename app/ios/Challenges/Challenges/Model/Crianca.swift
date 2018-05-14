@@ -16,8 +16,10 @@ class Crianca: Usuario {
     var responsavel: Responsavel?
     var habilidade: Habilidade?
     var amigos: [Crianca]?
-    var pontos: NSNumber?
-    
+    lazy var pontos = 0
+    lazy var desafios = 0
+    lazy var recompensas = 0
+
     static var sharedInstance: Crianca? = {
         
         if let currentUser = Auth.auth().currentUser {
@@ -69,9 +71,11 @@ class Crianca: Usuario {
             data["habilidade"] = habilidade
         }
         
-        if let pontos = pontos {
-            data["pontos"] = pontos
-        }
+        
+        data["pontos"] = pontos
+        data["desafios"] = desafios
+        data["recompensas"] = recompensas
+
         
         data["tipo"] = NSNumber(integerLiteral: 1)
 
@@ -104,8 +108,16 @@ class Crianca: Usuario {
             self.habilidade = habilidade
         }
         
-        if let pontos = data["pontos"] as? NSNumber {
+        if let pontos = data["pontos"] as? Int {
             self.pontos = pontos
+        }
+        
+        if let desafios = data["desafios"] as? Int {
+            self.desafios = desafios
+        }
+        
+        if let recompensas = data["recompensas"] as? Int {
+            self.recompensas = recompensas
         }
         
         if let tipo = data["tipo"] as? NSNumber {

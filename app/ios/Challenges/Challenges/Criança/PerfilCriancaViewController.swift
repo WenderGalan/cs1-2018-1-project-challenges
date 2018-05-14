@@ -14,7 +14,7 @@ class PerfilCriancaViewController: UIViewController, UITableViewDelegate, UITabl
 
     @IBOutlet weak var tableView: UITableView!
     
-    var userResponsavel: Responsavel!
+    var userResponsavel: Responsavel?
     var user: Crianca?
     lazy var amigos: [Crianca] = [Crianca]()
 
@@ -33,7 +33,7 @@ class PerfilCriancaViewController: UIViewController, UITableViewDelegate, UITabl
                 MBProgressHUD.hide(for: self.view, animated: true)
             }
         } else {
-            self.setupTableView()
+            setupTableView()
         }
     }
 
@@ -117,10 +117,10 @@ class PerfilCriancaViewController: UIViewController, UITableViewDelegate, UITabl
                 cell.tipoDadoTresLabel.text = "Amigos"
                 cell.tipoDadoQuatroLabel.text = "Recompensas"
                 
-                cell.dadoUmLabel.text = "1"
-                cell.dadoDoisLabel.text = "0"
+                cell.dadoUmLabel.text = "\(user!.desafios)"
+                cell.dadoDoisLabel.text = "\(user!.pontos)"
                 cell.dadoTresLabel.text = "0"
-                cell.dadoQuatroLabel.text = "0"
+                cell.dadoQuatroLabel.text = "\(user!.recompensas)"
                 
                 return cell
             }
@@ -164,10 +164,14 @@ class PerfilCriancaViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     @objc func configuracoesButtonTapped(_ sender: UITapGestureRecognizer) {
-        let criancaController = self.storyboard?.instantiateViewController(withIdentifier: "CadastroCrianca") as! CadastroCriancaController
-        criancaController.user = user?.responsavel!
-        criancaController.editandoCadastro = false
-        criancaController.fromPerfil = true
-        navigationController?.pushViewController(criancaController, animated: true)
+        if let responsavel = userResponsavel {
+            let criancaController = self.storyboard?.instantiateViewController(withIdentifier: "CadastroCrianca") as! CadastroCriancaController
+            criancaController.user = responsavel
+            criancaController.crianca = user!
+            criancaController.editandoCadastro = true
+            criancaController.fromPerfil = true
+            navigationController?.pushViewController(criancaController, animated: true)
+        }
+
     }
 }

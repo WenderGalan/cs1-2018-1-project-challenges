@@ -14,9 +14,12 @@ class PerfilResponsavelViewController: UIViewController, UITableViewDelegate, UI
     @IBOutlet weak var tableView: UITableView!
     
     var user: Responsavel?
-    lazy var notificacoes: [Any] = [Any]()
+
     lazy var desafios: [Desafio] = [Desafio]()
 
+    lazy var notificacoesDesafioCompleto: [NotificacaoDesafio] = [NotificacaoDesafio]()
+    lazy var notificacoesDesafioApp: [NotificacaoDesafio] = [NotificacaoDesafio]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,7 +36,7 @@ class PerfilResponsavelViewController: UIViewController, UITableViewDelegate, UI
         } else {
             MBProgressHUD.showAdded(to: view, animated: true)
             getDesafios()
-            self.setupTableView()
+            setupTableView()
         }
     }
 
@@ -51,6 +54,28 @@ class PerfilResponsavelViewController: UIViewController, UITableViewDelegate, UI
     fileprivate func getDesafios() {
         DesafioDAO.sharedInstance.getDesafiosPara(responsavelID: user!.objectId!, success: { (array) in
             self.desafios = array
+            self.tableView.reloadData()
+            self.getNotificacoesCompletos()
+            MBProgressHUD.hide(for: self.view, animated: true)
+        }, failed: { (error) in
+            MBProgressHUD.hide(for: self.view, animated: true)
+        })
+    }
+    
+    fileprivate func getNotificacoesCompletos() {
+        NotificacoesDAO.sharedInstance.getNotificacoesDesafioCompleto(responsavelID: user!.objectId!, success: { (array) in
+            self.notificacoesDesafioCompleto = array
+            self.tableView.reloadData()
+            self.getNotificacoesApp()
+            MBProgressHUD.hide(for: self.view, animated: true)
+        }, failed: { (error) in
+            MBProgressHUD.hide(for: self.view, animated: true)
+        })
+    }
+    
+    fileprivate func getNotificacoesApp() {
+        NotificacoesDAO.sharedInstance.getNotificacoesDesafioApp(responsavelID: user!.objectId!, success: { (array) in
+            self.notificacoesDesafioApp = array
             self.tableView.reloadData()
             MBProgressHUD.hide(for: self.view, animated: true)
         }, failed: { (error) in
@@ -111,9 +136,12 @@ class PerfilResponsavelViewController: UIViewController, UITableViewDelegate, UI
             let cell = tableView.dequeueReusableCell(withIdentifier: NotificationHeaderSectionView.defaultIdentifier()) as! NotificationHeaderSectionView
             cell.tituloLabel.text = user?.nome
             
-            cell.notificationBadge.isHidden = notificacoes.count == 0 ? true : false
-            cell.notificationBadge.text = "\(notificacoes.count)"
-            
+            let count = notificacoesDesafioCompleto.count + notificacoesDesafioApp.count
+            cell.notificationBadge.isHidden = count == 0 ? true : false
+            cell.notificationBadge.text = "\(count)"
+            cell.notificationBadge.layer.masksToBounds = true
+            cell.notificationBadge.layer.cornerRadius = cell.notificationBadge.frame.size.width / 2
+
             cell.logoutButton.addTarget(self, action: #selector(logoutButtonTapped(_:)), for: .touchUpInside)
             cell.notificationButton.setImage(#imageLiteral(resourceName: "notificationIconBlue"), for: .normal)
             cell.notificationButton.addTarget(self, action: #selector(notificacoesButtonTapped(_:)), for: .touchUpInside)
@@ -170,7 +198,7 @@ class PerfilResponsavelViewController: UIViewController, UITableViewDelegate, UI
     }
     
     @objc func notificacoesButtonTapped(_ sender: UIButton) {
-        
+        self.performSegue(withIdentifier: "SegueNotificacoes", sender: true)
     }
     
     @objc func configuracoesButtonTapped(_ sender: UIButton) {
@@ -184,6 +212,11 @@ class PerfilResponsavelViewController: UIViewController, UITableViewDelegate, UI
         if segue.identifier == "SegueCadastroDesafio" {
             let cadastroDesafio = segue.destination as! CadastroDesafioController
             cadastroDesafio.user = user!
+        } else if segue.identifier == "SegueNotificacoes" {
+            let notificacoesController = segue.destination as! NotificacoesResponsavelViewController
+            notificacoesController.user = user!
+            notificacoesController.notificacoesDesafioApp = notificacoesDesafioApp
+            notificacoesController.notificacoesDesafioCompleto = notificacoesDesafioCompleto
         }
     }
 }

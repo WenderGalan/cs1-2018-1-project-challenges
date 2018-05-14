@@ -84,11 +84,9 @@ class CriancasCollectionViewController: UICollectionViewController, UICollection
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         
-        let criancaController = self.storyboard?.instantiateViewController(withIdentifier: "CadastroCrianca") as! CadastroCriancaController
-        criancaController.user = user!
-        criancaController.crianca = criancas[indexPath.row]
-        criancaController.editandoCadastro = true
-        criancaController.fromPerfil = true
+        let criancaController = self.storyboard?.instantiateViewController(withIdentifier: "PerfilCrianca") as! PerfilCriancaViewController
+        criancaController.userResponsavel = user!
+        criancaController.user = criancas[indexPath.row]
         navigationController?.pushViewController(criancaController, animated: true)
     }
 

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 extension UIView {
     // Drop Shadow
@@ -75,7 +76,14 @@ class DesafioViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         switch tipoDesafio {
         case .padrao:
-            primeiroButton.setTitle("Completar desafio", for: .normal)
+            if desafio.checado != nil && desafio.checado! {
+                self.primeiroButton.setTitle("Desafio Realizado", for: .normal)
+            } else if desafio.completado != nil && desafio.completado! {
+                self.primeiroButton.setTitle("Aguardando confirmação", for: .normal)
+            } else {
+                primeiroButton.setTitle("Completar desafio", for: .normal)
+            }
+            
             primeiroButton.backgroundColor = UIColor.init(red: 42/255, green: 201/255, blue: 64/255, alpha: 1.0)
             
             segundoButton.setTitle("Pedir ajuda", for: .normal)
@@ -219,6 +227,22 @@ class DesafioViewController: UIViewController, UITableViewDelegate, UITableViewD
             desafioController.editandoCadastro = true
             desafioController.desafio = desafio
             navigationController?.pushViewController(desafioController, animated: true)
+            
+        case .padrao:
+            if desafio.checado == nil {
+                if desafio.completado == nil {
+                    MBProgressHUD.showAdded(to: view, animated: true)
+
+                    desafio.completado = true
+                    desafio.saveInBackground(success: { (_) in
+                        NotificacoesDAO.sharedInstance.notificarDesafioCompleto(desafio: self.desafio)
+                        self.primeiroButton.setTitle("Aguardando confirmação", for: .normal)
+                        MBProgressHUD.hide(for: self.view, animated: true)
+                    }) { (error) in
+                        MBProgressHUD.hide(for: self.view, animated: true)
+                    }
+                }
+            }
         default:
             break
         }
@@ -232,6 +256,8 @@ class DesafioViewController: UIViewController, UITableViewDelegate, UITableViewD
             }) { (error) in
                 AlertHelper.sharedInstance.createFirestoreErrorAlert(error: error!, from: self)
             }
+        
+        
         default:
             break
         }

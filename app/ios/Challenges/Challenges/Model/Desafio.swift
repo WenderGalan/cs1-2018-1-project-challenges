@@ -23,6 +23,8 @@ class Desafio: FirestoreObject {
     var frequencia: String?
     var repeticoes: Int?
     var observacoes: String?
+    var completado: Bool?
+    var checado: Bool?
     
     override init() {
         super.init()
@@ -38,7 +40,7 @@ class Desafio: FirestoreObject {
         var data = [String : Any]()
         
         if let nome = nome {
-            data["nome"] = nome
+            data["titulo"] = nome
         }
         
         if let crianca = crianca {
@@ -93,6 +95,14 @@ class Desafio: FirestoreObject {
             data["observacoes"] = observacoes
         }
         
+        if let checado = checado {
+            data["checado"] = checado
+        }
+        
+        if let completado = completado {
+            data["completado"] = completado
+        }
+        
         return data
     }
     
@@ -101,7 +111,7 @@ class Desafio: FirestoreObject {
             return
         }
         
-        if let nome = data["nome"] as? String {
+        if let nome = data["titulo"] as? String {
             self.nome = nome
         }
         

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NotificacaoCellID" rowHeight="110" id="jC5-DZ-Za6" customClass="NotificacaoCell" customModule="Challenges" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="110"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jC5-DZ-Za6" id="e7w-bM-4qc">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="109.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="aZA-F5-iG2">
+                        <rect key="frame" x="15" y="15" width="345" height="79.5"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VAv-Y7-BDL">
+                                <rect key="frame" x="0.0" y="0.0" width="79.5" height="79.5"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profilePlaceholderSmall" translatesAutoresizingMaskIntoConstraints="NO" id="3sM-hd-Zl6">
+                                        <rect key="frame" x="5" y="5" width="69.5" height="69.5"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="3sM-hd-Zl6" firstAttribute="top" secondItem="VAv-Y7-BDL" secondAttribute="top" constant="5" id="0ji-LI-zff"/>
+                                    <constraint firstAttribute="bottom" secondItem="3sM-hd-Zl6" secondAttribute="bottom" constant="5" id="A35-1d-wRh"/>
+                                    <constraint firstAttribute="width" secondItem="VAv-Y7-BDL" secondAttribute="height" multiplier="1:1" id="Am0-G8-2a6"/>
+                                    <constraint firstItem="3sM-hd-Zl6" firstAttribute="leading" secondItem="VAv-Y7-BDL" secondAttribute="leading" constant="5" id="XPd-Fg-LsJ"/>
+                                    <constraint firstAttribute="trailing" secondItem="3sM-hd-Zl6" secondAttribute="trailing" constant="5" id="vxY-wc-g80"/>
+                                </constraints>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="DeC-pZ-IwI">
+                                <rect key="frame" x="94.5" y="0.0" width="250.5" height="79.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eeT-dM-6ay">
+                                        <rect key="frame" x="0.0" y="0.0" width="250.5" height="47.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" red="0.30980392156862746" green="0.30980392156862746" blue="0.30980392156862746" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="gF5-N1-nEu">
+                                        <rect key="frame" x="0.0" y="50.5" width="250.5" height="29"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U3F-uQ-ju7">
+                                                <rect key="frame" x="0.0" y="0.0" width="118" height="29"/>
+                                                <color key="backgroundColor" red="0.1647058824" green="0.78823529410000004" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="29" id="OVy-OC-2Cs"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <state key="normal" title="Aceitar">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qUf-jo-iwa">
+                                                <rect key="frame" x="133" y="0.0" width="117.5" height="29"/>
+                                                <color key="backgroundColor" red="1" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="29" id="a7P-be-jpw"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <state key="normal" title="Recusar">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="aZA-F5-iG2" secondAttribute="bottom" constant="15" id="2s7-aQ-ueh"/>
+                    <constraint firstItem="aZA-F5-iG2" firstAttribute="leading" secondItem="e7w-bM-4qc" secondAttribute="leading" constant="15" id="IeI-Sj-iCj"/>
+                    <constraint firstItem="aZA-F5-iG2" firstAttribute="top" secondItem="e7w-bM-4qc" secondAttribute="top" constant="15" id="Jkb-Yu-mPY"/>
+                    <constraint firstAttribute="trailing" secondItem="aZA-F5-iG2" secondAttribute="trailing" constant="15" id="pD9-gS-xVc"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="aceitarButton" destination="U3F-uQ-ju7" id="SNc-Sk-blW"/>
+                <outlet property="avatarBottom" destination="A35-1d-wRh" id="c7a-0R-cUF"/>
+                <outlet property="avatarImageView" destination="3sM-hd-Zl6" id="HD4-sX-wwI"/>
+                <outlet property="avatarLeading" destination="XPd-Fg-LsJ" id="zW5-hC-qyG"/>
+                <outlet property="avatarTop" destination="0ji-LI-zff" id="Phh-im-YiB"/>
+                <outlet property="avatarTrailing" destination="vxY-wc-g80" id="xQd-vw-YMI"/>
+                <outlet property="holdingView" destination="VAv-Y7-BDL" id="RDQ-Vm-9ML"/>
+                <outlet property="recusarButton" destination="qUf-jo-iwa" id="TF9-w0-7WA"/>
+                <outlet property="tituloLabel" destination="eeT-dM-6ay" id="wv4-bN-mqB"/>
+            </connections>
+            <point key="canvasLocation" x="-197.5" y="-134"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="profilePlaceholderSmall" width="50" height="50"/>
+    </resources>
+</document>
