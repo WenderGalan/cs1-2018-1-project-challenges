@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:id="@+id/imagem_notificacao"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="26dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@color/cinza" />
+
+    <TextView
+        android:id="@+id/titulo_notificacao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="26dp"
+        android:text="Titulo"
+        android:textColor="#4F4F4F"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/imagem_notificacao"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/button_confirmar"
+        android:layout_width="125dp"
+        android:layout_height="29dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/fundo_botao_verde_grande"
+        android:text="Confirmar"
+        android:textColor="@color/branco"
+        app:layout_constraintStart_toEndOf="@+id/imagem_notificacao"
+        app:layout_constraintTop_toBottomOf="@+id/titulo_notificacao"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/button_recusar"
+        android:layout_width="125dp"
+        android:layout_height="29dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/fundo_botao_vermelho_grande"
+        android:text="Recusar"
+        android:textColor="@color/branco"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_confirmar"
+        app:layout_constraintTop_toBottomOf="@+id/titulo_notificacao"
+        tools:ignore="MissingConstraints" />
+</android.support.constraint.ConstraintLayout>

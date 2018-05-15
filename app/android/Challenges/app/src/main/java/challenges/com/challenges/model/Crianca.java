@@ -14,6 +14,7 @@ public class Crianca extends Usuario implements Serializable {
     private int tipo = 1;
     private int pontos;
     private String foto;
+    private int recompensa = 0;
 
     public Crianca() {
     }
@@ -54,6 +55,14 @@ public class Crianca extends Usuario implements Serializable {
         this.foto = foto;
     }
 
+    public int getRecompensa() {
+        return recompensa;
+    }
+
+    public void setRecompensa(int recompensa) {
+        this.recompensa = recompensa;
+    }
+
     public Map construirHash() {
         Map<String, Object> hashMap = new HashMap<String, Object>();
 
@@ -65,6 +74,7 @@ public class Crianca extends Usuario implements Serializable {
         if (getPontos() != 0) hashMap.put("pontos", getPontos());
         if (getResponsavel() != null) hashMap.put("responsavel", getResponsavel());
         if (getAmigos() != null) hashMap.put("amigos", getAmigos());
+        if (getRecompensa() != 0) hashMap.put("recompensas", getRecompensa());
 
         return hashMap;
     }
