@@ -27,9 +27,30 @@
             android:visibility="visible"
             app:srcCompat="@drawable/notificacoes" />
 
-
     </android.support.v7.widget.Toolbar>
 
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="13dp"
+        android:text="DESAFIOS COMPLETOS"
+        android:textColor="#7B67FF"
+        android:textSize="28sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/notificacao_desafio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+    </ScrollView>
 </LinearLayout>
 
