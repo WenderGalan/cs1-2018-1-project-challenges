@@ -1,10 +1,11 @@
 package challenges.com.challenges.activities;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -12,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,20 +25,15 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
+import com.google.firebase.firestore.DocumentSnapshot;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import challenges.com.challenges.R;
 import challenges.com.challenges.config.ConfiguracaoFirebase;
 import challenges.com.challenges.model.Responsavel;
-import challenges.com.challenges.model.Usuario;
 import challenges.com.challenges.util.Validator;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CadastroActivity extends AppCompatActivity {
 
@@ -51,7 +46,10 @@ public class CadastroActivity extends AppCompatActivity {
     private Responsavel responsavel;
     private FirebaseAuth autenticacao;
     private ProgressDialog progressDialog;
+    private String tipo;
+    private String idUsuario;
 
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,18 +66,81 @@ public class CadastroActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
-        getSupportActionBar().setTitle("Crie sua conta");
+
+        tipo = getIntent().getStringExtra("tipo");
+
+        if (tipo.equals("editar")) {
+            getSupportActionBar().setTitle("Editar Usuário");
+            idUsuario = ConfiguracaoFirebase.getFirebaseAutenticacao().getCurrentUser().getUid();
+
+
+            ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(idUsuario).get().addOnSuccessListener(CadastroActivity.this, new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    Responsavel responsavel = documentSnapshot.toObject(Responsavel.class);
+
+                    email.setText(responsavel.getEmail());
+                    email.setClickable(false);
+                    email.setFocusable(false);
+                    email.setBackgroundColor(R.color.cinza);
+
+                    nome.setText(responsavel.getNome());
+
+                    senha.setText("nao pode alterar");
+                    senha.setClickable(false);
+                    senha.setFocusable(false);
+                    senha.setBackgroundColor(R.color.cinza);
+
+                    final int sdk = android.os.Build.VERSION.SDK_INT;
+
+                    if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                        confirmarSenha.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.fundo_botao_cinza));
+                        senha.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.fundo_botao_cinza));
+                        email.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.fundo_botao_cinza));
+                    } else {
+                        confirmarSenha.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.fundo_botao_cinza));
+                        senha.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.fundo_botao_cinza));
+                        email.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.fundo_botao_cinza));
+                    }
+
+                    confirmarSenha.setText("nao pode alterar");
+                    confirmarSenha.setClickable(false);
+                    confirmarSenha.setFocusable(false);
+                }
+            });
+
+            continuar.setText("Salvar");
+
+        } else if (tipo.equals("novo")) {
+            getSupportActionBar().setTitle("Crie sua conta");
+        }
 
 
         //botao cadastrar
         continuar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (validarCampos()) {
-                    responsavel.setNome(nome.getText().toString());
-                    responsavel.setSenha(senha.getText().toString());
-                    responsavel.setEmail(email.getText().toString());
-                    cadastrarUsuario();
+                if (tipo.equals("novo")) {
+                    if (validarCampos()) {
+                        responsavel.setNome(nome.getText().toString());
+                        responsavel.setSenha(senha.getText().toString());
+                        responsavel.setEmail(email.getText().toString());
+                        cadastrarUsuario();
+                    }
+                } else if (tipo.equals("editar")) {
+                    Map<String, Object> hashMap = new HashMap<String, Object>();
+                    hashMap.put("nome", nome.getText().toString());
+                    DocumentReference reference = ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(idUsuario);
+                    reference.update(hashMap).addOnSuccessListener(CadastroActivity.this, new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(getApplicationContext(), "Usuário atualizado com sucesso!", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(CadastroActivity.this, HomeResponsavelActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        }
+                    });
+
                 }
             }
         });
@@ -102,11 +163,7 @@ public class CadastroActivity extends AppCompatActivity {
                     responsavel.setId(idUsuario);
 
                     CollectionReference referencia = ConfiguracaoFirebase.getFirestore().collection("Usuarios");
-                    Map<String, Object> salvar = new HashMap<String, Object>();
-                    salvar.put("nome", responsavel.getNome());
-                    salvar.put("email", responsavel.getEmail());
-                    salvar.put("tipo", responsavel.getTipo());
-                    referencia.document(idUsuario).set(salvar).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    referencia.document(idUsuario).set(responsavel.construirHash()).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             Log.i("DEBUG", "SALVO COM SUCESSO");
@@ -200,9 +257,15 @@ public class CadastroActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() { //Botão BACK padrão do android
-        startActivity(new Intent(this, LoginActivity.class)); //O efeito ao ser pressionado do botão (no caso abre a activity)
-        finishAffinity(); //Método para matar a activity e não deixa-lá indexada na pilhagem
-        return;
+        if (tipo.equals("novo")) {
+            startActivity(new Intent(this, LoginActivity.class)); //O efeito ao ser pressionado do botão (no caso abre a activity)
+            finishAffinity(); //Método para matar a activity e não deixa-lá indexada na pilhagem
+            return;
+        } else if (tipo.equals("editar")) {
+            startActivity(new Intent(this, HomeResponsavelActivity.class)); //O efeito ao ser pressionado do botão (no caso abre a activity)
+            finishAffinity(); //Método para matar a activity e não deixa-lá indexada na pilhagem
+            return;
+        }
     }
 
 }
