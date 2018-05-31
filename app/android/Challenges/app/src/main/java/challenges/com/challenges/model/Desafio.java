@@ -1,6 +1,8 @@
 package challenges.com.challenges.model;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,15 +18,17 @@ public class Desafio implements Serializable {
     private String crianca;
     private String frequencia;
     private int repeticoes = 1;
-    private String hora;
-    private String data;
     private boolean completado = false;
     private boolean checado = false;
+    private Date dataCriacao;
+    private Date dataUpdate;
+    private Timestamp dataCriacaoTimestamp;
+    private Timestamp dataUpdateTimestamp;
+
 
     public boolean isCompletado() {
         return completado;
     }
-
     public void setCompletado(boolean completado) {
         this.completado = completado;
     }
@@ -95,17 +99,29 @@ public class Desafio implements Serializable {
     public void setRepeticoes(int repeticoes) {
         this.repeticoes = repeticoes;
     }
-    public String getHora() {
-        return hora;
+    public Date getDataCriacao() {
+        return dataCriacao;
     }
-    public void setHora(String hora) {
-        this.hora = hora;
+    public void setDataCriacao(Date dataCriacao) {
+        this.dataCriacao = dataCriacao;
     }
-    public String getData() {
-        return data;
+    public Date getDataUpdate() {
+        return dataUpdate;
     }
-    public void setData(String data) {
-        this.data = data;
+    public void setDataUpdate(Date dataUpdate) {
+        this.dataUpdate = dataUpdate;
+    }
+    public Timestamp getDataCriacaoTimestamp() {
+        return dataCriacaoTimestamp;
+    }
+    public void setDataCriacaoTimestamp(Timestamp dataCriacaoTimestamp) {
+        this.dataCriacaoTimestamp = dataCriacaoTimestamp;
+    }
+    public Timestamp getDataUpdateTimestamp() {
+        return dataUpdateTimestamp;
+    }
+    public void setDataUpdateTimestamp(Timestamp dataUpdateTimestamp) {
+        this.dataUpdateTimestamp = dataUpdateTimestamp;
     }
 
     public Map construirHash(){
@@ -119,10 +135,10 @@ public class Desafio implements Serializable {
         if (getResponsavel() != null) hashMap.put("responsavel", getResponsavel());
         if (getFrequencia() != null) hashMap.put("frequencia", getFrequencia());
         if (getRepeticoes() >= 1) hashMap.put("repeticoes", getRepeticoes());
-        if (getHora() != null) hashMap.put("hora", getHora());
-        if (getData() != null) hashMap.put("data", getData());
         hashMap.put("completado", isCompletado());
         hashMap.put("checado", isChecado());
+        if (getDataCriacaoTimestamp() != null) hashMap.put("dataCriacao", getDataCriacaoTimestamp());
+        if (getDataUpdateTimestamp() != null) hashMap.put("dataUpdate", getDataUpdateTimestamp());
         return hashMap;
     }
 
