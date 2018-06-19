@@ -20,6 +20,6 @@ public class ViewHolderNotificacao extends RecyclerView.ViewHolder {
         imagem = itemView.findViewById(R.id.imagem_notificacao);
         titulo = itemView.findViewById(R.id.titulo_notificacao);
         aceitar = itemView.findViewById(R.id.button_confirmar);
-        recusar = itemView.findViewById(R.id.button_recusar);
+        recusar = itemView.findViewById(R.id.button_recusar_item);
     }
 }

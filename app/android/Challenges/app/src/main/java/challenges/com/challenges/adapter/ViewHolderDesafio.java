@@ -7,7 +7,8 @@ import android.widget.TextView;
 
 import challenges.com.challenges.R;
 
-public class ViewHolderDesafio extends RecyclerView.ViewHolder {
+public class
+ViewHolderDesafio extends RecyclerView.ViewHolder {
 
     public TextView titulo;
     public ImageView imagem;

@@ -1,5 +1,6 @@
 package challenges.com.challenges.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -64,7 +65,8 @@ public class PerfilCriancaFragment extends Fragment {
         String idUsuarioAtual = autenticacao.getCurrentUser().getUid();
 
         //coloquei um listener para ficar escutando as alteraçoes do banco porque é usuário...
-        ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(idUsuarioAtual).addSnapshotListener(getActivity(), new EventListener<DocumentSnapshot>() {
+        ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(idUsuarioAtual)
+                .addSnapshotListener(getActivity(), new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
                 if (documentSnapshot.exists()){
@@ -72,6 +74,18 @@ public class PerfilCriancaFragment extends Fragment {
                     nomeCrianca.setText(crianca.getNome().toUpperCase());
                     if (crianca.getFoto() != null){
                         Picasso.get().load(crianca.getFoto()).into(fotoCrianca);
+                    }
+
+                    if (crianca.getRecompensa() > 0) {
+                        qntRecompensas.setText(String.valueOf(crianca.getRecompensa()));
+                    }
+
+                    if (crianca.getPontos() > 0) {
+                        qntPontos.setText(String.valueOf(crianca.getPontos()));
+                    }
+
+                    if (crianca.getDesafios() > 0) {
+                        qntDesafios.setText(String.valueOf(crianca.getDesafios()));
                     }
                 }
             }

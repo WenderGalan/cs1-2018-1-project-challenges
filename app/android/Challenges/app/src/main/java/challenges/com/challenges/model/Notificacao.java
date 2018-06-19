@@ -1,22 +1,18 @@
 package challenges.com.challenges.model;
 
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.google.firebase.firestore.DocumentReference;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Notificacao implements Serializable {
+public class Notificacao {
 
     private DocumentReference crianca;
     private DocumentReference desafio;
     private String responsavel;
     private String id;
-    public Desafio desafioObject;
+    private Desafio desafioObject;
 
     public String getId() {
         return id;
@@ -40,6 +36,14 @@ public class Notificacao implements Serializable {
 
     public String getResponsavel() {
         return responsavel;
+    }
+
+    public Desafio getDesafioObject() {
+        return desafioObject;
+    }
+
+    public void setDesafioObject(Desafio desafioObject) {
+        this.desafioObject = desafioObject;
     }
 
     public void setResponsavel(String responsavel) {
