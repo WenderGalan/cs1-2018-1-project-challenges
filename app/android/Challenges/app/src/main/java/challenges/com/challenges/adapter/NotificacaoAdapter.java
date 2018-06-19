@@ -79,14 +79,7 @@ public class NotificacaoAdapter extends RecyclerView.Adapter<ViewHolderNotificac
                     //TODO recusar o desafio, excluir a notificacao
                     Toast.makeText(holder.imagem.getContext(), "Clicou recusar", Toast.LENGTH_LONG).show();
 
-                    //recusarDesafio(notificacao, holder.imagem.getContext());
-                }
-            });
-
-            holder.recusar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
+                    recusarDesafio(notificacao, holder.imagem.getContext());
                 }
             });
 
@@ -94,24 +87,25 @@ public class NotificacaoAdapter extends RecyclerView.Adapter<ViewHolderNotificac
 
     }
 
-//    private void recusarDesafio(final Notificacao notificacao, final Context context) {
-//        DocumentReference desafioNegado = ConfiguracaoFirebase.getFirestore().collection("Desafios").document(notificacao.getDesafio().getId());
-//        desafioNegado.update("completado", false).addOnSuccessListener(new OnSuccessListener<Void>() {
-//            @Override
-//            public void onSuccess (Void aVoid){
-//                ConfiguracaoFirebase.getFirestore().collection("NotificacoesDesafioCompleto")
-//                        .document(notificacao.getId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void aVoid) {
-//                        Toast.makeText(context, "Desafio Recusado", Toast.LENGTH_LONG).show();
-//                        Intent intent = new Intent(context, HomeResponsavelActivity.class);
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                        context.startActivity(intent);
-//                    }
-//                });
-//            }
-//        });
-//    }
+    private void recusarDesafio(final Notificacao notificacao, final Context context) {
+        DocumentReference desafioNegado = ConfiguracaoFirebase.getFirestore().collection("Desafios").document(notificacao.getDesafio().getId());
+        desafioNegado.update("completado", false).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess (Void aVoid){
+                ConfiguracaoFirebase.getFirestore().collection("NotificacoesDesafioCompleto")
+                        .document(notificacao.getId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                        Toast.makeText(context, "Desafio Recusado", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(context, HomeResponsavelActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        context.startActivity(intent);
+                    }
+                });
+            }
+        });
+    }
 
     @Override
     public int getItemCount() {

@@ -43,6 +43,8 @@
         app:layout_constraintTop_toBottomOf="@+id/titulo_notificacao"
         tools:ignore="MissingConstraints" />
 
+
+
     <Button
         android:id="@+id/button_recusar_item"
         android:layout_width="125dp"
