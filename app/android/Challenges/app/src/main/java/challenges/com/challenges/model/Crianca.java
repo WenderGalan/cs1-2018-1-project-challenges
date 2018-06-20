@@ -92,4 +92,13 @@ public class Crianca extends Usuario implements Serializable {
         return hashMap;
     }
 
+    public Map updatePontos() {
+        Map<String, Integer> hashMap = new HashMap<>();
+        hashMap.put("desafios", getDesafios());
+        hashMap.put("pontos", getPontos());
+        hashMap.put("recompensas", getRecompensa());
+
+        return hashMap;
+    }
+
 }
