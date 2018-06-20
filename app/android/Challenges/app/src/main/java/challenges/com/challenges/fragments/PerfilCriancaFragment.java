@@ -1,13 +1,11 @@
 package challenges.com.challenges.fragments;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,8 +16,8 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.squareup.picasso.Picasso;
 
 import challenges.com.challenges.R;
-import challenges.com.challenges.activities.AdicionarAmigoActivity;
 import challenges.com.challenges.activities.LoginActivity;
+import challenges.com.challenges.activities.SearchAmigos;
 import challenges.com.challenges.config.ConfiguracaoFirebase;
 import challenges.com.challenges.model.Crianca;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -93,7 +91,7 @@ public class PerfilCriancaFragment extends Fragment {
         adicionarAmigo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View vie) {
-                Intent intent = new Intent(getActivity(), AdicionarAmigoActivity.class);
+                Intent intent = new Intent(getActivity(), SearchAmigos.class);
                 startActivity(intent);
             }
         });

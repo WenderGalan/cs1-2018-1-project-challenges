@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -199,16 +200,12 @@ public class CadastrarDesafioActivity extends AppCompatActivity {
                         if (!observacoes.getText().toString().equals("")) {
                             desafio.setObservacoes(observacoes.getText().toString());
                         }
-                        /**SETAR A HORA E A DATA ATUAL**/
-                        Calendar c = Calendar.getInstance();
-                        int ano = c.get(Calendar.YEAR);
-                        int mes = c.get(Calendar.MONTH) + 1;
-                        int dia = c.get(Calendar.DAY_OF_MONTH);
-                        int hora = c.get(Calendar.HOUR_OF_DAY);
-                        int minuto = c.get(Calendar.MINUTE);
 
-                        desafio.setData(dia + "/" + mes + "/" + ano);
-                        desafio.setHora(hora + ":" + minuto);
+                        /**SETAR A HORA E A DATA ATUAL**/
+                        Calendar now = Calendar.getInstance();
+                        Timestamp timestamp = new Timestamp(now.getTimeInMillis());
+                        desafio.setDataCriacaoTimestamp(timestamp);
+                        desafio.setDataUpdateTimestamp(timestamp);
 
                         ConfiguracaoFirebase.getFirestore().collection("Desafios").document().set(desafio.construirHash()).addOnSuccessListener(CadastrarDesafioActivity.this, new OnSuccessListener() {
                             @Override
@@ -389,8 +386,8 @@ public class CadastrarDesafioActivity extends AppCompatActivity {
             pontos.requestFocus();
             retorno = false;
         }
-        if (!pontos.getText().toString().equals("")){
-            if (Integer.parseInt(pontos.getText().toString()) > 10000){
+        if (!pontos.getText().toString().equals("")) {
+            if (Integer.parseInt(pontos.getText().toString()) > 10000) {
                 pontos.setError("Insira um número entre 0 e 10000");
                 pontos.setFocusable(true);
                 pontos.requestFocus();

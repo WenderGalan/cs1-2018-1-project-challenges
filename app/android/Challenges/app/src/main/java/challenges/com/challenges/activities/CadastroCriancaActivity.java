@@ -145,12 +145,16 @@ public class CadastroCriancaActivity extends AppCompatActivity {
 
 
 
-        if (tipo.equals(null)){
+        if (tipo.equals("cadastrar")){
             if (segundoCadastro.equals("verdade") || tipo.equals("editar")) {
                 cadastrarDepois.setVisibility(View.INVISIBLE);
                 tipoDeConclusao = false;
             }
         }
+
+
+
+
 
         cadastrarDepois.setOnClickListener(new View.OnClickListener() {
             @Override
