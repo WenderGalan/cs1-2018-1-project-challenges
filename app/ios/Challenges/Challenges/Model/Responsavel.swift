@@ -13,6 +13,7 @@ import FirebaseAuth
 
 class Responsavel: Usuario {
     lazy var criancas: [Crianca] = [Crianca]()
+    var permiteSocial: Bool = false
     
     private static var sharedInstance: Responsavel? = {
         
@@ -84,7 +85,7 @@ class Responsavel: Usuario {
         }
         
         data["tipo"] = NSNumber(integerLiteral: 0)
-        
+        data["permiteSocial"] = permiteSocial
         return data
     }
     
@@ -103,6 +104,10 @@ class Responsavel: Usuario {
         
         if let tipo = data["tipo"] as? NSNumber {
             self.tipo = tipo
+        }
+        
+        if let permite = data["permiteSocial"] as? Bool {
+            self.permiteSocial = permite
         }
     }
     

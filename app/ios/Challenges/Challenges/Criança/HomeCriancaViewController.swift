@@ -14,7 +14,8 @@ class HomeCriancaViewController: UIViewController, UITableViewDelegate, UITableV
     var user: Crianca?
     lazy var desafios: [Desafio] = [Desafio]()
     lazy var desafiosAplicativo: [Desafio] = [Desafio]()
-
+    lazy var notificacoesAmizade: [NotificacaoAmizade] = [NotificacaoAmizade]()
+    
     lazy var notificacoes: [Any] = [Any]()
     
     @IBOutlet weak var tableView: UITableView!
@@ -30,6 +31,7 @@ class HomeCriancaViewController: UIViewController, UITableViewDelegate, UITableV
                 self.user = crianca as? Crianca
                 self.setupTableView()
                 self.getDesafios()
+                self.getNotificacoes()
             }) { (error) in
                 MBProgressHUD.hide(for: self.view, animated: true)
             }
@@ -55,13 +57,29 @@ class HomeCriancaViewController: UIViewController, UITableViewDelegate, UITableV
     fileprivate func getDesafios() {
         DesafioDAO.sharedInstance.getDesafiosPara(criancaID: user!.objectId!, success: { (array) in
             self.desafios = array
-            self.desafiosAplicativo = array
             
             self.tableView.reloadData()
             MBProgressHUD.hide(for: self.view, animated: true)
         }, failed: { (error) in
             MBProgressHUD.hide(for: self.view, animated: true)
         })
+        
+        DesafioDAO.sharedInstance.getDesafiosApp(habilidadeID: "", success: { (array) in
+            self.desafiosAplicativo = array
+            self.tableView.reloadData()
+            MBProgressHUD.hide(for: self.view, animated: true)
+        }, failed: { (error) in
+            MBProgressHUD.hide(for: self.view, animated: true)
+        })
+    }
+    
+    func getNotificacoes() {
+        NotificacoesDAO.sharedInstance.getNotificacoesAmizade(criancaID: (user?.objectId!)!, success: { (array) in
+            self.notificacoesAmizade = array
+            self.tableView.reloadData()
+        }) { (error) in
+            
+        }
     }
     
     func setupTableView() {
@@ -90,16 +108,16 @@ class HomeCriancaViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
-            return UIView.init()
+           return UIView.init()
+        } else {
+            let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: DefaultSectionHeaderView.defaultIdentifier()) as! DefaultSectionHeaderView
+            
+            headerView.plusButton.isHidden = true
+            headerView.tituloLabel.textColor = UIColor.init(red: 255/255, green: 79/255, blue: 114/255, alpha: 1.0)
+            headerView.tituloLabel.text = "SUGESTÕES\nDE DESAFIOS"
+            
+            return headerView;
         }
-        
-        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: DefaultSectionHeaderView.defaultIdentifier()) as! DefaultSectionHeaderView
-        
-        headerView.plusButton.isHidden = true
-        headerView.tituloLabel.textColor = UIColor.init(red: 255/255, green: 79/255, blue: 114/255, alpha: 1.0)
-        headerView.tituloLabel.text = "SUGESTÕES\nDE DESAFIOS"
-
-        return headerView;
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -116,8 +134,11 @@ class HomeCriancaViewController: UIViewController, UITableViewDelegate, UITableV
                 cell.tituloLabel.text = "MEUS\nDESAFIOS"
                 cell.tituloLabel.textColor = UIColor.init(red: 255/255, green: 79/255, blue: 114/255, alpha: 1.0)
                 
-                cell.notificationBadge.isHidden = notificacoes.count == 0 ? true : false
-                cell.notificationBadge.text = "\(notificacoes.count)"
+                cell.notificationBadge.isHidden = notificacoesAmizade.count == 0 ? true : false
+                cell.notificationBadge.layer.cornerRadius = cell.notificationBadge.frame.size.width / 2
+                cell.notificationBadge.layer.masksToBounds = true
+                
+                cell.notificationBadge.text = "\(notificacoesAmizade.count)"
                 cell.notificationButton.addTarget(self, action: #selector(notificacoesButtonTapped(_:)), for: .touchUpInside)
                 
                 cell.logoutButton.isHidden = true
@@ -131,10 +152,13 @@ class HomeCriancaViewController: UIViewController, UITableViewDelegate, UITableV
                 let dcvc = storyboard.instantiateViewController(withIdentifier: "DesafiosCVC") as! DesafiosCollectionViewController
                 dcvc.desafios = desafios
                 dcvc.tipoDesafio = .padrao
+                
+                
                 self.addChildViewController(dcvc)
                 cell.containerView.addSubview(dcvc.view)
                 dcvc.didMove(toParentViewController: self)
-                cell.heightConstraint.constant = 195
+                cell.heightConstraint.constant = CGFloat(195 * numberOfCollectionViewLines(array: desafios))
+                cell.frame.size.height = CGFloat(195 * numberOfCollectionViewLines(array: desafios))
                 
                 return cell
             }
@@ -143,8 +167,8 @@ class HomeCriancaViewController: UIViewController, UITableViewDelegate, UITableV
             let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
             
             let dcvc = storyboard.instantiateViewController(withIdentifier: "DesafiosCVC") as! DesafiosCollectionViewController
-            dcvc.desafios = desafios
-            dcvc.tipoDesafio = .padrao
+            dcvc.desafios = desafiosAplicativo
+            dcvc.tipoDesafio = .aplicativo
             self.addChildViewController(dcvc)
             cell.containerView.addSubview(dcvc.view)
             dcvc.didMove(toParentViewController: self)
@@ -155,7 +179,26 @@ class HomeCriancaViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     @objc func notificacoesButtonTapped(_ sender: UIButton) {
-        
+        self.performSegue(withIdentifier: "SegueNotificacao", sender: self)
     }
     
+    func numberOfCollectionViewLines(array: [Desafio]) -> Int {
+        if array.count < 2 {
+            return 1
+        } else {
+            if array.count % 2 == 0 {
+                return array.count / 2
+            } else {
+                return array.count / 2 + 1
+            }
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SegueNotificacao" {
+            let notificacaoController = segue.destination as! NotificacoesCriancaController
+            notificacaoController.notificacoesAmizade = notificacoesAmizade
+            notificacaoController.user = user!
+        }
+    }
 }

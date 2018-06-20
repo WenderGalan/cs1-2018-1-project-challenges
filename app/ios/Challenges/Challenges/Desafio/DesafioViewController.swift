@@ -243,6 +243,16 @@ class DesafioViewController: UIViewController, UITableViewDelegate, UITableViewD
                     }
                 }
             }
+            
+        case .aplicativo:
+            var user = Crianca.sharedInstance
+            UsuarioDAO.sharedInstance.getUsuarioInfo(objectId: user!.objectId!, success: { (crianca) in
+                NotificacoesDAO.sharedInstance.notificarInteresseDesafioApp(desafio: self.desafio, crianca: crianca as! Crianca)
+                self.navigationController?.popViewController(animated: true)
+            }) { (error) in
+
+            }
+            
         default:
             break
         }

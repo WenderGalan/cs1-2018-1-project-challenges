@@ -97,18 +97,18 @@ class PerfilResponsavelViewController: UIViewController, UITableViewDelegate, UI
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 {
+        if section == 0 || section == 2 {
             return 0
         }
         return 50
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if section == 0 {
+        if section == 0 || section == 2 {
             return UIView.init()
         }
         
@@ -148,6 +148,18 @@ class PerfilResponsavelViewController: UIViewController, UITableViewDelegate, UI
             cell.editarPerfilButton.addTarget(self, action: #selector(configuracoesButtonTapped(_:)), for: .touchUpInside)
             
             return cell
+        } else if indexPath.section == 2 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CellCheckmark", for: indexPath)
+            
+            let checkmarkImageView = cell.viewWithTag(1) as! UIImageView
+            
+            if (user?.permiteSocial)! {
+                checkmarkImageView.image = #imageLiteral(resourceName: "checkmarkOn")
+            } else {
+                checkmarkImageView.image = #imageLiteral(resourceName: "checkmarkOff")
+            }
+            
+            return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: ContainerTableViewCell.defaultIdentifier(), for: indexPath) as! ContainerTableViewCell
             let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
@@ -172,6 +184,22 @@ class PerfilResponsavelViewController: UIViewController, UITableViewDelegate, UI
                 cell.heightConstraint.constant = (dcvc.collectionView?.frame.size.height)!
             }
             return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        if indexPath.section == 2 {
+            if indexPath.row == 0 {
+                if (user?.permiteSocial)! {
+                    user?.permiteSocial = false
+                } else {
+                    user?.permiteSocial = true
+                }
+                user?.save()
+                tableView.reloadData()
+            }
         }
     }
 

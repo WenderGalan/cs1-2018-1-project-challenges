@@ -54,7 +54,7 @@ class PerfilCriancaViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -85,7 +85,7 @@ class PerfilCriancaViewController: UIViewController, UITableViewDelegate, UITabl
         if section == 0 {
             return 2
         }
-        return 1
+        return user?.amigos.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -130,7 +130,7 @@ class PerfilCriancaViewController: UIViewController, UITableViewDelegate, UITabl
             
             if indexPath.section == 1 {
                 let ccvc = storyboard.instantiateViewController(withIdentifier: "CriancasCVC") as! CriancasCollectionViewController
-                ccvc.criancas = user!.amigos!
+                ccvc.criancas = user!.amigos
                 ccvc.userCrianca = user!
                 self.addChildViewController(ccvc)
                 var frame = cell.containerView.frame
@@ -155,11 +155,14 @@ class PerfilCriancaViewController: UIViewController, UITableViewDelegate, UITabl
     
     @objc func addAmigoButtonTapped(_ sender: UIButton) {
         if sender.tag == 1 {
-//            let criancaController = self.storyboard?.instantiateViewController(withIdentifier: "CadastroCrianca") as! CadastroCriancaController
-//            criancaController.user = user!
-//            criancaController.editandoCadastro = false
-//            criancaController.fromPerfil = true
-//            navigationController?.pushViewController(criancaController, animated: true)
+            if (user?.responsavel?.permiteSocial)! {
+                self.performSegue(withIdentifier: "SegueAddAmigo", sender: self)
+            } else {
+                let alert = UIAlertController.init(title: "Você não pode adicionar amigos", message: "Seu responsável desabilitou a opção de você poder adicionar outras pessoas.", preferredStyle: .alert)
+                let action = UIAlertAction.init(title: "Ok", style: .default, handler: nil)
+                alert.addAction(action)
+                self.present(alert, animated: true, completion: nil)
+            }            
         }
     }
     
@@ -173,5 +176,12 @@ class PerfilCriancaViewController: UIViewController, UITableViewDelegate, UITabl
             navigationController?.pushViewController(criancaController, animated: true)
         }
 
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SegueAddAmigo" {
+            let buscaController = segue.destination as! BuscaPessoasViewController
+            buscaController.user = user!
+        }
     }
 }

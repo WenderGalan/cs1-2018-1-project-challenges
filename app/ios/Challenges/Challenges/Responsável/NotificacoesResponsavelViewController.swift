@@ -130,7 +130,28 @@ class NotificacoesResponsavelViewController: UIViewController, UITableViewDelega
         if segmentControl.selectedSegmentIndex == 0 {
             
         } else if segmentControl.selectedSegmentIndex == 1 {
+            let notificacao = notificacoesDesafioApp[index]
+
+            let meuDesafio = Desafio.init()
+            meuDesafio.dataCriacao = Date.init(timeIntervalSinceNow: 0)
+            meuDesafio.dataUpdate = Date.init(timeIntervalSinceNow: 0)
+            meuDesafio.completado = false
+            meuDesafio.checado = false
+            meuDesafio.crianca = notificacao.crianca
+            meuDesafio.responsavel = user
+            meuDesafio.frequencia = notificacao.desafio?.frequencia
+            meuDesafio.habilidade = notificacao.desafio?.habilidade
+            meuDesafio.nome = notificacao.desafio?.nome
+            meuDesafio.pontos = notificacao.desafio?.pontos
+            meuDesafio.recompensa = notificacao.desafio?.recompensa
             
+            meuDesafio.saveInBackground(success: { (_) in
+                notificacao.delete()
+                self.tableView.reloadData()
+                self.navigationController?.popViewController(animated: true)
+            }) { (error) in
+                
+            }
         } else if segmentControl.selectedSegmentIndex == 2 {
             let notificacao = notificacoesDesafioCompleto[index]
             notificacao.desafio?.checado = true
@@ -153,7 +174,11 @@ class NotificacoesResponsavelViewController: UIViewController, UITableViewDelega
         if segmentControl.selectedSegmentIndex == 0 {
             
         } else if segmentControl.selectedSegmentIndex == 1 {
-            
+            let notificacao = notificacoesDesafioApp[index]
+
+            notificacao.delete()
+            self.tableView.reloadData()
+            self.navigationController?.popViewController(animated: true)
         } else if segmentControl.selectedSegmentIndex == 2 {
             let notificacao = notificacoesDesafioCompleto[index]
             notificacao.desafio?.checado = false

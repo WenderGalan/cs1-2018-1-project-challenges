@@ -15,7 +15,8 @@ class NotificacoesDAO: NSObject {
     
     let refCompleto = Firestore.firestore().collection("NotificacoesDesafioCompleto")
     let refApp = Firestore.firestore().collection("NotificacaoDesafioApp")
-    
+    let refAmizade = Firestore.firestore().collection("NotificacaoAmizade")
+
     // get habilidadesdesa
     
     func getNotificacoesDesafioCompleto(responsavelID: String, success: @escaping ([NotificacaoDesafio]) -> (), failed: @escaping (Error?) -> ()) {
@@ -120,6 +121,42 @@ class NotificacoesDAO: NSObject {
         }
     }
     
+    func getNotificacoesAmizade(criancaID: String, success: @escaping ([NotificacaoAmizade]) -> (), failed: @escaping (Error?) -> ()) {
+        let childRef = self.refAmizade.whereField("amigo", isEqualTo: criancaID)
+        
+        childRef.getDocuments { (snapshot, error) in
+            if let e = error {
+                failed(e)
+            } else {
+                if let snap = snapshot {
+                    var notificacoes = [NotificacaoAmizade]()
+                    for doc in snap.documents {
+                        let notificacao = NotificacaoAmizade.init()
+                        notificacao.objectId = doc.documentID
+                        notificacao.ref = Firestore.firestore().collection("NotificacaoAmizade")
+                        let data = doc.data()
+                        let criancaRef = data["crianca"] as! DocumentReference
+                        criancaRef.getDocument(completion: { (criancaSnap, errorCrianca) in
+                            if let ec = errorCrianca {
+                                print(ec.localizedDescription)
+                            } else {
+                                if let criancaSnap = criancaSnap {
+                                    notificacao.crianca = Crianca.init(objectId: criancaSnap.documentID)
+                                    notificacao.crianca?.from(document: criancaSnap)
+                                }
+                            }
+                        })
+                        
+                        notificacoes.append(notificacao)
+                    }
+                    success(notificacoes)
+                }
+            }
+            
+        }
+        
+    }
+    
     func notificarDesafioCompleto(desafio: Desafio) {
         let desafioRef = desafio.ref?.document(desafio.objectId!)
         let criancaRef = desafio.crianca?.ref?.document(desafio.crianca!.objectId!)
@@ -129,13 +166,21 @@ class NotificacoesDAO: NSObject {
         refCompleto.addDocument(data: post)
     }
     
-    func notificarInteresseDesafioApp(desafio: Desafio) {
+    func notificarInteresseDesafioApp(desafio: Desafio, crianca: Crianca) {
         let desafioRef = desafio.ref?.document(desafio.objectId!)
-        let criancaRef = desafio.crianca?.ref?.document(desafio.crianca!.objectId!)
+        let criancaRef = crianca.ref?.document(crianca.objectId!)
         
-        let post = ["responsavel" : desafio.responsavel!.objectId!, "crianca" : criancaRef!, "desafio" : desafioRef!] as [String : Any]
+        let post = ["responsavel" : crianca.responsavel!.objectId!, "crianca" : criancaRef!, "desafio" : desafioRef!] as [String : Any]
         
         refApp.addDocument(data: post)
+    }
+    
+    func notificarPedidoAmizade(amigo: Crianca, crianca: Crianca) {
+        let criancaRef = crianca.ref?.document(crianca.objectId!)
+        
+        let post = ["crianca" : criancaRef!, "amigo" : amigo.objectId!] as [String : Any]
+        
+        refAmizade.addDocument(data: post)
     }
     
 }

@@ -10,7 +10,7 @@ import UIKit
 
 class Usuario: FirestoreObject {
 
-    var nome: String?
+    @objc var nome: String?
     var email: String?
     var tipo: NSNumber?
     

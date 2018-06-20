@@ -59,6 +59,28 @@ class DesafioDAO: NSObject {
             }
             
         }
+    }
+    
+    func getDesafiosApp(habilidadeID: String, success: @escaping ([Desafio]) -> (), failed: @escaping (Error?) -> ()) {
+        let childRef = Firestore.firestore().collection("DesafioApp").whereField("habilidadeID", isEqualTo: "9geWwaRduSwkgNmi6NPw")
+        
+        childRef.getDocuments { (snapshot, error) in
+            if let e = error {
+                failed(e)
+            } else {
+                if let snap = snapshot {
+                    var desafios = [Desafio]()
+                    for doc in snap.documents {
+                        let desafio = Desafio.init(document: doc)
+                        desafio.objectId = doc.documentID
+                        desafio.ref = Firestore.firestore().collection("DesafioApp")
+                        desafios.append(desafio)
+                    }
+                    success(desafios)
+                }
+            }
+            
+        }
         
     }
     

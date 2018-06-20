@@ -186,7 +186,17 @@ class UsuarioDAO: NSObject {
                     let user = Crianca.sharedUser()
                     if let usuario = user {
                         usuario.from(document: snapshot)
-                        success(usuario)
+                        let data = snapshot.data()
+                        if let responsavelRef = data!["responsavel"] as? DocumentReference {
+                            responsavelRef.getDocument(completion: { (responsavelSnapshot, errorResponsavel) in
+                                let responsavel = Responsavel.init(objectId: (responsavelSnapshot?.documentID)!)
+                                responsavel.from(document: responsavelSnapshot!)
+                                usuario.responsavel = responsavel
+                                success(usuario)
+                            })
+                        }
+                        
+                        
                     }
                 }
             } else {
@@ -231,6 +241,32 @@ class UsuarioDAO: NSObject {
             })
         }) { (errorAuth) in
             failed(errorAuth)
+        }
+    }
+    
+    func buscarPessoas(nome: String, success: @escaping ([Crianca]) -> (), failed: @escaping (Error?) -> ()) {
+        let childRef = Firestore.firestore().collection("Usuarios")
+            
+        let query = childRef.whereField("nome", isGreaterThanOrEqualTo: nome).order(by: "nome")
+    
+//            query.whereField("tipo", isEqualTo: 1)
+//            .whereField("nome_lower", isGreaterThanOrEqualTo: nome.lowercased())
+//            .order(by: "nome_lower")
+        
+        query.getDocuments { (snapshot, error) in
+            if let e = error {
+                failed(e)
+            } else {
+                if let snap = snapshot {
+                    var criancas = [Crianca]()
+                    for doc in snap.documents {
+                        let crianca = Crianca.init(objectId: doc.documentID)
+                        crianca.from(document: doc)
+                        criancas.append(crianca)
+                    }
+                    success(criancas)
+                }
+            }
         }
     }
     

@@ -15,7 +15,7 @@ class Crianca: Usuario {
     var fotoURL: String?
     var responsavel: Responsavel?
     var habilidade: Habilidade?
-    var amigos: [Crianca]?
+    lazy var amigos: [Crianca] = [Crianca]()
     lazy var pontos = 0
     lazy var desafios = 0
     lazy var recompensas = 0
@@ -79,6 +79,13 @@ class Crianca: Usuario {
         
         data["tipo"] = NSNumber(integerLiteral: 1)
 
+        if amigos.count > 0 {
+            var amigosRef: [DocumentReference] = [DocumentReference]()
+            for amigo in amigos {
+                amigosRef.append((amigo.ref?.document(amigo.objectId!))!)
+            }
+            data["amigos"] = amigosRef
+        }
         
         return data
     }
