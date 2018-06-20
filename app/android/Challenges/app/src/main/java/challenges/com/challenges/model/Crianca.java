@@ -12,7 +12,8 @@ public class Crianca extends Usuario implements Serializable {
     private CollectionReference amigos;
     private DocumentReference responsavel;
     private int tipo = 1;
-    private int pontos;
+    private int pontos = 0;
+    private int desafios = 0;
     private String foto;
     private int recompensa = 0;
 
@@ -57,6 +58,18 @@ public class Crianca extends Usuario implements Serializable {
 
     public int getRecompensa() {
         return recompensa;
+    }
+
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
+    }
+
+    public int getDesafios() {
+        return desafios;
+    }
+
+    public void setDesafios(int desafios) {
+        this.desafios = desafios;
     }
 
     public void setRecompensa(int recompensa) {

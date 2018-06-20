@@ -5,14 +5,11 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -34,17 +31,17 @@ public class NotificacoesActivity extends AppCompatActivity {
     private ArrayList<Notificacao> notificacoesDesafio = new ArrayList<>();
     private FirebaseAuth autenticacao;
     private NotificacaoAdapter notificacaoAdapter;
+    private ArrayList<Desafio> desafioArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notificacoes);
         recyclerViewNotificacoes = findViewById(R.id.notificacao_desafio);
+        acharDesafio();
 
         LinearLayoutManager linearLayout = new LinearLayoutManager(NotificacoesActivity.this, LinearLayoutManager.VERTICAL, false);
         recyclerViewNotificacoes.setLayoutManager(linearLayout);
-
-        carregarNotificacoes();
 
         toolbar = findViewById(R.id.toolbarNotificacoes);
         setSupportActionBar(toolbar);
@@ -61,32 +58,47 @@ public class NotificacoesActivity extends AppCompatActivity {
         final String idUsuarioAtual = autenticacao.getCurrentUser().getUid();
 
         Query query = ConfiguracaoFirebase.getFirestore().collection("NotificacoesDesafioCompleto").whereEqualTo("responsavel", idUsuarioAtual);
-        query.get().addOnSuccessListener(NotificacoesActivity.this, new OnSuccessListener<QuerySnapshot>() {
+        query.addSnapshotListener(NotificacoesActivity.this, new EventListener<QuerySnapshot>() {
             @Override
-            public void onSuccess(QuerySnapshot documentSnapshots) {
-                for(final DocumentSnapshot document : documentSnapshots){
-                    final Notificacao notificacao = document.toObject(Notificacao.class);
-                    if (notificacao != null){
-                        notificacao.setId(document.getId());
-                        DocumentReference reference = notificacao.getDesafio();
-                        reference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                            @Override
-                            public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
-                                if (documentSnapshot.exists()){
-                                    Desafio desafio = documentSnapshot.toObject(Desafio.class);
-                                    desafio.setId(documentSnapshot.getId());
-                                    notificacao.desafioObject = desafio;
-                                    notificacoesDesafio.add(notificacao);
-                                }else {
-                                    notificacoesDesafio.add(notificacao);
-                                }
-                            }
-                        });
-                    }
+            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                notificacoesDesafio.clear();
 
+                if (documentSnapshots != null) {
+                    for (DocumentSnapshot documentSnapshot: documentSnapshots) {
+                        Notificacao notificacao = documentSnapshot.toObject(Notificacao.class);
+                        notificacao.setId(documentSnapshot.getId());
+
+                        for (Desafio desafio : desafioArrayList) {
+
+                            if (notificacao.getDesafio().getId().equals(desafio.getId())) {
+                                notificacao.setDesafioObject(desafio);
+                                break;
+                            }
+
+                        }
+                        notificacoesDesafio.add(notificacao);
+                    }
                 }
-                notificacaoAdapter = new NotificacaoAdapter(notificacoesDesafio);
+                notificacaoAdapter = new NotificacaoAdapter(notificacoesDesafio, NotificacoesActivity.this);
                 recyclerViewNotificacoes.setAdapter(notificacaoAdapter);
+            }
+
+        });
+    }
+
+    private void acharDesafio() {
+        Task<QuerySnapshot> query = ConfiguracaoFirebase.getFirestore().collection("Desafios").get();
+        query.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (DocumentSnapshot documentSnapshot : task.getResult()) {
+                        Desafio desafio = documentSnapshot.toObject(Desafio.class);
+                        desafio.setId(documentSnapshot.getId());
+                        desafioArrayList.add(desafio);
+                    }
+                }
+                carregarNotificacoes();
             }
         });
     }
