@@ -18,31 +18,53 @@ class PerfilCriancaViewController: UIViewController, UITableViewDelegate, UITabl
     var user: Crianca?
     lazy var amigos: [Crianca] = [Crianca]()
 
+    lazy var refresher: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action:
+            #selector(PerfilCriancaViewController.getData),
+                                 for: UIControlEvents.valueChanged)
+        
+        return refreshControl
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if user == nil {
-            MBProgressHUD.showAdded(to: view, animated: true)
-            user = Crianca.sharedUser()
-            UsuarioDAO.sharedInstance.getUsuarioInfo(objectId: user!.objectId!, success: { (crianca) in
-                self.user = crianca as? Crianca
-                self.setupTableView()
-                MBProgressHUD.hide(for: self.view, animated: true)
+    }
 
-            }) { (error) in
-                MBProgressHUD.hide(for: self.view, animated: true)
-            }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if user == nil {
+            getData()
         } else {
             setupTableView()
         }
     }
-
+    
+    @objc fileprivate func getData() {
+        refresher.beginRefreshing()
+        MBProgressHUD.showAdded(to: view, animated: true)
+        user = Crianca.sharedUser()
+        UsuarioDAO.sharedInstance.getUsuarioInfo(objectId: user!.objectId!, success: { (crianca) in
+            self.user = crianca as? Crianca
+            self.setupTableView()
+            MBProgressHUD.hide(for: self.view, animated: true)
+            self.refresher.endRefreshing()
+        }) { (error) in
+            self.refresher.endRefreshing()
+            
+            MBProgressHUD.hide(for: self.view, animated: true)
+        }
+    }
+    
     func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 44
         tableView.tableFooterView = UIView.init(frame: .zero)
+        
+        tableView.addSubview(refresher)
         
         tableView.register(UINib.init(nibName: "EstatisticaCell", bundle: nil), forCellReuseIdentifier: EstatisticaCell.defaultIdentifier())
         tableView.register(UINib.init(nibName: "CriancaPerfilHeaderCell", bundle: nil), forCellReuseIdentifier: CriancaPerfilHeaderCell.defaultIdentifier())
@@ -96,7 +118,8 @@ class PerfilCriancaViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 cell.nomeLabel.text = user?.nome
                 cell.sairContaButton.addTarget(self, action: #selector(logoutButtonTapped(_:)), for: .touchUpInside)
-                cell.habilidadeLabel.text = "Intelectual"
+                cell.habilidadeLabel.text = user?.habilidade
+                
                 
                 if let fotoURL = user?.fotoURL {
                     cell.editarPerfilImageView.setImageWith(URL.init(string: fotoURL)!, placeholderImage: #imageLiteral(resourceName: "profilePlaceholderBig"))

@@ -14,7 +14,7 @@ class Crianca: Usuario {
 
     var fotoURL: String?
     var responsavel: Responsavel?
-    var habilidade: Habilidade?
+    var habilidade: String?
     lazy var amigos: [Crianca] = [Crianca]()
     lazy var pontos = 0
     lazy var desafios = 0
@@ -111,7 +111,7 @@ class Crianca: Usuario {
             self.responsavel = responsavel
         }
         
-        if let habilidade = data["habilidade"] as? Habilidade {
+        if let habilidade = data["habilidade"] as? String {
             self.habilidade = habilidade
         }
         
@@ -129,6 +129,27 @@ class Crianca: Usuario {
         
         if let tipo = data["tipo"] as? NSNumber {
             self.tipo = tipo
+        }
+        
+        if let amigosRef = data["amigos"] as? [DocumentReference] {
+            for amigoRef in amigosRef {
+                amigoRef.getDocument { (snapshot, error) in
+                    if let snap = snapshot {
+                        let amigo = Crianca.init(objectId: snap.documentID)
+                        amigo.from(document: snap)
+                        var found = false
+                        for a in self.amigos {
+                            if a.objectId! == amigo.objectId! {
+                                found = true
+                            }
+                        }
+                        if !found {
+                            self.amigos.append(amigo)
+                        }
+                        
+                    }
+                }
+            }
         }
     }
 }

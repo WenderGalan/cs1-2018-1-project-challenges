@@ -187,6 +187,7 @@ class UsuarioDAO: NSObject {
                     if let usuario = user {
                         usuario.from(document: snapshot)
                         let data = snapshot.data()
+                        
                         if let responsavelRef = data!["responsavel"] as? DocumentReference {
                             responsavelRef.getDocument(completion: { (responsavelSnapshot, errorResponsavel) in
                                 let responsavel = Responsavel.init(objectId: (responsavelSnapshot?.documentID)!)

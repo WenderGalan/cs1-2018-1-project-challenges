@@ -20,24 +20,19 @@ class PerfilResponsavelViewController: UIViewController, UITableViewDelegate, UI
     lazy var notificacoesDesafioCompleto: [NotificacaoDesafio] = [NotificacaoDesafio]()
     lazy var notificacoesDesafioApp: [NotificacaoDesafio] = [NotificacaoDesafio]()
     
+    lazy var refresher: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action:
+            #selector(PerfilResponsavelViewController.getData),
+                                 for: UIControlEvents.valueChanged)
+        
+        return refreshControl
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if user == nil {
-            MBProgressHUD.showAdded(to: view, animated: true)
-            user = Responsavel.sharedUser()
-            UsuarioDAO.sharedInstance.getUsuarioInfo(objectId: user!.objectId!, success: { (responsavel) in
-                self.user = responsavel as? Responsavel
-                self.setupTableView()
-                self.getDesafios()
-            }) { (error) in
-                MBProgressHUD.hide(for: self.view, animated: true)
-            }
-        } else {
-            MBProgressHUD.showAdded(to: view, animated: true)
-            getDesafios()
-            setupTableView()
-        }
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -48,7 +43,30 @@ class PerfilResponsavelViewController: UIViewController, UITableViewDelegate, UI
         super.viewWillAppear(animated)
         
         navigationController?.isNavigationBarHidden = true
-        getDesafios()
+        getData()
+    }
+    
+    @objc fileprivate func getData() {
+        refresher.beginRefreshing()
+        if user == nil {
+            MBProgressHUD.showAdded(to: view, animated: true)
+            user = Responsavel.sharedUser()
+            UsuarioDAO.sharedInstance.getUsuarioInfo(objectId: user!.objectId!, success: { (responsavel) in
+                self.user = responsavel as? Responsavel
+                self.setupTableView()
+                self.getDesafios()
+                self.refresher.endRefreshing()
+
+            }) { (error) in
+                MBProgressHUD.hide(for: self.view, animated: true)
+                self.refresher.endRefreshing()
+
+            }
+        } else {
+            MBProgressHUD.showAdded(to: view, animated: true)
+            getDesafios()
+            setupTableView()
+        }
     }
     
     fileprivate func getDesafios() {
@@ -57,8 +75,12 @@ class PerfilResponsavelViewController: UIViewController, UITableViewDelegate, UI
             self.tableView.reloadData()
             self.getNotificacoesCompletos()
             MBProgressHUD.hide(for: self.view, animated: true)
+            self.refresher.endRefreshing()
+
         }, failed: { (error) in
             MBProgressHUD.hide(for: self.view, animated: true)
+            self.refresher.endRefreshing()
+
         })
     }
     
@@ -90,7 +112,8 @@ class PerfilResponsavelViewController: UIViewController, UITableViewDelegate, UI
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 44
         tableView.tableFooterView = UIView.init(frame: .zero)
-        
+        tableView.addSubview(refresher)
+
         tableView.register(UINib.init(nibName: "NotificationHeaderSectionView", bundle: nil), forCellReuseIdentifier: NotificationHeaderSectionView.defaultIdentifier())
         tableView.register(UINib.init(nibName: "DefaultSectionHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: DefaultSectionHeaderView.defaultIdentifier())
         tableView.register(UINib.init(nibName: "ContainerTableViewCell", bundle: nil), forCellReuseIdentifier: ContainerTableViewCell.defaultIdentifier())

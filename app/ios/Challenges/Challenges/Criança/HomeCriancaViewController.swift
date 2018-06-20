@@ -20,26 +20,20 @@ class HomeCriancaViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBOutlet weak var tableView: UITableView!
     
+    lazy var refresher: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action:
+            #selector(HomeCriancaViewController.getData),
+                                 for: UIControlEvents.valueChanged)
+        
+        return refreshControl
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
      
         
-        if user == nil {
-            MBProgressHUD.showAdded(to: view, animated: true)
-            user = Crianca.sharedUser()
-            UsuarioDAO.sharedInstance.getUsuarioInfo(objectId: user!.objectId!, success: { (crianca) in
-                self.user = crianca as? Crianca
-                self.setupTableView()
-                self.getDesafios()
-                self.getNotificacoes()
-            }) { (error) in
-                MBProgressHUD.hide(for: self.view, animated: true)
-            }
-        } else {
-            MBProgressHUD.showAdded(to: view, animated: true)
-            getDesafios()
-            self.setupTableView()
-        }
+        getData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -51,7 +45,29 @@ class HomeCriancaViewController: UIViewController, UITableViewDelegate, UITableV
         
         tabBarController?.tabBar.isHidden = false
         navigationController?.isNavigationBarHidden = true
-        getDesafios()
+        getData()
+    }
+    
+    @objc fileprivate func getData() {
+        refresher.beginRefreshing()
+        if user == nil {
+            MBProgressHUD.showAdded(to: view, animated: true)
+            user = Crianca.sharedUser()
+            UsuarioDAO.sharedInstance.getUsuarioInfo(objectId: user!.objectId!, success: { (crianca) in
+                self.user = crianca as? Crianca
+                self.setupTableView()
+                self.getDesafios()
+                self.getNotificacoes()
+                self.refresher.endRefreshing()
+            }) { (error) in
+                MBProgressHUD.hide(for: self.view, animated: true)
+                self.refresher.endRefreshing()
+            }
+        } else {
+            MBProgressHUD.showAdded(to: view, animated: true)
+            getDesafios()
+            self.setupTableView()
+        }
     }
     
     fileprivate func getDesafios() {
@@ -60,16 +76,20 @@ class HomeCriancaViewController: UIViewController, UITableViewDelegate, UITableV
             
             self.tableView.reloadData()
             MBProgressHUD.hide(for: self.view, animated: true)
+            self.refresher.endRefreshing()
         }, failed: { (error) in
             MBProgressHUD.hide(for: self.view, animated: true)
+            self.refresher.endRefreshing()
         })
         
         DesafioDAO.sharedInstance.getDesafiosApp(habilidadeID: "", success: { (array) in
             self.desafiosAplicativo = array
             self.tableView.reloadData()
             MBProgressHUD.hide(for: self.view, animated: true)
+            self.refresher.endRefreshing()
         }, failed: { (error) in
             MBProgressHUD.hide(for: self.view, animated: true)
+            self.refresher.endRefreshing()
         })
     }
     
@@ -89,7 +109,8 @@ class HomeCriancaViewController: UIViewController, UITableViewDelegate, UITableV
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 44
         tableView.tableFooterView = UIView.init(frame: .zero)
-        
+        tableView.addSubview(refresher)
+
         tableView.register(UINib.init(nibName: "NotificationHeaderSectionView", bundle: nil), forCellReuseIdentifier: NotificationHeaderSectionView.defaultIdentifier())
         tableView.register(UINib.init(nibName: "DefaultSectionHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: DefaultSectionHeaderView.defaultIdentifier())
         tableView.register(UINib.init(nibName: "ContainerTableViewCell", bundle: nil), forCellReuseIdentifier: ContainerTableViewCell.defaultIdentifier())

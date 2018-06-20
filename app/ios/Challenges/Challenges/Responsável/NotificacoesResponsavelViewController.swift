@@ -157,7 +157,8 @@ class NotificacoesResponsavelViewController: UIViewController, UITableViewDelega
             notificacao.desafio?.checado = true
             notificacao.desafio?.saveInBackground(success: { (_) in
                 self.notificacoesDesafioCompleto.remove(at: index)
-                notificacao.crianca?.pontos = (notificacao.crianca?.pontos)! + (notificacao.desafio?.pontos)!
+                let somaPontos = (notificacao.crianca?.pontos)! + (notificacao.desafio?.pontos)!
+                notificacao.crianca?.pontos = somaPontos
                 notificacao.crianca?.desafios = (notificacao.crianca?.desafios)! + 1
                 notificacao.crianca?.recompensas = (notificacao.crianca?.recompensas)! + 1
                 notificacao.crianca?.save()
