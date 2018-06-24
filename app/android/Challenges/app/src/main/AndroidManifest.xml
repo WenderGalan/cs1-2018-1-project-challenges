@@ -16,7 +16,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.AdicionarAmigoActivity" />
         <activity
             android:name=".activities.CadastroActivity"
             android:screenOrientation="portrait" />
@@ -41,7 +40,8 @@
         <activity
             android:name=".activities.DesafioDetalhesActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.CriancaDetalhesActivity"></activity>
+        <activity android:name=".activities.CriancaDetalhesActivity" />
+        <activity android:name=".activities.SearchAmigos"></activity>
     </application>
 
 </manifest>

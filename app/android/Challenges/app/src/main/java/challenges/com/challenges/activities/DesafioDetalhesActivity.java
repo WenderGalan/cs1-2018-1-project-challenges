@@ -15,11 +15,18 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.squareup.picasso.Picasso;
 
 import challenges.com.challenges.R;
 import challenges.com.challenges.config.ConfiguracaoFirebase;
+import challenges.com.challenges.model.Crianca;
 import challenges.com.challenges.model.Desafio;
+import challenges.com.challenges.model.Notificacao;
 
 public class DesafioDetalhesActivity extends AppCompatActivity {
 
@@ -37,7 +44,8 @@ public class DesafioDetalhesActivity extends AppCompatActivity {
     private Button primeiroBotao;
     private Button segundoBotao;
     private Desafio desafio;
-    private Desafio desafioEditar;
+    private FirebaseAuth autenticacao;
+    private Crianca crianca;
     /**TIPO vai ter três para poder saber qual activity será aberta
      * responsavel que é a padrão,
      * crianca,
@@ -184,14 +192,39 @@ public class DesafioDetalhesActivity extends AppCompatActivity {
 
                 }else if (tipo.equals("crianca")){
                     //COMPLETAR O DESAFIO
+                    autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+                    final String idUsuarioAtual = autenticacao.getCurrentUser().getUid();
+                    ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(idUsuarioAtual).addSnapshotListener(DesafioDetalhesActivity.this, new EventListener<DocumentSnapshot>() {
+                        @Override
+                        public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
+                            if (documentSnapshot.exists()){
+                                crianca = documentSnapshot.toObject(Crianca.class);
+                            }
+                        }
+                    });
+                    //ALTERA PARA TRUE O COMPLETADO DO DESAFIO
                     DocumentReference completarDesafio = ConfiguracaoFirebase.getFirestore().collection("Desafios").document(desafio.getId());
                     completarDesafio.update("completado", true).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(getApplicationContext(), "Desafio completado com sucesso!", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(DesafioDetalhesActivity.this, HomeCriancaActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
+                            Notificacao notificacaoDesafio = new Notificacao();
+                            DocumentReference criancaReferencia = ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(idUsuarioAtual);
+                            DocumentReference desafioReferencia = ConfiguracaoFirebase.getFirestore().collection("Desafios").document(desafio.getId());
+                            notificacaoDesafio.setCrianca(criancaReferencia);
+                            notificacaoDesafio.setResponsavel(crianca.getResponsavel().getId());
+                            notificacaoDesafio.setDesafio(desafioReferencia);
+
+                            //ADICIONA UM DOCUMENT COM A NOTIFICACAO
+                            ConfiguracaoFirebase.getFirestore().collection("NotificacoesDesafioCompleto").document()
+                                    .set(notificacaoDesafio.construirHash()).addOnSuccessListener(DesafioDetalhesActivity.this, new OnSuccessListener() {
+                                @Override
+                                public void onSuccess(Object o) {
+                                    Toast.makeText(getApplicationContext(), "Desafio completado com sucesso!", Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(DesafioDetalhesActivity.this, HomeCriancaActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                }
+                            });
                         }
                     });
 
