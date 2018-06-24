@@ -37,7 +37,7 @@ public class CriancaSolicitacaoAdapter extends RecyclerView.Adapter<ViewHolderSo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolderSolicitacao holder, int position) {
+    public void onBindViewHolder(final ViewHolderSolicitacao holder, int position) {
         if (criancas != null && criancas.size() > 0){
             final Crianca crianca = criancas.get(position);
             if (crianca != null){
@@ -48,19 +48,19 @@ public class CriancaSolicitacaoAdapter extends RecyclerView.Adapter<ViewHolderSo
             }
 
             final NotificacaoAmizade notificacaoAmizade = new NotificacaoAmizade();
-            notificacaoAmizade.setCriancaDestinatario(ConfiguracaoFirebase.getFirestore().document(crianca.getId()));
-            notificacaoAmizade.setResponsavel(criancas.get(position).getResponsavel());
-            notificacaoAmizade.setCriancaRemetente(ConfiguracaoFirebase.getFirestore().document(ConfiguracaoFirebase.getFirebaseAutenticacao().getCurrentUser().toString()));
-
+            notificacaoAmizade.setCrianca(ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(ConfiguracaoFirebase.getFirebaseAutenticacao().getCurrentUser().getUid()));
+            notificacaoAmizade.setAmigo(ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(crianca.getId()));
 
             holder.aceitar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    CollectionReference notificacao = ConfiguracaoFirebase.getFirestore().collection("NotificacaoAmizadeApp");
+                    CollectionReference notificacao = ConfiguracaoFirebase.getFirestore().collection("NotificacaoAmizade");
                     notificacao.add(notificacaoAmizade.construirHash()).addOnSuccessListener(new OnSuccessListener() {
                         @Override
                         public void onSuccess(Object o) {
                             Toast.makeText(context, "Solicitação enviada com sucesso", Toast.LENGTH_LONG).show();
+                            holder.aceitar.setText("Solicitação enviada");
+                            holder.aceitar.setEnabled(false);
                         }
                     });
                 }
@@ -72,9 +72,5 @@ public class CriancaSolicitacaoAdapter extends RecyclerView.Adapter<ViewHolderSo
     @Override
     public int getItemCount() {
         return criancas.size();
-    }
-
-    public void notificar(){
-        notifyDataSetChanged();
     }
 }

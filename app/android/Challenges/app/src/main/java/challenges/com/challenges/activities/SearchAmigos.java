@@ -5,8 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
 import android.widget.SearchView;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -69,15 +67,8 @@ public class SearchAmigos extends AppCompatActivity {
                             }
                             criancaSolicitacaoAdapter = new CriancaSolicitacaoAdapter(criancasResult, SearchAmigos.this);
                             lista.setAdapter(criancaSolicitacaoAdapter);
-                            //criancaSolicitacaoAdapter.notificar();
+                            criancaSolicitacaoAdapter.notifyDataSetChanged();
                         }
-                    }
-                });
-
-                lista.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Log.i("DEBUG", "CLICOU");
                     }
                 });
 
@@ -93,7 +84,10 @@ public class SearchAmigos extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String s) {
                 if (s.equals("")){
-
+                    criancasResult.clear();
+                    criancaSolicitacaoAdapter = new CriancaSolicitacaoAdapter(criancasResult, SearchAmigos.this);
+                    lista.setAdapter(criancaSolicitacaoAdapter);
+                    criancaSolicitacaoAdapter.notifyDataSetChanged();
                 }
                 return false;
             }

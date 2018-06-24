@@ -16,6 +16,6 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewResultadoAmigos"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="80dp"
         tools:listitem="@layout/row_adicionar_amigo" />
 </LinearLayout>

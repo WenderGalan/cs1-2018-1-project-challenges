@@ -11,40 +11,40 @@ import java.util.Map;
 
 public class NotificacaoAmizade {
 
-    private DocumentReference criancaRemetente;
-    private DocumentReference criancaDestinatario;
-    private DocumentReference responsavel;
+    private String id;
+    private DocumentReference amigo;
+    private DocumentReference crianca;
 
     public Map construirHash(){
         Map<String, Object> hashMap = new HashMap<>();
-        hashMap.put("criancaRemetente", getCriancaRemetente());
-        hashMap.put("criancaDestinatario", getCriancaDestinatario());
-        hashMap.put("responsavel", getResponsavel());
+        hashMap.put("crianca", getCrianca());
+        hashMap.put("amigo", getAmigo());
 
         return hashMap;
     }
 
-    public DocumentReference getCriancaRemetente() {
-        return criancaRemetente;
+    @com.google.firebase.firestore.Exclude
+    public String getId() {
+        return id;
     }
 
-    public void setCriancaRemetente(DocumentReference criancaRemetente) {
-        this.criancaRemetente = criancaRemetente;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public DocumentReference getCriancaDestinatario() {
-        return criancaDestinatario;
+    public DocumentReference getAmigo() {
+        return amigo;
     }
 
-    public void setCriancaDestinatario(DocumentReference criancaDestinatario) {
-        this.criancaDestinatario = criancaDestinatario;
+    public void setAmigo(DocumentReference amigo) {
+        this.amigo = amigo;
     }
 
-    public DocumentReference getResponsavel() {
-        return responsavel;
+    public DocumentReference getCrianca() {
+        return crianca;
     }
 
-    public void setResponsavel(DocumentReference responsavel) {
-        this.responsavel = responsavel;
+    public void setCrianca(DocumentReference crianca) {
+        this.crianca = crianca;
     }
 }

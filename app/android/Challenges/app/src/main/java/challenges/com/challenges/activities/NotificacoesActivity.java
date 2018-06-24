@@ -10,6 +10,7 @@ import android.view.View;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -20,11 +21,13 @@ import java.util.ArrayList;
 
 import challenges.com.challenges.R;
 import challenges.com.challenges.adapter.NotificacaoAdapter;
+import challenges.com.challenges.adapter.NotificacaoAmizadeAdapter;
 import challenges.com.challenges.adapter.NotificacaoDesafioAppAdapter;
 import challenges.com.challenges.config.ConfiguracaoFirebase;
 import challenges.com.challenges.model.Desafio;
 import challenges.com.challenges.model.DesafioApp;
 import challenges.com.challenges.model.Notificacao;
+import challenges.com.challenges.model.NotificacaoAmizade;
 import challenges.com.challenges.model.NotificacaoDesafioApps;
 
 public class NotificacoesActivity extends AppCompatActivity {
@@ -39,6 +42,9 @@ public class NotificacoesActivity extends AppCompatActivity {
     private NotificacaoDesafioAppAdapter notificacaoDesafioAdapter;
     private ArrayList<Desafio> desafioArrayList = new ArrayList<>();
     private ArrayList<DesafioApp> desafioAppArrayList = new ArrayList<>();
+    private RecyclerView recyclerViewNotificacoesAmizade;
+    private ArrayList<NotificacaoAmizade> notificacaoAmizades = new ArrayList<>();
+    private NotificacaoAmizadeAdapter adapterNotificacaoAmizade;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,14 +52,19 @@ public class NotificacoesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_notificacoes);
         recyclerViewNotificacoes = findViewById(R.id.notificacao_desafio);
         recyclerViewNotificacoesApp = findViewById(R.id.notificacao_desafioApp);
+        recyclerViewNotificacoesAmizade = findViewById(R.id.notificacao_amizade);
         acharDesafio();
         acharDesafiosApp();
+        acharNotificacoesAmizade();
 
         LinearLayoutManager linearLayout = new LinearLayoutManager(NotificacoesActivity.this, LinearLayoutManager.VERTICAL, false);
         recyclerViewNotificacoes.setLayoutManager(linearLayout);
 
         LinearLayoutManager linearLayout2 = new LinearLayoutManager(NotificacoesActivity.this, LinearLayoutManager.VERTICAL, false);
         recyclerViewNotificacoesApp.setLayoutManager(linearLayout2);
+
+        LinearLayoutManager linearLayout3 = new LinearLayoutManager(NotificacoesActivity.this, LinearLayoutManager.VERTICAL, false);
+        recyclerViewNotificacoesAmizade.setLayoutManager(linearLayout3);
 
         toolbar = findViewById(R.id.toolbarNotificacoes);
         setSupportActionBar(toolbar);
@@ -63,6 +74,34 @@ public class NotificacoesActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void acharNotificacoesAmizade() {
+        String idUsuario = ConfiguracaoFirebase.getFirebaseAutenticacao().getCurrentUser().getUid();
+        DocumentReference here = ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(idUsuario);
+        Query query  = ConfiguracaoFirebase.getFirestore().collection("NotificacaoAmizade").whereEqualTo("amigo", here);
+
+        query.addSnapshotListener(NotificacoesActivity.this, new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                notificacaoAmizades.clear();
+                if (documentSnapshots.getDocuments() != null){
+                    for (DocumentSnapshot document : documentSnapshots.getDocuments()){
+                        if (document.exists()){
+                            NotificacaoAmizade notificacaoAmizade = document.toObject(NotificacaoAmizade.class);
+                            notificacaoAmizade.setId(document.getId());
+                            notificacaoAmizades.add(notificacaoAmizade);
+                        }
+                    }
+                    //chamar o adapter e a view
+                    adapterNotificacaoAmizade = new NotificacaoAmizadeAdapter(notificacaoAmizades, NotificacoesActivity.this);
+                    recyclerViewNotificacoesAmizade.setAdapter(adapterNotificacaoAmizade);
+                    adapterNotificacaoAmizade.notifyDataSetChanged();
+                }
+            }
+        });
+
+
     }
 
     private void carregarNotificacoes() {
