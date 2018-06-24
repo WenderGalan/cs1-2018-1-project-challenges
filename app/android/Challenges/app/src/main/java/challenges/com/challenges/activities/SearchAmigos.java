@@ -3,6 +3,7 @@ package challenges.com.challenges.activities;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -38,28 +39,37 @@ public class SearchAmigos extends AppCompatActivity {
         searchView = findViewById(R.id.search_amigos);
         lista = findViewById(R.id.recyclerViewResultadoAmigos);
 
+        LinearLayoutManager linearLayout = new LinearLayoutManager(SearchAmigos.this, LinearLayoutManager.VERTICAL, false);
+        lista.setLayoutManager(linearLayout);
+
         final CollectionReference referenceUsuarios = ConfiguracaoFirebase.getFirestore().collection("Usuarios");
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String s) {
+            public boolean onQueryTextSubmit(final String s) {
                 criancasResult.clear();
-                Query query = referenceUsuarios.whereGreaterThanOrEqualTo("nome", s);
+                Query query = referenceUsuarios.whereEqualTo("nome", s).limit(1);
                 query.get().addOnSuccessListener(SearchAmigos.this, new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot documentSnapshots) {
                         if (documentSnapshots != null){
                             for (DocumentSnapshot document : documentSnapshots){
-                                Crianca crianca = document.toObject(Crianca.class);
-                                crianca.setId(document.getId());
-                                if (crianca.getTipo() == 1){
-                                    criancasResult.add(crianca);
-                                }
+                               if (document.exists() && document != null){
+                                   try {
+                                           Crianca crianca = document.toObject(Crianca.class);
+                                           crianca.setId(document.getId());
+                                           criancasResult.add(crianca);
+
+
+                                   }catch (Exception e){
+                                       e.printStackTrace();
+                                   }
+                               }
 
                             }
                             criancaSolicitacaoAdapter = new CriancaSolicitacaoAdapter(criancasResult, SearchAmigos.this);
                             lista.setAdapter(criancaSolicitacaoAdapter);
-                            criancaSolicitacaoAdapter.notifyDataSetChanged();
+                            //criancaSolicitacaoAdapter.notificar();
                         }
                     }
                 });

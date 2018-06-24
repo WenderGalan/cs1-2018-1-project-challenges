@@ -1,6 +1,5 @@
 package challenges.com.challenges.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,12 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import challenges.com.challenges.R;
+import challenges.com.challenges.config.ConfiguracaoFirebase;
 import challenges.com.challenges.model.Crianca;
+import challenges.com.challenges.model.NotificacaoAmizade;
 
 public class CriancaSolicitacaoAdapter extends RecyclerView.Adapter<ViewHolderSolicitacao> {
 
@@ -44,11 +47,22 @@ public class CriancaSolicitacaoAdapter extends RecyclerView.Adapter<ViewHolderSo
                 }
             }
 
+            final NotificacaoAmizade notificacaoAmizade = new NotificacaoAmizade();
+            notificacaoAmizade.setCriancaDestinatario(ConfiguracaoFirebase.getFirestore().document(crianca.getId()));
+            notificacaoAmizade.setResponsavel(criancas.get(position).getResponsavel());
+            notificacaoAmizade.setCriancaRemetente(ConfiguracaoFirebase.getFirestore().document(ConfiguracaoFirebase.getFirebaseAutenticacao().getCurrentUser().toString()));
+
+
             holder.aceitar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context, "Solicitação enviada com sucesso", Toast.LENGTH_LONG).show();
-                    ((Activity)context).finish();
+                    CollectionReference notificacao = ConfiguracaoFirebase.getFirestore().collection("NotificacaoAmizadeApp");
+                    notificacao.add(notificacaoAmizade.construirHash()).addOnSuccessListener(new OnSuccessListener() {
+                        @Override
+                        public void onSuccess(Object o) {
+                            Toast.makeText(context, "Solicitação enviada com sucesso", Toast.LENGTH_LONG).show();
+                        }
+                    });
                 }
             });
 
@@ -58,5 +72,9 @@ public class CriancaSolicitacaoAdapter extends RecyclerView.Adapter<ViewHolderSo
     @Override
     public int getItemCount() {
         return criancas.size();
+    }
+
+    public void notificar(){
+        notifyDataSetChanged();
     }
 }

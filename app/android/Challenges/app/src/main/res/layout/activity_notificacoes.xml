@@ -42,15 +42,40 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.RecyclerView
+    android:id="@+id/notificacao_desafio"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/lbNotificacaoDesafioApp"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="13dp"
+        android:text="DESAFIOS OFERTADOS"
+        android:textColor="#7B67FF"
+        android:textSize="28sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/notificacao_desafio"
+            android:id="@+id/notificacao_desafioApp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
         </android.support.v7.widget.RecyclerView>
     </ScrollView>
+
 </LinearLayout>
 

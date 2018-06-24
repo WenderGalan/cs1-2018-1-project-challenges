@@ -4,12 +4,14 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Crianca extends Usuario implements Serializable {
 
-    private CollectionReference amigos;
+    private ArrayList<Crianca> amigos;
     private DocumentReference responsavel;
     private int tipo = 1;
     private int pontos = 0;
@@ -24,11 +26,11 @@ public class Crianca extends Usuario implements Serializable {
         return tipo;
     }
 
-    public CollectionReference getAmigos() {
+    public ArrayList<Crianca> getAmigos() {
         return amigos;
     }
 
-    public void setAmigos(CollectionReference amigos) {
+    public void setAmigos(ArrayList<Crianca> amigos) {
         this.amigos = amigos;
     }
 

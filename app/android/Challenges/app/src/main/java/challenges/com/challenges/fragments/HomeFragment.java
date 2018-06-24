@@ -100,8 +100,24 @@ public class HomeFragment extends Fragment {
                 if (task.isSuccessful()) {
 
                     for (DocumentSnapshot documentSnapshot : task.getResult()) {
-                        DesafioApp desafio = documentSnapshot.toObject(DesafioApp.class);
+                        final DesafioApp desafio = documentSnapshot.toObject(DesafioApp.class);
                         desafio.setId(documentSnapshot.getId());
+                        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+                        String idUsuarioAtual = autenticacao.getCurrentUser().getUid();
+
+                        ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(idUsuarioAtual)
+                                .addSnapshotListener(getActivity(), new EventListener<DocumentSnapshot>() {
+
+                                            @Override
+                                            public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
+
+                                                if (documentSnapshot.exists()) {
+                                                    Crianca criancaAux = documentSnapshot.toObject(Crianca.class);
+                                                    desafio.setResponsavel(criancaAux.getResponsavel().getId());
+                                                }
+                                            }
+                                        });
+
                         desafiosAppResult.add(desafio);
                     }
                     desafioAppAdapter = new DesafioAppAdapter((ArrayList<DesafioApp>) desafiosAppResult);

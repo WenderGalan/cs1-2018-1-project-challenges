@@ -8,8 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -20,6 +23,7 @@ import challenges.com.challenges.activities.LoginActivity;
 import challenges.com.challenges.activities.SearchAmigos;
 import challenges.com.challenges.config.ConfiguracaoFirebase;
 import challenges.com.challenges.model.Crianca;
+import challenges.com.challenges.model.Responsavel;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -91,8 +95,21 @@ public class PerfilCriancaFragment extends Fragment {
         adicionarAmigo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View vie) {
-                Intent intent = new Intent(getActivity(), SearchAmigos.class);
-                startActivity(intent);
+                DocumentReference pai = crianca.getResponsavel();
+                pai.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Responsavel responsavel = documentSnapshot.toObject(Responsavel.class);
+                        if (responsavel != null && responsavel.isPermiteSocial()){
+                            Intent intent = new Intent(getActivity(), SearchAmigos.class);
+                            startActivity(intent);
+                        }else{
+                            Toast.makeText(getContext(), "Seu responsável não permite você adicionar amigos", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+
+
             }
         });
 

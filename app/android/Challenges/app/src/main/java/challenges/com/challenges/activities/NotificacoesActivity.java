@@ -20,28 +20,40 @@ import java.util.ArrayList;
 
 import challenges.com.challenges.R;
 import challenges.com.challenges.adapter.NotificacaoAdapter;
+import challenges.com.challenges.adapter.NotificacaoDesafioAppAdapter;
 import challenges.com.challenges.config.ConfiguracaoFirebase;
 import challenges.com.challenges.model.Desafio;
+import challenges.com.challenges.model.DesafioApp;
 import challenges.com.challenges.model.Notificacao;
+import challenges.com.challenges.model.NotificacaoDesafioApps;
 
 public class NotificacoesActivity extends AppCompatActivity {
 
     private android.support.v7.widget.Toolbar toolbar;
     private RecyclerView recyclerViewNotificacoes;
+    private RecyclerView recyclerViewNotificacoesApp;
     private ArrayList<Notificacao> notificacoesDesafio = new ArrayList<>();
+    private ArrayList<NotificacaoDesafioApps> notificacoesDesafioApp = new ArrayList<>();
     private FirebaseAuth autenticacao;
     private NotificacaoAdapter notificacaoAdapter;
+    private NotificacaoDesafioAppAdapter notificacaoDesafioAdapter;
     private ArrayList<Desafio> desafioArrayList = new ArrayList<>();
+    private ArrayList<DesafioApp> desafioAppArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notificacoes);
         recyclerViewNotificacoes = findViewById(R.id.notificacao_desafio);
+        recyclerViewNotificacoesApp = findViewById(R.id.notificacao_desafioApp);
         acharDesafio();
+        acharDesafiosApp();
 
         LinearLayoutManager linearLayout = new LinearLayoutManager(NotificacoesActivity.this, LinearLayoutManager.VERTICAL, false);
         recyclerViewNotificacoes.setLayoutManager(linearLayout);
+
+        LinearLayoutManager linearLayout2 = new LinearLayoutManager(NotificacoesActivity.this, LinearLayoutManager.VERTICAL, false);
+        recyclerViewNotificacoesApp.setLayoutManager(linearLayout2);
 
         toolbar = findViewById(R.id.toolbarNotificacoes);
         setSupportActionBar(toolbar);
@@ -86,6 +98,40 @@ public class NotificacoesActivity extends AppCompatActivity {
         });
     }
 
+    private void carregarNotificacoesDesafioApp() {
+        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        final String idUsuarioAtual = autenticacao.getCurrentUser().getUid();
+
+        Query query = ConfiguracaoFirebase.getFirestore().collection("NotificacaoDesafioApps").whereEqualTo("responsavel", idUsuarioAtual);
+        query.addSnapshotListener(NotificacoesActivity.this, new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                notificacoesDesafioApp.clear();
+
+                int total = documentSnapshots.size();
+                if (documentSnapshots != null) {
+                    for (DocumentSnapshot documentSnapshot: documentSnapshots) {
+                        NotificacaoDesafioApps notificacao = documentSnapshot.toObject(NotificacaoDesafioApps.class);
+                        notificacao.setId(documentSnapshot.getId());
+
+                        for (DesafioApp desafio : desafioAppArrayList) {
+
+                            if (notificacao.getDesafio().getId().equals(desafio.getId())) {
+                                notificacao.setDesafioObject(desafio);
+                                break;
+                            }
+
+                        }
+                        notificacoesDesafioApp.add(notificacao);
+                    }
+                }
+                notificacaoDesafioAdapter = new NotificacaoDesafioAppAdapter(notificacoesDesafioApp, NotificacoesActivity.this);
+                recyclerViewNotificacoesApp.setAdapter(notificacaoDesafioAdapter);
+            }
+
+        });
+    }
+
     private void acharDesafio() {
         Task<QuerySnapshot> query = ConfiguracaoFirebase.getFirestore().collection("Desafios").get();
         query.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -99,6 +145,23 @@ public class NotificacoesActivity extends AppCompatActivity {
                     }
                 }
                 carregarNotificacoes();
+            }
+        });
+    }
+
+    private void acharDesafiosApp() {
+        Task<QuerySnapshot> query = ConfiguracaoFirebase.getFirestore().collection("DesafioApp").get();
+        query.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (DocumentSnapshot documentSnapshot : task.getResult()) {
+                        DesafioApp desafio = documentSnapshot.toObject(DesafioApp.class);
+                        desafio.setId(documentSnapshot.getId());
+                        desafioAppArrayList.add(desafio);
+                    }
+                }
+                carregarNotificacoesDesafioApp();
             }
         });
     }

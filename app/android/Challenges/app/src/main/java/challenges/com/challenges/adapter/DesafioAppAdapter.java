@@ -134,7 +134,7 @@ public class DesafioAppAdapter extends RecyclerView.Adapter<ViewHolderDesafio> {
                 desafioApp.setDesafio(desafioAppDocument);
 
                 //enviar a notificação!
-                ConfiguracaoFirebase.getFirestore().collection("NotificacaoDesafioApp").document()
+                ConfiguracaoFirebase.getFirestore().collection("NotificacaoDesafioApps").document()
                         .set(desafioApp.construirHash()).addOnSuccessListener((Activity) context, new OnSuccessListener() {
                     @Override
                     public void onSuccess(Object o) {
