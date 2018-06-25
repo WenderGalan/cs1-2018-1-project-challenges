@@ -14,15 +14,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 import challenges.com.challenges.R;
-import challenges.com.challenges.activities.DesafioDetalhesActivity;
-import challenges.com.challenges.activities.HomeCriancaActivity;
 import challenges.com.challenges.activities.HomeResponsavelActivity;
 import challenges.com.challenges.config.ConfiguracaoFirebase;
 import challenges.com.challenges.model.Desafio;
-import challenges.com.challenges.model.Notificacao;
 import challenges.com.challenges.model.NotificacaoDesafioApps;
 
 /**
@@ -76,7 +72,6 @@ public class NotificacaoDesafioAppAdapter extends RecyclerView.Adapter<ViewHolde
                 @Override
                 public void onClick(View view) {
                     //TODO aceitar o desafio, excluir a notificação e adicionar os pontos e a recompensa para a crianca
-                    Toast.makeText(holder.imagem.getContext(), "Clicou confirmar", Toast.LENGTH_LONG).show();
                     aceitarDesafio(notificacao, holder.imagem.getContext());
                 }
             });
@@ -85,8 +80,6 @@ public class NotificacaoDesafioAppAdapter extends RecyclerView.Adapter<ViewHolde
                 @Override
                 public void onClick(View view) {
                     //TODO recusar o desafio, excluir a notificacao
-                    Toast.makeText(holder.imagem.getContext(), "Clicou recusar", Toast.LENGTH_LONG).show();
-
                     recusarDesafio(notificacao, holder.imagem.getContext());
                 }
             });
