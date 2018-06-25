@@ -14,6 +14,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 
@@ -94,17 +95,16 @@ public class NotificacaoAdapter extends RecyclerView.Adapter<ViewHolderNotificac
         DocumentReference desafioAceito = ConfiguracaoFirebase.getFirestore().collection("Desafios").document(notificacao.getDesafio().getId());
         desafioAceito.update("checado", true).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
-            public void onSuccess (Void aVoid){
+            public void onSuccess(Void aVoid) {
                 //PEGA A CRIANCA DO BANCO
                 ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(notificacao.getCrianca().getId())
                         .addSnapshotListener((Activity) context, new EventListener<DocumentSnapshot>() {
                             @Override
                             public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
                                 Crianca crianca = documentSnapshot.toObject(Crianca.class);
-
                                 if (notificacao.getDesafioObject().getRecompensa() != null) {
-                                    int recompensa = crianca.getRecompensa();
-                                    crianca.setRecompensa(recompensa + 1);
+                                    int recompensa = crianca.getRecompensas();
+                                    crianca.setRecompensas(recompensa + 1);
                                 }
 
                                 int pontos = crianca.getPontos();
@@ -114,28 +114,32 @@ public class NotificacaoAdapter extends RecyclerView.Adapter<ViewHolderNotificac
                                 crianca.setDesafios(desafios + 1);
 
                                 //PROCESSO DE SOMAR OS PONTOS DA CRIANCA
-                                DocumentReference somarPontos = ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(notificacao.getCrianca().getId());
-                                somarPontos.update(crianca.construirHash()).addOnSuccessListener(new OnSuccessListener() {
-                                    @Override
-                                    public void onSuccess(Object o) {
-                                        Toast.makeText(context, "alteração da criança", Toast.LENGTH_LONG).show();
-
-                                        //DELETAR A NOTIFICACAO
-                                        ConfiguracaoFirebase.getFirestore().collection("NotificacoesDesafioCompleto")
-                                                .document(notificacao.getId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-
-                                                Toast.makeText(context, "Desafio Recusado", Toast.LENGTH_LONG).show();
-                                                Intent intent = new Intent(context, HomeResponsavelActivity.class);
-                                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                context.startActivity(intent);
-                                            }
-                                        });
-                                    }
-                                });
+                                somarPontos(crianca, notificacao);
                             }
+
                         });
+            }
+        });
+    }
+
+    private void somarPontos(Crianca crianca, final Notificacao notificacao) {
+        DocumentReference somarPontos = ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(notificacao.getCrianca().getId());
+        somarPontos.update(crianca.construirHash()).addOnSuccessListener(new OnSuccessListener() {
+            @Override
+            public void onSuccess(Object o) {
+
+                //DELETAR A NOTIFICACAO
+                ConfiguracaoFirebase.getFirestore().collection("NotificacoesDesafioCompleto")
+                        .document(notificacao.getId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                        Toast.makeText(context, "Desafio aceito", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(context, HomeResponsavelActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        context.startActivity(intent);
+                    }
+                });
             }
         });
     }
@@ -145,7 +149,7 @@ public class NotificacaoAdapter extends RecyclerView.Adapter<ViewHolderNotificac
         DocumentReference desafioNegado = ConfiguracaoFirebase.getFirestore().collection("Desafios").document(notificacao.getDesafio().getId());
         desafioNegado.update("completado", false).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
-            public void onSuccess (Void aVoid){
+            public void onSuccess(Void aVoid) {
                 //DELETA DO BANCO O NOTIFICACAO
                 ConfiguracaoFirebase.getFirestore().collection("NotificacoesDesafioCompleto")
                         .document(notificacao.getId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -154,7 +158,7 @@ public class NotificacaoAdapter extends RecyclerView.Adapter<ViewHolderNotificac
 
                         Toast.makeText(context, "Desafio Recusado", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(context, HomeResponsavelActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         context.startActivity(intent);
                     }
                 });

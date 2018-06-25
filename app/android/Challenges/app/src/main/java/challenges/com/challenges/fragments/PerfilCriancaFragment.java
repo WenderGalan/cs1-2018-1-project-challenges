@@ -69,29 +69,29 @@ public class PerfilCriancaFragment extends Fragment {
         //coloquei um listener para ficar escutando as alteraçoes do banco porque é usuário...
         ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(idUsuarioAtual)
                 .addSnapshotListener(getActivity(), new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
-                if (documentSnapshot.exists()){
-                    crianca = documentSnapshot.toObject(Crianca.class);
-                    nomeCrianca.setText(crianca.getNome().toUpperCase());
-                    if (crianca.getFoto() != null){
-                        Picasso.get().load(crianca.getFoto()).into(fotoCrianca);
-                    }
+                    @Override
+                    public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
+                        if (documentSnapshot.exists()) {
+                            crianca = documentSnapshot.toObject(Crianca.class);
+                            nomeCrianca.setText(crianca.getNome().toUpperCase());
+                            if (crianca.getFoto() != null) {
+                                Picasso.get().load(crianca.getFoto()).into(fotoCrianca);
+                            }
 
-                    if (crianca.getRecompensa() > 0) {
-                        qntRecompensas.setText(String.valueOf(crianca.getRecompensa()));
-                    }
+                            if (crianca.getRecompensa() > 0) {
+                                qntRecompensas.setText(String.valueOf(crianca.getRecompensa()));
+                            }
 
-                    if (crianca.getPontos() > 0) {
-                        qntPontos.setText(String.valueOf(crianca.getPontos()));
-                    }
+                            if (crianca.getPontos() > 0) {
+                                qntPontos.setText(String.valueOf(crianca.getPontos()));
+                            }
 
-                    if (crianca.getDesafios() > 0) {
-                        qntDesafios.setText(String.valueOf(crianca.getDesafios()));
+                            if (crianca.getDesafios() > 0) {
+                                qntDesafios.setText(String.valueOf(crianca.getDesafios()));
+                            }
+                        }
                     }
-                }
-            }
-        });
+                });
         adicionarAmigo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View vie) {
@@ -100,10 +100,10 @@ public class PerfilCriancaFragment extends Fragment {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         Responsavel responsavel = documentSnapshot.toObject(Responsavel.class);
-                        if (responsavel != null && responsavel.isPermiteSocial()){
+                        if (responsavel != null && responsavel.isPermiteSocial()) {
                             Intent intent = new Intent(getActivity(), SearchAmigos.class);
                             startActivity(intent);
-                        }else{
+                        } else {
                             Toast.makeText(getContext(), "Seu responsável não permite você adicionar amigos", Toast.LENGTH_LONG).show();
                         }
                     }

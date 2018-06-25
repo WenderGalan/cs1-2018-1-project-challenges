@@ -15,7 +15,7 @@ public class Crianca extends Usuario implements Serializable {
     private int pontos = 0;
     private int desafios = 0;
     private String foto;
-    private int recompensa = 0;
+    private int recompensas = 0;
 
     public Crianca() {
     }
@@ -57,7 +57,7 @@ public class Crianca extends Usuario implements Serializable {
     }
 
     public int getRecompensa() {
-        return recompensa;
+        return recompensas;
     }
 
     public void setTipo(int tipo) {
@@ -68,12 +68,16 @@ public class Crianca extends Usuario implements Serializable {
         return desafios;
     }
 
-    public void setDesafios(int desafios) {
-        this.desafios = desafios;
+    public int getRecompensas() {
+        return recompensas;
     }
 
-    public void setRecompensa(int recompensa) {
-        this.recompensa = recompensa;
+    public void setRecompensas(int recompensas) {
+        this.recompensas = recompensas;
+    }
+
+    public void setDesafios(int desafios) {
+        this.desafios = desafios;
     }
 
     public Map construirHash() {
