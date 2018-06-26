@@ -6,21 +6,24 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.squareup.picasso.Picasso;
 
 import challenges.com.challenges.R;
-import challenges.com.challenges.activities.AdicionarAmigoActivity;
 import challenges.com.challenges.activities.LoginActivity;
+import challenges.com.challenges.activities.SearchAmigos;
 import challenges.com.challenges.config.ConfiguracaoFirebase;
 import challenges.com.challenges.model.Crianca;
+import challenges.com.challenges.model.Responsavel;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -64,7 +67,8 @@ public class PerfilCriancaFragment extends Fragment {
         String idUsuarioAtual = autenticacao.getCurrentUser().getUid();
 
         //coloquei um listener para ficar escutando as alteraçoes do banco porque é usuário...
-        ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(idUsuarioAtual).addSnapshotListener(getActivity(), new EventListener<DocumentSnapshot>() {
+        ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(idUsuarioAtual)
+                .addSnapshotListener(getActivity(), new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
                 if (documentSnapshot.exists()){
@@ -73,14 +77,39 @@ public class PerfilCriancaFragment extends Fragment {
                     if (crianca.getFoto() != null){
                         Picasso.get().load(crianca.getFoto()).into(fotoCrianca);
                     }
+
+                    if (crianca.getRecompensa() > 0) {
+                        qntRecompensas.setText(String.valueOf(crianca.getRecompensa()));
+                    }
+
+                    if (crianca.getPontos() > 0) {
+                        qntPontos.setText(String.valueOf(crianca.getPontos()));
+                    }
+
+                    if (crianca.getDesafios() > 0) {
+                        qntDesafios.setText(String.valueOf(crianca.getDesafios()));
+                    }
                 }
             }
         });
         adicionarAmigo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View vie) {
-                Intent intent = new Intent(getActivity(), AdicionarAmigoActivity.class);
-                startActivity(intent);
+                DocumentReference pai = crianca.getResponsavel();
+                pai.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Responsavel responsavel = documentSnapshot.toObject(Responsavel.class);
+                        if (responsavel != null && responsavel.isPermiteSocial()){
+                            Intent intent = new Intent(getActivity(), SearchAmigos.class);
+                            startActivity(intent);
+                        }else{
+                            Toast.makeText(getContext(), "Seu responsável não permite você adicionar amigos", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+
+
             }
         });
 

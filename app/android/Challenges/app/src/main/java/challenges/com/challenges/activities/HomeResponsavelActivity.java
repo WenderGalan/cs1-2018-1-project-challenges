@@ -8,7 +8,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -21,7 +23,9 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import challenges.com.challenges.R;
 import challenges.com.challenges.adapter.CriancaAdapter;
@@ -40,6 +44,7 @@ public class HomeResponsavelActivity extends AppCompatActivity {
     private ImageView verNotificacoes;
     private RecyclerView recyclerViewCrianca;
     private RecyclerView recyclerViewDesafio;
+    private Switch switchSocial;
 
     private DocumentReference usuario;
     private String usuarioUID;
@@ -67,6 +72,7 @@ public class HomeResponsavelActivity extends AppCompatActivity {
         recyclerViewCrianca = findViewById(R.id.recyclerViewCriancas);
         recyclerViewDesafio = findViewById(R.id.recyclerViewDesafios);
         verNotificacoes = findViewById(R.id.imageViewNotificacoes);
+        switchSocial = findViewById(R.id.switchAddCrianças);
 
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         usuarioUID = autenticacao.getCurrentUser().getUid();
@@ -88,6 +94,7 @@ public class HomeResponsavelActivity extends AppCompatActivity {
                 responsavel = documentSnapshot.toObject(Responsavel.class);
                 /**SETA TODAS AS INFORMACOES DA ACTIVITY PARA NAO OCORRER ERROS DE NULO**/
                 nome.setText(responsavel.getNome().toUpperCase());
+                switchSocial.setChecked(responsavel.isPermiteSocial());
                 //recupera as criancas
 
                 criancas = responsavel.getCriancas();
@@ -152,6 +159,22 @@ public class HomeResponsavelActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 abrirNotificacoes();
+            }
+        });
+
+        switchSocial.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                responsavel.setPermiteSocial(b);
+                Map<String, Object> hashMap = new HashMap<String, Object>();
+                hashMap.put("permiteSocial", b);
+                DocumentReference reference = ConfiguracaoFirebase.getFirestore().collection("Usuarios").document(usuarioUID);
+                reference.update(hashMap).addOnSuccessListener(HomeResponsavelActivity.this, new OnSuccessListener() {
+                    @Override
+                    public void onSuccess(Object o) {
+
+                    }
+                });
             }
         });
 
