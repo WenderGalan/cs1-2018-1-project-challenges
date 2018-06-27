@@ -162,7 +162,6 @@ class BuscaPessoasViewController: UIViewController, UISearchBarDelegate, UITable
         UsuarioDAO.sharedInstance.buscarPessoas(nome: searchText, success: { (array) in
             
             self.contatos = array
-//            self.filtrarPorInicial()
             self.tableView.reloadData()
         }) { (error) in
             

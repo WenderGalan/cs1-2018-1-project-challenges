@@ -60,7 +60,7 @@ class Crianca: Usuario {
         }
         
         if let fotoURL = fotoURL {
-            data["fotoURL"] = fotoURL
+            data["foto"] = fotoURL
         }
         
         if let responsavel = responsavel {
@@ -103,7 +103,7 @@ class Crianca: Usuario {
             self.email = email
         }
         
-        if let fotoURL = data["fotoURL"] as? String {
+        if let fotoURL = data["foto"] as? String {
             self.fotoURL = fotoURL
         }
         

@@ -142,7 +142,7 @@ class PerfilCriancaViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 cell.dadoUmLabel.text = "\(user!.desafios)"
                 cell.dadoDoisLabel.text = "\(user!.pontos)"
-                cell.dadoTresLabel.text = "0"
+                cell.dadoTresLabel.text = "\(user!.amigos.count)"
                 cell.dadoQuatroLabel.text = "\(user!.recompensas)"
                 
                 return cell

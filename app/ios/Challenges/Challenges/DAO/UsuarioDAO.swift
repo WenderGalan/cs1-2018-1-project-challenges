@@ -248,8 +248,8 @@ class UsuarioDAO: NSObject {
     func buscarPessoas(nome: String, success: @escaping ([Crianca]) -> (), failed: @escaping (Error?) -> ()) {
         let childRef = Firestore.firestore().collection("Usuarios")
             
-        let query = childRef.whereField("nome", isGreaterThanOrEqualTo: nome).order(by: "nome")
-    
+        let query = childRef.whereField("nome", isEqualTo: nome)
+        
 //            query.whereField("tipo", isEqualTo: 1)
 //            .whereField("nome_lower", isGreaterThanOrEqualTo: nome.lowercased())
 //            .order(by: "nome_lower")
@@ -263,7 +263,10 @@ class UsuarioDAO: NSObject {
                     for doc in snap.documents {
                         let crianca = Crianca.init(objectId: doc.documentID)
                         crianca.from(document: doc)
-                        criancas.append(crianca)
+                        if crianca.tipo == 1 {
+                            criancas.append(crianca)
+                        }
+                        
                     }
                     success(criancas)
                 }
